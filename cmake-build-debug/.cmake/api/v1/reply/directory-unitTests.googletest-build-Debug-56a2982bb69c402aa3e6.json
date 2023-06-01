@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "unitTests/googletest-build",
+		"source" : "cmake-build-debug/unitTests/googletest-src"
+	}
+}

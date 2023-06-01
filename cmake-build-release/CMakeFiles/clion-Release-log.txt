@@ -1,0 +1,45 @@
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/ninja -G Ninja -S /Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame -B /Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release
+-- The CXX compiler identification is AppleClang 14.0.0.14000029
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found SFML 2.5.1 in /opt/homebrew/lib/cmake/SFML
+-- The C compiler identification is AppleClang 14.0.0.14000029
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+CMake Warning (dev) at cmake-build-release/_deps/pugixml-src/CMakeLists.txt:6 (option):
+  Policy CMP0077 is not set: option() honors normal variables.  Run "cmake
+  --help-policy CMP0077" for policy details.  Use the cmake_policy command to
+  set the policy and suppress this warning.
+
+  For compatibility with older versions of CMake, option is clearing the
+  normal variable 'BUILD_SHARED_LIBS'.
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/unitTests/googletest-download
+[1/9] Creating directories for 'googletest'
+[2/9] Performing download step (git clone) for 'googletest'
+Cloning into 'googletest-src'...
+Your branch is up to date with 'origin/main'.
+Already on 'main'
+[3/9] Performing update step for 'googletest'
+[4/9] No patch step for 'googletest'
+[5/9] No configure step for 'googletest'
+[6/9] No build step for 'googletest'
+[7/9] No install step for 'googletest'
+[8/9] No test step for 'googletest'
+[9/9] Completed 'googletest'
+-- Found Python: /Users/sarahzakon/opt/anaconda3/bin/python3.9 (found version "3.9.13") found components: Interpreter 
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release

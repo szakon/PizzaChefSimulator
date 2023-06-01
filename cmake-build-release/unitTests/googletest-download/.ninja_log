@@ -1,0 +1,21 @@
+# ninja log v5
+1	14	1685612122422756805	googletest-prefix/src/googletest-stamp/googletest-mkdir	f0920d48a9453d16
+1	14	1685612122422756805	/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/unitTests/googletest-download/googletest-prefix/src/googletest-stamp/googletest-mkdir	f0920d48a9453d16
+14	5310	1685612127718741097	googletest-prefix/src/googletest-stamp/googletest-download	c3451525d19e8d5b
+14	5310	1685612127718741097	/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/unitTests/googletest-download/googletest-prefix/src/googletest-stamp/googletest-download	c3451525d19e8d5b
+5310	6005	0	googletest-prefix/src/googletest-stamp/googletest-update	32cb4fcac80d5464
+5310	6005	0	/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/unitTests/googletest-download/googletest-prefix/src/googletest-stamp/googletest-update	32cb4fcac80d5464
+6005	6018	1685612128427072775	googletest-prefix/src/googletest-stamp/googletest-patch	351662fe5557a4e1
+6005	6018	1685612128427072775	/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/unitTests/googletest-download/googletest-prefix/src/googletest-stamp/googletest-patch	351662fe5557a4e1
+6018	6031	1685612128439673367	googletest-prefix/src/googletest-stamp/googletest-configure	923008a432dc3956
+6018	6031	1685612128439673367	/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/unitTests/googletest-download/googletest-prefix/src/googletest-stamp/googletest-configure	923008a432dc3956
+6031	6043	1685612128452091172	googletest-prefix/src/googletest-stamp/googletest-build	df832d3aca5b251a
+6031	6043	1685612128452091172	/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/unitTests/googletest-download/googletest-prefix/src/googletest-stamp/googletest-build	df832d3aca5b251a
+6043	6056	1685612128464599599	googletest-prefix/src/googletest-stamp/googletest-install	898952507eb0ca9
+6043	6056	1685612128464599599	/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/unitTests/googletest-download/googletest-prefix/src/googletest-stamp/googletest-install	898952507eb0ca9
+6056	6068	1685612128477253356	googletest-prefix/src/googletest-stamp/googletest-test	987b95d03a127e18
+6056	6068	1685612128477253356	/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/unitTests/googletest-download/googletest-prefix/src/googletest-stamp/googletest-test	987b95d03a127e18
+6068	6085	1685612128494253960	CMakeFiles/googletest-complete	91159d6670baa0c0
+6068	6085	1685612128494253960	googletest-prefix/src/googletest-stamp/googletest-done	91159d6670baa0c0
+6068	6085	1685612128494253960	/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/unitTests/googletest-download/CMakeFiles/googletest-complete	91159d6670baa0c0
+6068	6085	1685612128494253960	/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/unitTests/googletest-download/googletest-prefix/src/googletest-stamp/googletest-done	91159d6670baa0c0

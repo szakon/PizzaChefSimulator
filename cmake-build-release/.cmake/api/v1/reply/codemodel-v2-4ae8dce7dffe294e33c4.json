@@ -1,0 +1,306 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Release-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "_deps/pugixml-build",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-_deps.pugixml-build-Release-23c4ef7137cc6256233f.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "cmake-build-release/_deps/pugixml-src",
+					"targetIndexes" : 
+					[
+						6
+					]
+				},
+				{
+					"build" : "mainLauncher",
+					"jsonFile" : "directory-mainLauncher-Release-6b79d8ad5801521f02b1.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "mainLauncher",
+					"targetIndexes" : 
+					[
+						0,
+						5
+					]
+				},
+				{
+					"build" : "src",
+					"jsonFile" : "directory-src-Release-b6cf2213fc5053b67c22.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src",
+					"targetIndexes" : 
+					[
+						7
+					]
+				},
+				{
+					"build" : "unitTests",
+					"childIndexes" : 
+					[
+						5
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-unitTests-Release-ee7937807886ff4bb974.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "unitTests",
+					"targetIndexes" : 
+					[
+						8
+					]
+				},
+				{
+					"build" : "unitTests/googletest-build",
+					"childIndexes" : 
+					[
+						6
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-unitTests.googletest-build-Release-37e3f53086c82f021776.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 4,
+					"projectIndex" : 2,
+					"source" : "cmake-build-release/unitTests/googletest-src"
+				},
+				{
+					"build" : "unitTests/googletest-build/googlemock",
+					"childIndexes" : 
+					[
+						7
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-unitTests.googletest-build.googlemock-Release-5c0c5c99b2402c7e935a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 5,
+					"projectIndex" : 3,
+					"source" : "cmake-build-release/unitTests/googletest-src/googlemock",
+					"targetIndexes" : 
+					[
+						1,
+						2
+					]
+				},
+				{
+					"build" : "unitTests/googletest-build/googletest",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-unitTests.googletest-build.googletest-Release-c4ca031f5c4a46ae6804.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 6,
+					"projectIndex" : 4,
+					"source" : "cmake-build-release/unitTests/googletest-src/googletest",
+					"targetIndexes" : 
+					[
+						3,
+						4
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"directoryIndexes" : 
+					[
+						0,
+						2,
+						3,
+						4
+					],
+					"name" : "Glouton",
+					"targetIndexes" : 
+					[
+						0,
+						5,
+						7,
+						8
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "pugixml",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						6
+					]
+				},
+				{
+					"childIndexes" : 
+					[
+						3
+					],
+					"directoryIndexes" : 
+					[
+						5
+					],
+					"name" : "googletest-distribution",
+					"parentIndex" : 0
+				},
+				{
+					"childIndexes" : 
+					[
+						4
+					],
+					"directoryIndexes" : 
+					[
+						6
+					],
+					"name" : "gmock",
+					"parentIndex" : 2,
+					"targetIndexes" : 
+					[
+						1,
+						2
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						7
+					],
+					"name" : "gtest",
+					"parentIndex" : 3,
+					"targetIndexes" : 
+					[
+						3,
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 2,
+					"id" : "copy-resources::@448b1704701f8cdccfe4",
+					"jsonFile" : "target-copy-resources-Release-5cdb424cd138890b51d0.json",
+					"name" : "copy-resources",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "gmock::@79f4ce234406b44b66cc",
+					"jsonFile" : "target-gmock-Release-faccb7d65a5d6ec08eee.json",
+					"name" : "gmock",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "gmock_main::@79f4ce234406b44b66cc",
+					"jsonFile" : "target-gmock_main-Release-8880663422c8504f0399.json",
+					"name" : "gmock_main",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "gtest::@9001473bcf402cd5ee47",
+					"jsonFile" : "target-gtest-Release-2fdd003860f57b5c66b5.json",
+					"name" : "gtest",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "gtest_main::@9001473bcf402cd5ee47",
+					"jsonFile" : "target-gtest_main-Release-2224bde8f5447233826e.json",
+					"name" : "gtest_main",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "mainLauncher::@448b1704701f8cdccfe4",
+					"jsonFile" : "target-mainLauncher-Release-b79fc486051fe4fed1bf.json",
+					"name" : "mainLauncher",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "pugixml::@ec157c7f07670d922be3",
+					"jsonFile" : "target-pugixml-Release-b18b5b8e632013bb1b7a.json",
+					"name" : "pugixml",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "src::@145eef247bfb46b6828c",
+					"jsonFile" : "target-src-Release-6323f094d2166adbfabb.json",
+					"name" : "src",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "unitTests::@49d27c9c2595e8831c8e",
+					"jsonFile" : "target-unitTests-Release-86222569adc857b8af55.json",
+					"name" : "unitTests",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release",
+		"source" : "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}

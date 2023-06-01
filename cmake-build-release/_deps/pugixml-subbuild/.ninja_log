@@ -1,0 +1,21 @@
+# ninja log v5
+0	12	1685612118111199146	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-mkdir	58854d0420ccb1b
+0	12	1685612118111199146	/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/_deps/pugixml-subbuild/pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-mkdir	58854d0420ccb1b
+12	3958	1685612122057174184	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-download	c1be1070fbddf3db
+12	3958	1685612122057174184	/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/_deps/pugixml-subbuild/pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-download	c1be1070fbddf3db
+3958	3989	0	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-update	7e0304524165f9ab
+3958	3989	0	/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/_deps/pugixml-subbuild/pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-update	7e0304524165f9ab
+3989	4001	1685612122100098247	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-patch	366d44b65196ff62
+3989	4001	1685612122100098247	/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/_deps/pugixml-subbuild/pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-patch	366d44b65196ff62
+4001	4014	1685612122112658385	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-configure	be972af81de87654
+4001	4014	1685612122112658385	/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/_deps/pugixml-subbuild/pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-configure	be972af81de87654
+4014	4026	1685612122124622920	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-build	a5c7c2d7f6f06d21
+4014	4026	1685612122124622920	/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/_deps/pugixml-subbuild/pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-build	a5c7c2d7f6f06d21
+4026	4037	1685612122136121679	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-install	8c62cea749bab107
+4026	4037	1685612122136121679	/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/_deps/pugixml-subbuild/pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-install	8c62cea749bab107
+4037	4049	1685612122148295581	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-test	48cd0fb3b9a48ae5
+4037	4049	1685612122148295581	/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/_deps/pugixml-subbuild/pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-test	48cd0fb3b9a48ae5
+4049	4066	1685612122165256105	CMakeFiles/pugixml-populate-complete	8ad56bb788eb016e
+4049	4066	1685612122165256105	pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-done	8ad56bb788eb016e
+4049	4066	1685612122165256105	/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/_deps/pugixml-subbuild/CMakeFiles/pugixml-populate-complete	8ad56bb788eb016e
+4049	4066	1685612122165256105	/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/_deps/pugixml-subbuild/pugixml-populate-prefix/src/pugixml-populate-stamp/pugixml-populate-done	8ad56bb788eb016e

@@ -1,0 +1,3 @@
+# Hashes of file build rules.
+0cf12ff7f6e1a9fa17d58734ba0ac7ba mainLauncher/CMakeFiles/copy-resources
+60e390bd52e5c41abc86f53db16df42c mainLauncher/resources
