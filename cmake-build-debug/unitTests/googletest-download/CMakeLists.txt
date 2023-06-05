@@ -11,8 +11,8 @@ include(ExternalProject)
 ExternalProject_Add(googletest
   GIT_REPOSITORY    https://github.com/google/googletest.git
   GIT_TAG           main
-  SOURCE_DIR        "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-src"
-  BINARY_DIR        "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-build"
+  SOURCE_DIR        "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-src"
+  BINARY_DIR        "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-build"
   CONFIGURE_COMMAND ""
   BUILD_COMMAND     ""
   INSTALL_COMMAND   ""

@@ -12,18 +12,18 @@ project(pugixml-populate NONE)
 
 # Pass through things we've already detected in the main project to avoid
 # paying the cost of redetecting them again in ExternalProject_Add()
-set(GIT_EXECUTABLE [==[/opt/homebrew/bin/git]==])
-set(GIT_VERSION_STRING [==[2.39.1]==])
+set(GIT_EXECUTABLE [==[/usr/bin/git]==])
+set(GIT_VERSION_STRING [==[2.34.1]==])
 set_property(GLOBAL PROPERTY _CMAKE_FindGit_GIT_EXECUTABLE_VERSION
-  [==[/opt/homebrew/bin/git;2.39.1]==]
+  [==[/usr/bin/git;2.34.1]==]
 )
 
 
 include(ExternalProject)
 ExternalProject_Add(pugixml-populate
                      "UPDATE_DISCONNECTED" "False" "GIT_REPOSITORY" "https://github.com/zeux/pugixml.git" "GIT_TAG" "v1.10"
-                    SOURCE_DIR          "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-src"
-                    BINARY_DIR          "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-build"
+                    SOURCE_DIR          "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-src"
+                    BINARY_DIR          "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-build"
                     CONFIGURE_COMMAND   ""
                     BUILD_COMMAND       ""
                     INSTALL_COMMAND     ""

@@ -4,19 +4,19 @@
 cmake_minimum_required(VERSION 3.5)
 
 file(MAKE_DIRECTORY
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-src"
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-build"
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-subbuild/pugixml-populate-prefix"
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-subbuild/pugixml-populate-prefix/tmp"
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-subbuild/pugixml-populate-prefix/src/pugixml-populate-stamp"
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-subbuild/pugixml-populate-prefix/src"
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-subbuild/pugixml-populate-prefix/src/pugixml-populate-stamp"
+  "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-src"
+  "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-build"
+  "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-subbuild/pugixml-populate-prefix"
+  "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-subbuild/pugixml-populate-prefix/tmp"
+  "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-subbuild/pugixml-populate-prefix/src/pugixml-populate-stamp"
+  "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-subbuild/pugixml-populate-prefix/src"
+  "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-subbuild/pugixml-populate-prefix/src/pugixml-populate-stamp"
 )
 
 set(configSubDirs )
 foreach(subDir IN LISTS configSubDirs)
-    file(MAKE_DIRECTORY "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-subbuild/pugixml-populate-prefix/src/pugixml-populate-stamp/${subDir}")
+    file(MAKE_DIRECTORY "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-subbuild/pugixml-populate-prefix/src/pugixml-populate-stamp/${subDir}")
 endforeach()
 if(cfgdir)
-  file(MAKE_DIRECTORY "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-subbuild/pugixml-populate-prefix/src/pugixml-populate-stamp${cfgdir}") # cfgdir has leading slash
+  file(MAKE_DIRECTORY "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/_deps/pugixml-subbuild/pugixml-populate-prefix/src/pugixml-populate-stamp${cfgdir}") # cfgdir has leading slash
 endif()

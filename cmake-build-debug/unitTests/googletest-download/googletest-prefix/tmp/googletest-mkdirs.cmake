@@ -4,19 +4,19 @@
 cmake_minimum_required(VERSION 3.5)
 
 file(MAKE_DIRECTORY
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-src"
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-build"
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-download/googletest-prefix"
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-download/googletest-prefix/tmp"
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-download/googletest-prefix/src/googletest-stamp"
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-download/googletest-prefix/src"
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-download/googletest-prefix/src/googletest-stamp"
+  "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-src"
+  "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-build"
+  "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-download/googletest-prefix"
+  "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-download/googletest-prefix/tmp"
+  "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-download/googletest-prefix/src/googletest-stamp"
+  "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-download/googletest-prefix/src"
+  "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-download/googletest-prefix/src/googletest-stamp"
 )
 
 set(configSubDirs )
 foreach(subDir IN LISTS configSubDirs)
-    file(MAKE_DIRECTORY "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-download/googletest-prefix/src/googletest-stamp/${subDir}")
+    file(MAKE_DIRECTORY "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-download/googletest-prefix/src/googletest-stamp/${subDir}")
 endforeach()
 if(cfgdir)
-  file(MAKE_DIRECTORY "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-download/googletest-prefix/src/googletest-stamp${cfgdir}") # cfgdir has leading slash
+  file(MAKE_DIRECTORY "/home/iris/JIN/jeu_monsieur_madame/cmake-build-debug/unitTests/googletest-download/googletest-prefix/src/googletest-stamp${cfgdir}") # cfgdir has leading slash
 endif()
