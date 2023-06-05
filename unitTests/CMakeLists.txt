@@ -38,5 +38,5 @@ endif()
 #   enable_testing()  already done in top CMakeLists.txt
 add_executable(unitTests unitTests.cpp)
 target_link_libraries(unitTests gtest_main)
-target_link_libraries(unitTests src pugixml sfml-graphics)
+target_link_libraries(unitTests src pugixml sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
 add_test(NAME that-test-I-made COMMAND unitTests)
