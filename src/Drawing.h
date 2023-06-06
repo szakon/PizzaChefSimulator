@@ -3,9 +3,10 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include "pugixml.hpp"
 
 class Drawing
-{
+{/*
 public:
     explicit Drawing(pugi::xml_node node);
     void add(std::unique_ptr<Shape> shape);
@@ -13,6 +14,6 @@ public:
     void draw(SFML_output & out) const;
     void populate(std::map<std::string, Shape*, std::less<>> &string2shape) const;
 private:
-    std::vector<std::unique_ptr<Shape>> children;
+    std::vector<std::unique_ptr<Shape>> children;*/
 };
 

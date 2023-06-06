@@ -15,11 +15,12 @@ endif()
 # SOURCES at src/CMakeLists.txt:2 (file)
 file(GLOB NEW_GLOB LIST_DIRECTORIES true "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/*.cpp")
 set(OLD_GLOB
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Circle.cpp"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Drawing.cpp"
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Group.cpp"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Ingredient.cpp"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Kitchen.cpp"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Pizza.cpp"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Preparation.cpp"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/SFML_output.cpp"
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Shape.cpp"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/colors.cpp"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/myMain.cpp"
   )
@@ -31,11 +32,12 @@ endif()
 # SOURCES at src/CMakeLists.txt:2 (file)
 file(GLOB NEW_GLOB LIST_DIRECTORIES true "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/*.h")
 set(OLD_GLOB
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Circle.h"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Drawing.h"
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Group.h"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Ingredient.h"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Kitchen.h"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Pizza.h"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Preparation.h"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/SFML_output.h"
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Shape.h"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/colors.h"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/myMain.h"
   )

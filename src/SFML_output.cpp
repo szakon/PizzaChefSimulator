@@ -4,7 +4,7 @@
 
 static const unsigned int WINDOW_WIDTH(1000);
 static const unsigned int WINDOW_HEIGHT(700);
-
+/*
 SFML_output::SFML_output()
 	: window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Outil visualisation")
 {
@@ -71,3 +71,4 @@ sf::Color SFML_output::string2color(std::string const &s)
 	auto colorIndex = std::find(colors_as_string.begin(),colors_as_string.end(), s);
 	return (colorIndex == colors_as_string.end()) ? colors_as_sfml[0] : colors_as_sfml[colorIndex - colors_as_string.begin()];
 }
+*/

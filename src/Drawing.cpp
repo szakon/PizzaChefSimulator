@@ -3,7 +3,7 @@
 
 
 using namespace std;
-
+/*
 Drawing::Drawing(pugi::xml_node node)
 {
     load_children(children, node);
@@ -39,3 +39,4 @@ void Drawing::populate(std::map<std::string, Shape*, std::less<>> &string2shape)
     }
 }
 
+*/
