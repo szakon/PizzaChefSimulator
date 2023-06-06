@@ -23,10 +23,11 @@ std::ostream& operator<<(std::ostream& os, const Pizza& pizza)
     for(const auto &ingredient: pizza.ingredients){
         string key = ingredient.first.getlabel();
         bool value = ingredient.second;
-        os << key << " and it's print status is : " << value << " , ";
+        os << key << " and it's print status is : " << value << endl;
     }
     return os;
 }
 
 void receiveIngredient(Preparation preparation){
+
 }

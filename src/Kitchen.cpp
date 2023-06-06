@@ -1,4 +1,5 @@
 #include "Kitchen.h"
+#include <iostream>
 
 using namespace std;
 
@@ -11,4 +12,8 @@ Kitchen::Kitchen(Ingredient ingredient1)
 
 Ingredient Kitchen::getIngredient() {
     return ingredient;
+}
+
+bool Kitchen::getselected() {
+    return selected;
 }
