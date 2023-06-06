@@ -27,3 +27,6 @@ std::ostream& operator<<(std::ostream& os, const Pizza& pizza)
     }
     return os;
 }
+
+void receiveIngredient(Preparation preparation){
+}

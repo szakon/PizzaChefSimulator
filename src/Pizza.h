@@ -2,6 +2,8 @@
 #include "Ingredient.h"
 #include <vector>
 #include <map>
+#include "Ingredient.h"
+#include "Preparation.h"
 
 using namespace std;
 
@@ -14,6 +16,8 @@ public:
 
 
     friend std::ostream& operator<<(std::ostream& os, const Pizza& pizza);
+
+    friend void receiveIngredient(Preparation preparation);
 
 
 };
