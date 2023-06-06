@@ -1,7 +1,6 @@
 #include <sstream>
 #include "Drawing.h"
-#include "Group.h"
-#include "Circle.h"
+
 
 using namespace std;
 

@@ -1,3 +1,4 @@
+#include <string>
 
 using namespace std;
 
@@ -5,7 +6,8 @@ class Ingredient {
 private :
     std::string label;
 public:
-    explicit Ingredient(std::string name);
+    explicit Ingredient(const std::string name);
+    std::string getlabel() const;
 
 };
 

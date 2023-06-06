@@ -15,13 +15,12 @@ endif()
 # SOURCES at src/CMakeLists.txt:2 (file)
 file(GLOB NEW_GLOB LIST_DIRECTORIES true "/home/iris/JIN/jeu_monsieur_madame/src/*.cpp")
 set(OLD_GLOB
-  "/home/iris/JIN/jeu_monsieur_madame/src/Circle.cpp"
   "/home/iris/JIN/jeu_monsieur_madame/src/Drawing.cpp"
-  "/home/iris/JIN/jeu_monsieur_madame/src/Group.cpp"
   "/home/iris/JIN/jeu_monsieur_madame/src/Ingredient.cpp"
+  "/home/iris/JIN/jeu_monsieur_madame/src/Kitchen.cpp"
   "/home/iris/JIN/jeu_monsieur_madame/src/Pizza.cpp"
+  "/home/iris/JIN/jeu_monsieur_madame/src/Preparation.cpp"
   "/home/iris/JIN/jeu_monsieur_madame/src/SFML_output.cpp"
-  "/home/iris/JIN/jeu_monsieur_madame/src/Shape.cpp"
   "/home/iris/JIN/jeu_monsieur_madame/src/colors.cpp"
   "/home/iris/JIN/jeu_monsieur_madame/src/myMain.cpp"
   )
@@ -33,13 +32,12 @@ endif()
 # SOURCES at src/CMakeLists.txt:2 (file)
 file(GLOB NEW_GLOB LIST_DIRECTORIES true "/home/iris/JIN/jeu_monsieur_madame/src/*.h")
 set(OLD_GLOB
-  "/home/iris/JIN/jeu_monsieur_madame/src/Circle.h"
   "/home/iris/JIN/jeu_monsieur_madame/src/Drawing.h"
-  "/home/iris/JIN/jeu_monsieur_madame/src/Group.h"
   "/home/iris/JIN/jeu_monsieur_madame/src/Ingredient.h"
+  "/home/iris/JIN/jeu_monsieur_madame/src/Kitchen.h"
   "/home/iris/JIN/jeu_monsieur_madame/src/Pizza.h"
+  "/home/iris/JIN/jeu_monsieur_madame/src/Preparation.h"
   "/home/iris/JIN/jeu_monsieur_madame/src/SFML_output.h"
-  "/home/iris/JIN/jeu_monsieur_madame/src/Shape.h"
   "/home/iris/JIN/jeu_monsieur_madame/src/colors.h"
   "/home/iris/JIN/jeu_monsieur_madame/src/myMain.h"
   )

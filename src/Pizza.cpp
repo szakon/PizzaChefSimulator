@@ -10,7 +10,7 @@ Pizza::Pizza(std::vector<Ingredient> ingr)
 {
     completed = 0;
     for (const auto &ingredient: ingr) {
-        ingredients[ingredient.name] = 0;
+        ingredients[ingredient.getlabel()] = 0;
     }
 
 };
