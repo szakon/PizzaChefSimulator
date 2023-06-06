@@ -9,12 +9,8 @@ private :
 public:
     explicit Ingredient(const std::string name);
     std::string getlabel() const;
-
-
     // Declare less-than operator as a friend function
     friend bool operator<(const Ingredient& lhs, const Ingredient& rhs);
-
-
     friend bool operator==(const Ingredient& lhs, const Ingredient& rhs);
 
 
