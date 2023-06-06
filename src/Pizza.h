@@ -12,5 +12,9 @@ private :
 public:
     explicit Pizza(std::vector<Ingredient> ingr);
 
+
+    friend std::ostream& operator<<(std::ostream& os, const Pizza& pizza);
+
+
 };
 

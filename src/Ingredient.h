@@ -14,6 +14,7 @@ public:
     // Declare less-than operator as a friend function
     friend bool operator<(const Ingredient& lhs, const Ingredient& rhs);
 
+
 };
 
 

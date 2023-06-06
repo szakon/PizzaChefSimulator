@@ -16,3 +16,14 @@ Pizza::Pizza(std::vector<Ingredient> ingr)
     }
 
 };
+
+std::ostream& operator<<(std::ostream& os, const Pizza& pizza)
+{
+    os << "the Pizza contains the following ingredients";
+    for(const auto &ingredient: pizza.ingredients){
+        string key = ingredient.first.getlabel();
+        bool value = ingredient.second;
+        os << key << " and it's print status is : " << value << " , ";
+    }
+    return os;
+}
