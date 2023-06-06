@@ -7,10 +7,12 @@ using namespace std;
 
 class Kitchen {
 private :
-    Ingredient ingredient;
     bool selected;
+protected:
+    Ingredient ingredient;
 public:
     explicit Kitchen(Ingredient ingredient1);
+    Ingredient getIngredient();
 
 };
 
