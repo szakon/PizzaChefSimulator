@@ -1,3 +1,4 @@
+#pragma once
 #include "Kitchen.h"
 
 class Preparation : public Kitchen {
