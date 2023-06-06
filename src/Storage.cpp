@@ -3,3 +3,9 @@
 //
 
 #include "Storage.h"
+
+
+
+Storage::Storage(Ingredient ingredient11, Ingredient ingredient1) : Kitchen(ingredient11) {
+
+}
