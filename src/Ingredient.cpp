@@ -1,4 +1,5 @@
 #include <string>
+#include <cstring>
 #include "Ingredient.h"
 
 using namespace std;
@@ -21,6 +22,12 @@ std::string Ingredient::getlabel() const {
 bool operator<(const Ingredient& lhs, const Ingredient& rhs) {
     // Compare the labels of the ingredients for ordering
     return lhs.label < rhs.label;
+}
+
+// Define the equal operator implementation
+bool operator==(const Ingredient& lhs, const Ingredient& rhs) {
+    // Compare the labels of the ingredients for ordering
+    return lhs.label == rhs.label;
 }
 
 
