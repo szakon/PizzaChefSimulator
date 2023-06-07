@@ -12,7 +12,7 @@ using namespace std;
 
 int Pizza::id_count = 0;
 
-Pizza::Pizza(const std::vector<shared_ptr<Ingredient>>& ingr, std::vector<Preparation> prep)
+Pizza::Pizza(const std::vector<Ingredient>& ingr, std::vector<Preparation> prep)
 {
     completed = false;
     id = id_count++;
@@ -26,7 +26,7 @@ std::ostream& operator<<(std::ostream& os, const Pizza& pizza)
 {
     os << "the Pizza contains the following ingredients";
     for(const auto &ingredient: pizza.ingredients){
-        string key = ingredient.first->getlabel();
+        string key = ingredient.first.getlabel();
         bool value = ingredient.second;
         os << key << " and it's print status is : " << value << endl;
     }
@@ -34,7 +34,7 @@ std::ostream& operator<<(std::ostream& os, const Pizza& pizza)
 }
 
 
-std::map< shared_ptr<Ingredient> , bool> Pizza::getIngredients() {
+std::map<Ingredient, bool> Pizza::getIngredients() {
     return ingredients;
 }
 

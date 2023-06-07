@@ -6,11 +6,8 @@
 
 using namespace std;
 
-int Ingredient::idCount = 0;
-
 Ingredient::Ingredient(const std::string name)
 {
-    id = idCount++;
     label = name;
 }
 

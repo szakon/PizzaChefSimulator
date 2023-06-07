@@ -8,7 +8,7 @@
 
 int Preparation::id_count = 0;
 
-Preparation::Preparation(std::unique_ptr<Ingredient> ingredient) : Kitchen(std::move(ingredient)) {
+Preparation::Preparation(Ingredient ingredient) : Kitchen(ingredient) {
     id = id_count++;
     free = true;
     ready = false;
@@ -27,7 +27,7 @@ std::ostream& operator<<(std::ostream& os, const Preparation& preparation)
 }
 
 int Preparation::prepare(Storage stock) {
-    if(ingredientPtr == stock.getingredient()) {
+    if(ingredient == stock.getingredient()) {
         if(free) {
             free = false;
             while(time_left > 0) {

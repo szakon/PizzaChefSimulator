@@ -10,10 +10,8 @@ private:
     int time_prep;
     int time_left;
 public:
-    explicit Preparation(std::unique_ptr<Ingredient> ingredient);
+    explicit Preparation(Ingredient ingredient);
     int prepare(Kitchen stock);
-
-    explicit Preparation(Ingredient ingredient1);
     int prepare(Storage stock);
     void reset();
     friend std::ostream& operator<<(std::ostream& os, const Preparation& preparation);

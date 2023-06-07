@@ -11,6 +11,8 @@ using namespace std;
 int myMain()
 {
 
+    
+
     /*
     Ingredient cheese = Ingredient("cheese");
     cout << cheese << endl;
@@ -24,10 +26,17 @@ int myMain()
     sf::RenderWindow window(sf::VideoMode(1280,720), "My Program");
     window.setFramerateLimit(60);
 
-    sf::RectangleShape rect;
-    sf::Vector2f rectanglePosition(0,350);
-    rect.setPosition(rectanglePosition);
-    rect.setSize(sf::Vector2f(100,100));
+    sf::CircleShape pizza;
+    sf::CircleShape tomate;
+    sf::Vector2f circlePosition(0,350);
+    sf::Vector2f tomatePosition(0,350);
+    pizza.setPosition(circlePosition);
+    tomate.setPosition(tomatePosition);
+    pizza.setRadius(100);
+    tomate.setRadius(80);
+    sf::Color customColor(255, 228, 181);
+    pizza.setFillColor(customColor);
+    tomate.setFillColor(sf::Color::Red);
 
     //movement
     float xVelocity = 3;
@@ -41,12 +50,14 @@ int myMain()
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) window.close();
         }
         //physics
-        rectanglePosition.x += xVelocity;
-        rect.setPosition(rectanglePosition);
+        circlePosition.x += xVelocity;
+        pizza.setPosition(circlePosition);
+        tomate.setPosition(circlePosition);
 
         //render
         window.clear();
-        window.draw(rect);
+        window.draw(pizza);
+        window.draw(tomate);
         window.display();
 
     }
