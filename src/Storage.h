@@ -1,5 +1,5 @@
 #pragma once
-#import "Kitchen.h"
+#include "Kitchen.h"
 
 
 class Storage : public Kitchen {

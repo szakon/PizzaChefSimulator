@@ -11,16 +11,14 @@ using namespace std;
 int myMain()
 {
 
-    
 
-    /*
     Ingredient cheese = Ingredient("cheese");
     cout << cheese << endl;
     Storage storage_cheese = Storage(cheese);
     cout << storage_cheese << endl;
     Preparation prep_cheese = Preparation(cheese);
     cout << prep_cheese << endl;
-     */
+
 
 
     sf::RenderWindow window(sf::VideoMode(1280,720), "My Program");

@@ -11,7 +11,6 @@ private:
     int time_left;
 public:
     explicit Preparation(Ingredient ingredient);
-    int prepare(Kitchen stock);
     int prepare(Storage stock);
     void reset();
     friend std::ostream& operator<<(std::ostream& os, const Preparation& preparation);

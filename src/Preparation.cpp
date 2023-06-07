@@ -27,7 +27,7 @@ std::ostream& operator<<(std::ostream& os, const Preparation& preparation)
 }
 
 int Preparation::prepare(Storage stock) {
-    if(ingredient == stock.getingredient()) {
+    if(ingredient == stock.getIngredient()) {
         if(free) {
             free = false;
             while(time_left > 0) {
