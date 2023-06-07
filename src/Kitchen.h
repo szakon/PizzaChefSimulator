@@ -13,6 +13,7 @@ protected:
 public:
     explicit Kitchen(Ingredient ingredient1);
     Ingredient getIngredient();
+    bool getselected();
 
 };
 
