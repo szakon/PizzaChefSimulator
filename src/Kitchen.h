@@ -7,14 +7,16 @@ using namespace std;
 
 class Kitchen {
 protected:
-    Ingredient ingredient;
     bool selected;
+    std::shared_ptr<Ingredient> ingredientPtr;
 public:
-    explicit Kitchen(Ingredient ingredient1);
-    bool getselected();
+    explicit Kitchen(std::shared_ptr<Ingredient> ingredientPtr);
+    shared_ptr<Ingredient> getIngredient();
+
+    bool getselected() const;
     void selection();
     void unselection();
-    Ingredient getingredient();
+    std::shared_ptr<Ingredient> getingredient() const;
     friend std::ostream& operator<<(std::ostream& os, const Kitchen& kitchen);
 };
 

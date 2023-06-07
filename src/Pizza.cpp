@@ -1,5 +1,6 @@
 #include "Pizza.h"
 #include <string>
+#include <utility>
 #include <vector>
 #include <map>
 #include <unordered_map>
@@ -11,22 +12,21 @@ using namespace std;
 
 int Pizza::id_count = 0;
 
-Pizza::Pizza(std::vector<Ingredient> ingr, std::vector<Preparation> prep)
+Pizza::Pizza(const std::vector<shared_ptr<Ingredient>>& ingr, std::vector<Preparation> prep)
 {
     completed = false;
     id = id_count++;
     for (const auto &ingredient: ingr) {
-        ingredients.insert(std::make_pair(ingredient.getlabel(), false));
+        ingredients.insert(std::make_pair(ingredient, false));
     }
-    preparations = prep;
-
-};
+    preparations = std::move(prep);
+}
 
 std::ostream& operator<<(std::ostream& os, const Pizza& pizza)
 {
     os << "the Pizza contains the following ingredients";
     for(const auto &ingredient: pizza.ingredients){
-        string key = ingredient.first.getlabel();
+        string key = ingredient.first->getlabel();
         bool value = ingredient.second;
         os << key << " and it's print status is : " << value << endl;
     }
@@ -34,7 +34,7 @@ std::ostream& operator<<(std::ostream& os, const Pizza& pizza)
 }
 
 
-std::map<Ingredient, bool> Pizza::getIngredients() {
+std::map< shared_ptr<Ingredient> , bool> Pizza::getIngredients() {
     return ingredients;
 }
 
@@ -43,7 +43,7 @@ std::vector<Preparation> Pizza::getPreparations() {
 }
 
 int Pizza::addIngredient() {
-    for(Preparation prep : preparations) {
+    for(Preparation& prep : preparations) {
         if(prep.getselected() && prep.getready() && !ingredients[prep.getingredient()]) {
             ingredients[prep.getingredient()] = true;
             prep.reset();

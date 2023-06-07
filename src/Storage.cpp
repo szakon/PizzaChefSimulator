@@ -2,7 +2,6 @@
 #include "Kitchen.h"
 
 
-Storage::Storage(Ingredient ingredient1) : Kitchen(ingredient1) {
-
+Storage::Storage(std::unique_ptr<Ingredient> ingredient) : Kitchen(std::move(ingredient)) {
 }
 

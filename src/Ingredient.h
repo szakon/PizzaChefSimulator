@@ -18,7 +18,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Ingredient& ingredient);
     friend bool operator<(const Ingredient& lhs, const Ingredient& rhs);
     friend bool operator==(const Ingredient& lhs, const Ingredient& rhs);
-    static std::vector<Ingredient> getValue(const std::map<int, std::unique_ptr<Ingredient>>& map);
+    static std::vector<Ingredient> getValue(const std::map<int, std::shared_ptr<Ingredient>>& map);
 
 };
 
