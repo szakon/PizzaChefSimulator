@@ -22,6 +22,15 @@ void Kitchen::selection() {
     selected = true;
 }
 
-void Kitchen::release() {
+void Kitchen::unselection() {
     selected = false;
 }
+
+std::ostream& operator<<(std::ostream& os, const Kitchen& kitchen)
+{
+    os << "This is the Kitchen :" << endl;
+    os << "ingredient : " << kitchen.ingredient << endl;
+    os << "selected : " << kitchen.selected << endl;
+    return os;
+}
+

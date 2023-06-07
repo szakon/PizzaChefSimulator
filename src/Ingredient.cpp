@@ -18,6 +18,12 @@ std::string Ingredient::getlabel() const {
     return label;
 }
 
+std::ostream& operator<<(std::ostream& os, const Ingredient& ingredient)
+{
+    os << "This is the Ingredient :" << endl;
+    os << "label : " << ingredient.label << endl;
+    return os;
+}
 
 // Define the less-than operator implementation
 bool operator<(const Ingredient& lhs, const Ingredient& rhs) {

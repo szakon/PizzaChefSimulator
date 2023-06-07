@@ -71,6 +71,7 @@ int Preparation::gettime_left() {
 }
 
 void Preparation::reset() {
+    selected = false;
     free = true;
     ready = false;
     time_left = time_prep;

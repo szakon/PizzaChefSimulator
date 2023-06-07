@@ -6,16 +6,16 @@ using namespace std;
 
 
 class Kitchen {
-private :
-    bool selected;
 protected:
     Ingredient ingredient;
+    bool selected;
 public:
     explicit Kitchen(Ingredient ingredient1);
     bool getselected();
     void selection();
-    void release();
+    void unselection();
     Ingredient getingredient();
+    friend std::ostream& operator<<(std::ostream& os, const Kitchen& kitchen);
 };
 
 

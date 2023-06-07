@@ -10,13 +10,14 @@ using namespace std;
 
 int myMain()
 {
-    Ingredient tomatoe("Tomatoe");
-    Ingredient mushroom("Mushrooms");
-    Ingredient pepperoni("Pepperoni");
-    Ingredient cheese("Cheese");
-    std::vector<Ingredient> ingredients = {tomatoe, mushroom, pepperoni, cheese};
-    //Pizza pizza1(ingredients);
-    //std::cout << pizza1 << std::endl;
+
+    Ingredient cheese = Ingredient("cheese");
+    cout << cheese << endl;
+    Storage storage_cheese = Storage(cheese);
+    cout << storage_cheese << endl;
+    Preparation prep_cheese = Preparation(cheese);
+    cout << prep_cheese << endl;
+
 
     sf::RenderWindow window(sf::VideoMode(1280,720), "My Program");
     window.setFramerateLimit(60);

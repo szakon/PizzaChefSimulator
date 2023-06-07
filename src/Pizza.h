@@ -18,7 +18,7 @@ public:
     std::map<Ingredient, bool> getIngredients();
     std::vector<Preparation> getPreparations();
     friend std::ostream& operator<<(std::ostream& os, const Pizza& pizza);
-
+    int addIngredient();
 
     static int id_count;
 };
