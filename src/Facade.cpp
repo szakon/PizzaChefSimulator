@@ -23,12 +23,14 @@ void Facade::init(){
     ingredients.insert(std::make_pair("cheese", cheese));
     ingredients.insert(std::make_pair("pepperoni", pepperoni));
 
-    /*
+
     int i = 0;
     for (const auto &ingredient: ingredients){
-        Storage storage(ingredients.second);
-        storages.push_back()
-    }*/
+        Storage storage(ingredient.second);
+        Preparation preparation(ingredient.second);
+        storages.push_back(storage);
+        preparations.push_back(preparation);
+    }
 
 
 }

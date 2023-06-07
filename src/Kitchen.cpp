@@ -4,12 +4,12 @@
 using namespace std;
 
 
-Kitchen::Kitchen(std::shared_ptr<Ingredient> ingredient)
-        : ingredientPtr(std::move(ingredient)), selected(false)
+Kitchen::Kitchen(Ingredient ingr)
+        : ingredient(ingr), selected(false)
 {}
 
-std::shared_ptr<Ingredient> Kitchen::getIngredient() {
-    return ingredientPtr;
+Ingredient Kitchen::getIngredient() {
+    return ingredient;
 }
 
 bool Kitchen::getselected() const {
@@ -27,7 +27,7 @@ void Kitchen::unselection() {
 std::ostream& operator<<(std::ostream& os, const Kitchen& kitchen)
 {
     os << "This is the Kitchen :" << endl;
-    os << "ingredient : " << kitchen.ingredientPtr << endl;
+    os << "ingredient : " << kitchen.ingredient << endl;
     os << "selected : " << kitchen.selected << endl;
     return os;
 }

@@ -4,6 +4,6 @@
 
 class Storage : public Kitchen {
 public:
-    explicit Storage(std::unique_ptr<Ingredient> ingredientPtr);
+    explicit Storage(Ingredient ingredient);
 
 };
