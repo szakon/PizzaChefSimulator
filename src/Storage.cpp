@@ -6,6 +6,6 @@
 
 
 
-Storage::Storage(Ingredient ingredient11, Ingredient ingredient1) : Kitchen(ingredient11) {
+Storage::Storage(Ingredient ingredient11) : Kitchen(ingredient11) {
 
 }

@@ -3,15 +3,15 @@
 //
 
 #import "Kitchen.h"
-
+/*
 #ifndef GLOUTON_STORAGE_H
 #define GLOUTON_STORAGE_H
 
 #endif //GLOUTON_STORAGE_H
-
+*/
 
 class Storage : public Kitchen {
 public:
-    explicit Storage(Ingredient ingredient11, Ingredient ingredient1);
+    explicit Storage(Ingredient ingredient1);
 
 };
