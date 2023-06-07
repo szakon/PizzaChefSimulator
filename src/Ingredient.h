@@ -13,7 +13,6 @@ public:
     friend bool operator<(const Ingredient& lhs, const Ingredient& rhs);
     friend bool operator==(const Ingredient& lhs, const Ingredient& rhs);
 
-
 };
 
 

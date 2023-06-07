@@ -10,10 +10,18 @@ Kitchen::Kitchen(Ingredient ingredient1)
     selected = false;
 }
 
-Ingredient Kitchen::getIngredient() {
+Ingredient Kitchen::getingredient() {
     return ingredient;
 }
 
 bool Kitchen::getselected() {
     return selected;
+}
+
+void Kitchen::selection() {
+    selected = true;
+}
+
+void Kitchen::release() {
+    selected = false;
 }

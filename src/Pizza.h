@@ -9,13 +9,17 @@ using namespace std;
 
 class Pizza {
 private :
+    int id;
     std::map<Ingredient, bool> ingredients;
+    std::vector<Preparation> preparations;
     bool completed;
 public:
-    explicit Pizza(std::vector<Ingredient> ingr);
+    explicit Pizza(std::vector<Ingredient> ingr, std::vector<Preparation> prep);
+    std::map<Ingredient, bool> getIngredients();
+    std::vector<Preparation> getPreparations();
     friend std::ostream& operator<<(std::ostream& os, const Pizza& pizza);
-    friend void receiveIngredient(Preparation preparation);
 
 
+    static int id_count;
 };
 

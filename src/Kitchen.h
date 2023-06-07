@@ -12,9 +12,10 @@ protected:
     Ingredient ingredient;
 public:
     explicit Kitchen(Ingredient ingredient1);
-    Ingredient getIngredient();
     bool getselected();
-
+    void selection();
+    void release();
+    Ingredient getingredient();
 };
 
 
