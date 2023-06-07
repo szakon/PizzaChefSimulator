@@ -3,6 +3,7 @@
 //
 #include "Facade.h"
 #include <unordered_map>
+#include <iostream>
 
 
 Facade::Facade(){
@@ -11,6 +12,7 @@ Facade::Facade(){
     activites = new HashMap<>();
     taches = new HashMap<>()
      */
+    init();
 }
 
 
@@ -32,8 +34,33 @@ void Facade::init(){
         preparations.push_back(preparation);
     }
 
+    std::cout << "The ingredient list is: ";
+    int n=0;
+    for (const auto &ingredient: ingredients){
+        std::cout << "the ingredient number " << i << " is " << ingredient.second.getlabel() <<std::endl;
+        i++;
+    }
+
+
+    std::cout << "The storage list is: ";
+    int j=0;
+    for (auto &storage: storages){
+        std::cout << "the storage number " << j << " is " << storage.getIngredient() <<std::endl;
+        j++;
+    }
+
+
+    std::cout << "The preparation list is: ";
+    int k=0;
+    for (auto &preparation: preparations){
+        std::cout << "the preparation number " << k << " is " << preparation.getIngredient() <<std::endl;
+        k++;
+    }
+
 
 }
+
+
 
 
 

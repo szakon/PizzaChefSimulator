@@ -11,7 +11,7 @@ using namespace std;
 
 int myMain()
 {
-
+    Facade f;
     
 
     /*
@@ -62,8 +62,5 @@ int myMain()
         window.display();
 
     }
-
-    Facade f;
-    f.init();
     return 0;
 }
