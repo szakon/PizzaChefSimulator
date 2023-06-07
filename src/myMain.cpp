@@ -30,6 +30,12 @@ int myMain()
     sf::Sprite sprite;
     sprite.setTexture(texture);
 
+    sf::Texture pot1;
+    texture.loadFromFile("resources/storage_cheese.png");
+    sf::Sprite spritepot1;
+    spritepot1.setTexture(pot1);
+    spritepot1.setPosition(sf::Vector2f(200,200));
+
     sf::CircleShape pizza;
     sf::CircleShape tomate;
     sf::Vector2f circlePosition(0,350);
@@ -62,6 +68,7 @@ int myMain()
         //render
         window.clear();
         window.draw(sprite);
+        window.draw(spritepot1);
         window.draw(pizza);
         window.draw(tomate);
         window.display();
