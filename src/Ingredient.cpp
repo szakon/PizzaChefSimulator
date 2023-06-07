@@ -1,4 +1,5 @@
 #include <string>
+#include <ostream>
 #include <cstring>
 #include <vector>
 #include "Ingredient.h"

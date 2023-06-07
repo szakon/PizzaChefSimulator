@@ -16,7 +16,6 @@ public:
     bool getselected() const;
     void selection();
     void unselection();
-    Ingredient getingredient() const;
     friend std::ostream& operator<<(std::ostream& os, const Kitchen& kitchen);
 };
 

@@ -5,6 +5,7 @@
 #include "colors.h"
 #include <SFML/Graphics.hpp>
 #include "Pizza.h"
+#include "Facade.h"
 
 using namespace std;
 
@@ -60,6 +61,7 @@ int myMain()
 
     }
 
-
+    Facade f;
+    f.init();
     return 0;
 }
