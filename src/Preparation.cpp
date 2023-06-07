@@ -1,11 +1,15 @@
 #include "Preparation.h"
 #include "Kitchen.h"
+#include "Pizza.h"
+#include "Storage.h"
 #include <chrono>
 #include <thread>
 #include <iostream>
 
+int Preparation::id_count = 0;
 
 Preparation::Preparation(Ingredient ingredient1) : Kitchen(ingredient1) {
+    id = id_count++;
     free = true;
     ready = false;
     time_prep = 3;
@@ -22,16 +26,17 @@ std::ostream& operator<<(std::ostream& os, const Preparation& preparation)
     return os;
 }
 
-int Preparation::prepare(Kitchen stock) {
-    if(ingredient == stock.getIngredient()) {
+int Preparation::prepare(Storage stock) {
+    if(ingredient == stock.getingredient()) {
         if(free) {
             free = false;
-            std::chrono::seconds delay(time_prep);
-            std::thread thread([this, delay]() {
-                std::this_thread::sleep_for(delay); // Attente du délai spécifié
-                ready = true;
-            });
-            thread.detach();
+            while(time_left > 0) {
+                time_left -=1;
+                sleep(1);
+            }
+
+            ready = true;
+
         }
         else{
             return 1;
@@ -42,6 +47,7 @@ int Preparation::prepare(Kitchen stock) {
     }
     return 0; //preparation time is done : preparation is ready to be used
 }
+
 
 void Preparation::freeprep() {
     ready = false;
@@ -63,3 +69,11 @@ int Preparation::gettime_prep() {
 int Preparation::gettime_left() {
     return time_left;
 }
+
+void Preparation::reset() {
+    free = true;
+    ready = false;
+    time_left = time_prep;
+}
+
+

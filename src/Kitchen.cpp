@@ -15,3 +15,11 @@ std::unique_ptr<Ingredient> Kitchen::getIngredient() {
 bool Kitchen::getselected() {
     return selected;
 }
+
+void Kitchen::selection() {
+    selected = true;
+}
+
+void Kitchen::release() {
+    selected = false;
+}

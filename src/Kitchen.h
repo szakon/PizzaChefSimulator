@@ -13,8 +13,12 @@ protected:
 public:
     explicit Kitchen(std::unique_ptr<Ingredient> ingredientPtr);
     std::unique_ptr<Ingredient>  getIngredient();
-    bool getselected();
 
+    explicit Kitchen(Ingredient ingredient1);
+    bool getselected();
+    void selection();
+    void release();
+    Ingredient getingredient();
 };
 
 

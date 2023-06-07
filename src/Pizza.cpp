@@ -5,15 +5,20 @@
 #include <unordered_map>
 #include <iostream>
 #include "Ingredient.h"
+#include "Preparation.h"
 
 using namespace std;
 
-Pizza::Pizza(std::vector<Ingredient> ingr)
+int Pizza::id_count = 0;
+
+Pizza::Pizza(std::vector<Ingredient> ingr, std::vector<Preparation> prep)
 {
     completed = false;
+    id = id_count++;
     for (const auto &ingredient: ingr) {
         ingredients.insert(std::make_pair(ingredient.getlabel(), false));
     }
+    preparations = prep;
 
 };
 
@@ -28,6 +33,13 @@ std::ostream& operator<<(std::ostream& os, const Pizza& pizza)
     return os;
 }
 
-void receiveIngredient(Preparation preparation){
 
+std::map<Ingredient, bool> Pizza::getIngredients() {
+    return ingredients;
 }
+
+std::vector<Preparation> Pizza::getPreparations() {
+    return preparations;
+}
+
+

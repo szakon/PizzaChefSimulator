@@ -2,7 +2,8 @@
 #include <string>
 #include <unordered_map>
 #include <map>
-
+#include <vector>
+#include <memory>
 
 using namespace std;
 
@@ -19,7 +20,6 @@ public:
     friend bool operator==(const Ingredient& lhs, const Ingredient& rhs);
 
     static std::vector<Ingredient> getValue(const std::map<int, std::unique_ptr<Ingredient>>& map);
-
 
 
 };

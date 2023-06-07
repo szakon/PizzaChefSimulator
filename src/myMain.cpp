@@ -15,8 +15,8 @@ int myMain()
     Ingredient pepperoni("Pepperoni");
     Ingredient cheese("Cheese");
     std::vector<Ingredient> ingredients = {tomatoe, mushroom, pepperoni, cheese};
-    Pizza pizza1(ingredients);
-    std::cout << pizza1 << std::endl;
+    //Pizza pizza1(ingredients);
+    //std::cout << pizza1 << std::endl;
 
     sf::RenderWindow window(sf::VideoMode(1280,720), "My Program");
     window.setFramerateLimit(60);

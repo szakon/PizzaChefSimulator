@@ -1,8 +1,10 @@
 #pragma once
 #include "Kitchen.h"
+#include "Storage.h"
 
 class Preparation : public Kitchen {
 private:
+    int id;
     bool ready;
     bool free;
     int time_prep;
@@ -10,6 +12,10 @@ private:
 public:
     explicit Preparation(std::unique_ptr<Ingredient> ingredientPtr);
     int prepare(Kitchen stock);
+
+    explicit Preparation(Ingredient ingredient1);
+    int prepare(Storage stock);
+    void reset();
     friend std::ostream& operator<<(std::ostream& os, const Preparation& preparation);
     bool getready();
     bool getfree();
@@ -17,6 +23,7 @@ public:
     int gettime_left();
     void freeprep();
 
+    static int id_count;
 };
 
 
