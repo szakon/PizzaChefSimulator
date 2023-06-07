@@ -8,7 +8,7 @@ private:
     int time_prep;
     int time_left;
 public:
-    explicit Preparation(Ingredient ingredient1);
+    explicit Preparation(std::unique_ptr<Ingredient> ingredientPtr);
     int prepare(Kitchen stock);
     friend std::ostream& operator<<(std::ostream& os, const Preparation& preparation);
     bool getready();

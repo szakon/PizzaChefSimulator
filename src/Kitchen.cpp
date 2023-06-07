@@ -4,14 +4,12 @@
 using namespace std;
 
 
-Kitchen::Kitchen(Ingredient ingredient1)
-    : ingredient(ingredient1)
-{
-    selected = false;
-}
+Kitchen::Kitchen(std::unique_ptr<Ingredient> ingredient)
+        : ingredientPtr(std::move(ingredient)), selected(false)
+{}
 
-Ingredient Kitchen::getIngredient() {
-    return ingredient;
+std::unique_ptr<Ingredient> Kitchen::getIngredient() {
+    return std::move(ingredientPtr);
 }
 
 bool Kitchen::getselected() {

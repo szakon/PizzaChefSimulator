@@ -9,10 +9,10 @@ class Kitchen {
 private :
     bool selected;
 protected:
-    Ingredient ingredient;
+    std::unique_ptr<Ingredient> ingredientPtr;
 public:
-    explicit Kitchen(Ingredient ingredient1);
-    Ingredient getIngredient();
+    explicit Kitchen(std::unique_ptr<Ingredient> ingredientPtr);
+    std::unique_ptr<Ingredient>  getIngredient();
     bool getselected();
 
 };

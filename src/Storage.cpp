@@ -6,6 +6,6 @@
 
 
 
-Storage::Storage(Ingredient ingredient11) : Kitchen(ingredient11) {
+Storage::Storage(std::unique_ptr<Ingredient> ingredientPtr) : Kitchen(std::move(ingredientPtr)) {
 
 }
