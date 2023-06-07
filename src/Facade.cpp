@@ -87,10 +87,10 @@ void Facade::draw_init() {
 
     //create the cheese jar
     sf::Texture cheese_jar;
-    if (!cheese_jar.loadFromFile("image.png")) {
+    if (!cheese_jar.loadFromFile("resources/storage_cheese.png")) {
         cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
     }
-    cheese_jar.loadFromFile("resources/storage_cheese.png");
+
     sf::Sprite spriteCJ;
     spriteCJ.setTexture(cheese_jar);
     float scaleFactorJar = 0.9f; // Example scale factor, adjust as needed
@@ -101,10 +101,10 @@ void Facade::draw_init() {
 
     //create the tomatoe jar
     sf::Texture tomatoe_jar;
-    if (!tomatoe_jar.loadFromFile("image.png")) {
+    if (!tomatoe_jar.loadFromFile("resources/storage_tomatoe.png")) {
         cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
     }
-    tomatoe_jar.loadFromFile("resources/storage_tomatoe.png");
+
     sf::Sprite spriteTJ;
     spriteTJ.setTexture(tomatoe_jar);
     //spriteTJ.setScale(scaleFactorJar, scaleFactorJar);
@@ -114,27 +114,30 @@ void Facade::draw_init() {
 
     //create the pepperoni jar
     sf::Texture pepperoni_jar;
-    if (!pepperoni_jar.loadFromFile("image.png")) {
+    if (!pepperoni_jar.loadFromFile("resources/storage_peperoni.png")) {
         cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
     }
-    pepperoni_jar.loadFromFile("resources/storage_peperoni.png");
     sf::Sprite spritePJ;
     spritePJ.setTexture(pepperoni_jar);
     //spritePJ.setScale(scaleFactorJar, scaleFactorJar);
     sf::Vector2f pepperoniJPosition(1600, 20);
     spritePJ.setPosition(pepperoniJPosition);
 
+    //create a pot
+
+
+    //create a pizza
     sf::CircleShape pizza;
-    sf::CircleShape tomate;
-    sf::Vector2f circlePosition(0,800);
-    sf::Vector2f tomatePosition(20,820);
+    sf::CircleShape sauce;
+    sf::Vector2f circlePosition(0,600);
+    sf::Vector2f saucePosition(40,640);
     pizza.setPosition(circlePosition);
-    tomate.setPosition(sf::Vector2f(100,100));
-    pizza.setRadius(100);
-    tomate.setRadius(80);
+    sauce.setPosition(sf::Vector2f(100,100));
+    pizza.setRadius(250);
+    sauce.setRadius(210);
     sf::Color customColor(255, 228, 181);
     pizza.setFillColor(customColor);
-    tomate.setFillColor(sf::Color::Red);
+    sauce.setFillColor(sf::Color::Red);
 
     //movement
     float xVelocity = 3;
@@ -149,9 +152,9 @@ void Facade::draw_init() {
         }
         //physics
         circlePosition.x += xVelocity;
-        tomatePosition.x += xVelocity;
+        saucePosition.x += xVelocity;
         pizza.setPosition(circlePosition);
-        tomate.setPosition(tomatePosition);
+        sauce.setPosition(saucePosition);
 
         //render
         window.clear();
@@ -160,7 +163,7 @@ void Facade::draw_init() {
         window.draw(spriteTJ);
         window.draw(spritePJ);
         window.draw(pizza);
-        window.draw(tomate);
+        window.draw(sauce);
         window.display();
 
     }
