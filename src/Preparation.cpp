@@ -4,6 +4,7 @@
 #include "Storage.h"
 #include <chrono>
 #include <thread>
+#include <iostream>
 
 int Preparation::id_count = 0;
 

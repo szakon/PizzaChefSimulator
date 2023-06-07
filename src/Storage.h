@@ -4,5 +4,6 @@
 
 class Storage : public Kitchen {
 public:
-    explicit Storage(Ingredient ingredient11, Ingredient ingredient1);
+    explicit Storage(Ingredient ingredient1);
+
 };

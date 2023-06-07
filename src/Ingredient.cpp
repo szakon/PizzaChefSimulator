@@ -1,17 +1,18 @@
 #include <string>
 #include <cstring>
+#include <vector>
 #include "Ingredient.h"
+#include <unordered_map>
 
 using namespace std;
-#ifndef INGREDIENT_H
-#define INGREDIENT_H
+
+int Ingredient::idCount = 0;
 
 Ingredient::Ingredient(const std::string name)
 {
+    id = idCount++;
     label = name;
 }
-
-#endif // INGREDIENT_H
 
 std::string Ingredient::getlabel() const {
     return label;
@@ -28,6 +29,16 @@ bool operator<(const Ingredient& lhs, const Ingredient& rhs) {
 bool operator==(const Ingredient& lhs, const Ingredient& rhs) {
     // Compare the labels of the ingredients for ordering
     return lhs.label == rhs.label;
+}
+
+std::vector<Ingredient> getValue(std::map<int, std::unique_ptr<Ingredient>> map) {
+    std::vector<Ingredient> values;
+    for (const auto& pair : map) {
+        Ingredient* ingredientPtr = pair.second.get();  // Get the raw pointer from unique_ptr
+        Ingredient ingredient(*ingredientPtr);  // Instantiate an Ingredient object
+        values.push_back(ingredient);
+    }
+    return values;
 }
 
 

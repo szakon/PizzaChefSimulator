@@ -6,9 +6,24 @@
 #include <vector>
 #include <map>
 #include "Pizza.h"
+#include "Kitchen.h"
 #include "Storage.h"
+#include <memory>
 
 #ifndef GLOUTON_FACADE_H
 #define GLOUTON_FACADE_H
 
 #endif //GLOUTON_FACADE_H
+
+class Facade {
+private:
+    std::map< int , std::unique_ptr<Pizza>> pizzas;
+    std::map< int , std::unique_ptr<Storage>> storages;
+    std::map< int , std::unique_ptr<Preparation>> preparations;
+    std::map<int, std::unique_ptr<Ingredient>> ingredients;
+    // Declare other member functions and variables
+
+public:
+    Facade();  // Constructor
+    void init();
+};
