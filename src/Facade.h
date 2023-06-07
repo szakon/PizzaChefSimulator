@@ -9,6 +9,9 @@
 #include "Kitchen.h"
 #include "Storage.h"
 #include <memory>
+#include "Drawing.h"
+#include "colors.h"
+#include <SFML/Graphics.hpp>
 
 #ifndef GLOUTON_FACADE_H
 #define GLOUTON_FACADE_H
@@ -24,6 +27,8 @@ private:
     // Declare other member functions and variables
 
 public:
+    sf::RenderWindow window;
     Facade();  // Constructor
     void init();
+    void draw_init();
 };
