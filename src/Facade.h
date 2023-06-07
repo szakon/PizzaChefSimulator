@@ -17,10 +17,10 @@
 
 class Facade {
 private:
-    std::map< int , std::shared_ptr<Pizza>> pizzas;
-    std::map< int , std::shared_ptr<Storage>> storages;
-    std::map< int , std::shared_ptr<Preparation>> preparations;
-    std::map<int, std::shared_ptr<Ingredient>> ingredients;
+    std::vector<Pizza> pizzas;
+    std::vector<Storage> storages;
+    std::vector<Preparation> preparations;
+    std::map< std::string, Ingredient> ingredients;
     // Declare other member functions and variables
 
 public:
