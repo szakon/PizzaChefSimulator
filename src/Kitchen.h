@@ -15,8 +15,9 @@ protected:
 public:
     explicit Kitchen(Ingredient ingr);
     Ingredient getIngredient();
-    void setSprite(sf::Texture texture);
+    void setSprite(sf::Texture& texture, float scaleFactor, float position,int screenWidth);
     bool getSelected() const;
+    void draw(sf::RenderWindow& window);
     void selection();
     void unselection();
     friend std::ostream& operator<<(std::ostream& os, const Kitchen& kitchen);

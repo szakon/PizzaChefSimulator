@@ -90,64 +90,44 @@ void Facade::draw_init() {
     // Set the scale of the sprite to fill the window
     sprite.setScale(scaleX, scaleY);
 
+    float scaleFactorJar = 0.9f*screenWidth/2500;
 
     //create the cheese jar
     sf::Texture cheese_jar;
     if (!cheese_jar.loadFromFile("resources/storage_cheese.png")) {
         cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
     }
+    float positionCheese = 3.0f;
+
 
     //create the tomatoe jar
     sf::Texture tomatoe_jar;
     if (!tomatoe_jar.loadFromFile("resources/storage_tomatoe.png")) {
         cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
     }
+    float positionTomatoe = 1.5f;
 
     //create the pepperoni jar
     sf::Texture pepperoni_jar;
     if (!pepperoni_jar.loadFromFile("resources/storage_peperoni.png")) {
         cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
     }
+    float positionPepperoni = 0;
 
-    for(Storage storage : storages) {
+    for(Storage& storage : storages) {
         if(storage.getIngredient().getlabel() == "tomatoe") {
-            storage.setSprite(tomatoe_jar);
+            storage.setSprite(tomatoe_jar, scaleFactorJar, positionTomatoe, screenWidth);
         }
         else if (storage.getIngredient().getlabel() == "cheese") {
-            storage.setSprite(cheese_jar);
+            storage.setSprite(cheese_jar, scaleFactorJar, positionCheese, screenWidth);
         }
         else if (storage.getIngredient().getlabel() == "pepperoni") {
-            storage.setSprite(pepperoni_jar);
+            storage.setSprite(pepperoni_jar, scaleFactorJar, positionPepperoni, screenWidth);
         }
     }
 
-    sf::Sprite spriteCJ;
-    spriteCJ.setTexture(cheese_jar);
-    float scaleFactorJar = 0.9f*screenWidth/2500;
-    /*float scaleFactorJar = 0.6f; // Example scale factor, adjust as needed
-    if (screenWidth<2500) {
-        scaleFactorJar = 0.8f; // Example scale factor, adjust as needed
-    }*/
-    spriteCJ.setScale(scaleFactorJar,scaleFactorJar);
-    sf::Vector2f cheeseJPosition(8*screenWidth/10-3.0f * spriteCJ.getTextureRect().width * scaleFactorJar, 20);
-    spriteCJ.setPosition(cheeseJPosition);
 
-
-
-    sf::Sprite spriteTJ;
-    spriteTJ.setTexture(tomatoe_jar);
-    spriteTJ.setScale(scaleFactorJar, scaleFactorJar);
-    sf::Vector2f tomatoeJPosition(8*screenWidth/10-1.5f * spriteTJ.getTextureRect().width * scaleFactorJar, 20);
-    spriteTJ.setPosition(tomatoeJPosition);
-
-
-
-    sf::Sprite spritePJ;
-    spritePJ.setTexture(pepperoni_jar);
-    spritePJ.setScale(scaleFactorJar, scaleFactorJar);
-    sf::Vector2f pepperoniJPosition(8*screenWidth/10, 20);
-    spritePJ.setPosition(pepperoniJPosition);
-
+/*
     //create a pot
     sf::Texture pot1;
     if (!pot1.loadFromFile("resources/pot.png")) {
@@ -159,7 +139,7 @@ void Facade::draw_init() {
     spritePot1.setScale(scaleFactorPot, scaleFactorPot);
     sf::Vector2f pot1Position(8*screenWidth/10, 20 + 1.2f * spriteTJ.getTextureRect().height*scaleFactorJar );
     spritePot1.setPosition(pot1Position);
-
+*/
     //create a pizza
     sf::CircleShape pizza;
     sf::CircleShape sauce;
@@ -193,10 +173,15 @@ void Facade::draw_init() {
         //render
         window.clear();
         window.draw(sprite);
+        for(Storage& storage : storages) {
+            storage.draw(window);
+        }
+        /*
         window.draw(spriteCJ);
         window.draw(spriteTJ);
         window.draw(spritePJ);
         window.draw(spritePot1);
+         */
         window.draw(pizza);
         window.draw(sauce);
         window.display();
