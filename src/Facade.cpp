@@ -70,9 +70,9 @@ void Facade::draw_init() {
     unsigned int screenWidth = desktopMode.width;
     unsigned int screenHeight = desktopMode.height;
     //unsigned int screenWidth = window.getSize().x;
-    //cout << "WIDTH" << screenWidth << endl;
+    cout << "WIDTH" << screenWidth << endl;
     //unsigned int screenHeight = window.getSize().y;
-    //cout << "HEIGHT" << screenHeight << endl;
+    cout << "HEIGHT" << screenHeight << endl;
 
     window.setFramerateLimit(60);
     sf::Vector2u windowSize = window.getSize();
@@ -99,8 +99,12 @@ void Facade::draw_init() {
 
     sf::Sprite spriteCJ;
     spriteCJ.setTexture(cheese_jar);
-    float scaleFactorJar = 0.9f; // Example scale factor, adjust as needed
-    //spriteCJ.setScale(scaleFactorJar, scaleFactorJar);
+    float scaleFactorJar = 0.9f*screenWidth/2500;
+    /*float scaleFactorJar = 0.6f; // Example scale factor, adjust as needed
+    if (screenWidth<2500) {
+        scaleFactorJar = 0.8f; // Example scale factor, adjust as needed
+    }*/
+    spriteCJ.setScale(scaleFactorJar,scaleFactorJar);
     sf::Vector2f cheeseJPosition(8*screenWidth/10-3.0f * spriteCJ.getTextureRect().width * scaleFactorJar, 20);
     spriteCJ.setPosition(cheeseJPosition);
 
@@ -113,7 +117,7 @@ void Facade::draw_init() {
 
     sf::Sprite spriteTJ;
     spriteTJ.setTexture(tomatoe_jar);
-    //spriteTJ.setScale(scaleFactorJar, scaleFactorJar);
+    spriteTJ.setScale(scaleFactorJar, scaleFactorJar);
     sf::Vector2f tomatoeJPosition(8*screenWidth/10-1.5f * spriteTJ.getTextureRect().width * scaleFactorJar, 20);
     spriteTJ.setPosition(tomatoeJPosition);
 
@@ -125,7 +129,7 @@ void Facade::draw_init() {
     }
     sf::Sprite spritePJ;
     spritePJ.setTexture(pepperoni_jar);
-    //spritePJ.setScale(scaleFactorJar, scaleFactorJar);
+    spritePJ.setScale(scaleFactorJar, scaleFactorJar);
     sf::Vector2f pepperoniJPosition(8*screenWidth/10, 20);
     spritePJ.setPosition(pepperoniJPosition);
 
