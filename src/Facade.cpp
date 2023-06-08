@@ -69,6 +69,10 @@ void Facade::draw_init() {
     sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
     unsigned int screenWidth = desktopMode.width;
     unsigned int screenHeight = desktopMode.height;
+    //unsigned int screenWidth = window.getSize().x;
+    //cout << "WIDTH" << screenWidth << endl;
+    //unsigned int screenHeight = window.getSize().y;
+    //cout << "HEIGHT" << screenHeight << endl;
 
     window.setFramerateLimit(60);
     sf::Vector2u windowSize = window.getSize();
@@ -97,7 +101,7 @@ void Facade::draw_init() {
     spriteCJ.setTexture(cheese_jar);
     float scaleFactorJar = 0.9f; // Example scale factor, adjust as needed
     //spriteCJ.setScale(scaleFactorJar, scaleFactorJar);
-    sf::Vector2f cheeseJPosition(7*screenWidth/10, 20);
+    sf::Vector2f cheeseJPosition(9*screenWidth/10-3.0f * spriteCJ.getTextureRect().width * scaleFactorJar, 20);
     spriteCJ.setPosition(cheeseJPosition);
 
 
@@ -110,7 +114,7 @@ void Facade::draw_init() {
     sf::Sprite spriteTJ;
     spriteTJ.setTexture(tomatoe_jar);
     //spriteTJ.setScale(scaleFactorJar, scaleFactorJar);
-    sf::Vector2f tomatoeJPosition(8*screenWidth/10, 20);
+    sf::Vector2f tomatoeJPosition(9*screenWidth/10-1.5f * spriteTJ.getTextureRect().width * scaleFactorJar, 20);
     spriteTJ.setPosition(tomatoeJPosition);
 
 
@@ -126,7 +130,16 @@ void Facade::draw_init() {
     spritePJ.setPosition(pepperoniJPosition);
 
     //create a pot
-
+    sf::Texture pot1;
+    if (!pot1.loadFromFile("resources/pot.png")) {
+        cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
+    }
+    sf::Sprite spritePot1;
+    spritePot1.setTexture(pot1);
+    float scaleFactorPot = 0.2f;
+    spritePot1.setScale(scaleFactorPot, scaleFactorPot);
+    sf::Vector2f pot1Position(9*screenWidth/10, 200);
+    spritePot1.setPosition(pot1Position);
 
     //create a pizza
     sf::CircleShape pizza;
@@ -164,6 +177,7 @@ void Facade::draw_init() {
         window.draw(spriteCJ);
         window.draw(spriteTJ);
         window.draw(spritePJ);
+        window.draw(spritePot1);
         window.draw(pizza);
         window.draw(sauce);
         window.display();
