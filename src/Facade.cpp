@@ -2,19 +2,17 @@
 #include <unordered_map>
 #include <iostream>
 
+Facade::Facade() {
+    // Get the screen resolution
+    sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
+    unsigned int screenWidth = desktopMode.width;
+    unsigned int screenHeight = desktopMode.height;
 
-Facade::Facade()
-        : window(sf::VideoMode(2500, 1280), "My Program")
-{
-    /*
-    developpeurs = new HashMap<>();
-    activites = new HashMap<>();
-    taches = new HashMap<>()
-     */
+    // Create the SFML window with the screen size
+    window.create(sf::VideoMode(screenWidth, screenHeight), "My Program");
 
     init();
 }
-
 
 void Facade::init(){
 
@@ -64,6 +62,10 @@ void Facade::init(){
 }
 
 void Facade::draw_init() {
+    // Get the screen resolution
+    sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
+    unsigned int screenWidth = desktopMode.width;
+    unsigned int screenHeight = desktopMode.height;
 
     window.setFramerateLimit(60);
     sf::Vector2u windowSize = window.getSize();
@@ -92,7 +94,7 @@ void Facade::draw_init() {
     spriteCJ.setTexture(cheese_jar);
     float scaleFactorJar = 0.9f; // Example scale factor, adjust as needed
     //spriteCJ.setScale(scaleFactorJar, scaleFactorJar);
-    sf::Vector2f cheeseJPosition(1900, 20);
+    sf::Vector2f cheeseJPosition(7*screenWidth/10, 20);
     spriteCJ.setPosition(cheeseJPosition);
 
 
@@ -105,7 +107,7 @@ void Facade::draw_init() {
     sf::Sprite spriteTJ;
     spriteTJ.setTexture(tomatoe_jar);
     //spriteTJ.setScale(scaleFactorJar, scaleFactorJar);
-    sf::Vector2f tomatoeJPosition(2200, 20);
+    sf::Vector2f tomatoeJPosition(8*screenWidth/10, 20);
     spriteTJ.setPosition(tomatoeJPosition);
 
 
@@ -117,7 +119,7 @@ void Facade::draw_init() {
     sf::Sprite spritePJ;
     spritePJ.setTexture(pepperoni_jar);
     //spritePJ.setScale(scaleFactorJar, scaleFactorJar);
-    sf::Vector2f pepperoniJPosition(1600, 20);
+    sf::Vector2f pepperoniJPosition(9*screenWidth/10, 20);
     spritePJ.setPosition(pepperoniJPosition);
 
     //create a pot
@@ -126,8 +128,8 @@ void Facade::draw_init() {
     //create a pizza
     sf::CircleShape pizza;
     sf::CircleShape sauce;
-    sf::Vector2f circlePosition(0,600);
-    sf::Vector2f saucePosition(40,640);
+    sf::Vector2f circlePosition(0,5*screenHeight/10);
+    sf::Vector2f saucePosition(40,5*screenHeight/10+40);
     pizza.setPosition(circlePosition);
     sauce.setPosition(sf::Vector2f(100,100));
     pizza.setRadius(250);
