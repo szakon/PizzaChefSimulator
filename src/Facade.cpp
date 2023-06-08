@@ -145,11 +145,11 @@ void Facade::draw_init() {
     sf::CircleShape pizza;
     sf::CircleShape sauce;
     sf::Vector2f circlePosition(0,5*screenHeight/10);
-    sf::Vector2f saucePosition(250*screenWidth/2500-210*screenWidth/2500,5*screenHeight/10+250*screenWidth/2500-210*screenWidth/2500);
+    sf::Vector2f saucePosition(200*screenWidth/2500-170*screenWidth/2500,5*screenHeight/10+200*screenWidth/2500-170*screenWidth/2500);
     pizza.setPosition(circlePosition);
     sauce.setPosition(sf::Vector2f(100,100));
-    pizza.setRadius(250*screenWidth/2500);
-    sauce.setRadius(210*screenWidth/2500);
+    pizza.setRadius(200*screenWidth/2500);
+    sauce.setRadius(170*screenWidth/2500);
     sf::Color customColor(255, 228, 181);
     pizza.setFillColor(customColor);
     sauce.setFillColor(sf::Color::Red);
