@@ -157,8 +157,42 @@ void Facade::draw_init() {
     spritePot1.setTexture(pot1);
     float scaleFactorPot = 0.2f*screenWidth/2500;
     spritePot1.setScale(scaleFactorPot, scaleFactorPot);
-    sf::Vector2f pot1Position(8*screenWidth/10, 20 + 1.2f * spriteTJ.getTextureRect().height*scaleFactorJar );
+    //to align the pot to the left of the tomato jar
+    int center = spriteTJ.getTextureRect().width * scaleFactorJar/2 - spritePot1.getTextureRect().width*scaleFactorPot/2;
+    //int center_left = spriteTJ.getTextureRect().width * scaleFactorJar/2 - spritePot1.getTextureRect().width*scaleFactorPot/2 -1*spritePot1.getTextureRect().width * 2*scaleFactorPot/5;
+    int center_left = -1*spritePot1.getTextureRect().width * 2*scaleFactorPot/5;
+    sf::Vector2f pot1Position(8*screenWidth/10-1.5f * spriteTJ.getTextureRect().width * scaleFactorJar + center_left + center, 20 + 1.2f * spriteTJ.getTextureRect().height*scaleFactorJar );
     spritePot1.setPosition(pot1Position);
+
+
+    //create second pot
+    sf::Texture pot2;
+    if (!pot2.loadFromFile("resources/pot.png")) {
+        cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
+    }
+    sf::Sprite spritePot2;
+    spritePot2.setTexture(pot2);
+    spritePot2.setScale(scaleFactorPot, scaleFactorPot);
+    //to align the pot to the left of the tomato jar
+    sf::Vector2f pot2Position(8*screenWidth/10-1.5f * spriteTJ.getTextureRect().width * scaleFactorJar - center_left + center, 20 + 1.2f * spriteTJ.getTextureRect().height*scaleFactorJar );
+    spritePot2.setPosition(pot2Position);
+
+    //create a cutting board
+    sf::Texture cut1;
+    if (!cut1.loadFromFile("resources/cutting_board.png")) {
+        cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
+    }
+    sf::Sprite spriteCut1;
+    spriteCut1.setTexture(cut1);
+    float scaleFactorCut = 0.2f*screenWidth/2500;
+    spriteCut1.setScale(scaleFactorCut, scaleFactorCut);
+    //to align the pot to the left of the tomato jar
+    //int center = spriteTJ.getTextureRect().width * scaleFactorJar/2 - spriteCut1.getTextureRect().width*scaleFactorCut/2;
+    //int center_left = spriteTJ.getTextureRect().width * scaleFactorJar/2 - spriteCut1.getTextureRect().width*scaleFactorCut/2 -1*spriteCut1.getTextureRect().width * 2*scaleFactorCut/5;
+    //int center_left = -1*spriteCut1.getTextureRect().width * 2*scaleFactorCut/5;
+    sf::Vector2f cut1Position(5*screenWidth/10-0.0f * spriteTJ.getTextureRect().width * scaleFactorJar + center_left + center, 20 + 1.2f * spriteTJ.getTextureRect().height*scaleFactorJar );
+    spriteCut1.setPosition(cut1Position);
+
 
     //create a pizza
     sf::CircleShape pizza;
@@ -197,6 +231,8 @@ void Facade::draw_init() {
         window.draw(spriteTJ);
         window.draw(spritePJ);
         window.draw(spritePot1);
+        window.draw(spritePot2);
+        window.draw(spriteCut1);
         window.draw(pizza);
         window.draw(sauce);
         window.display();
