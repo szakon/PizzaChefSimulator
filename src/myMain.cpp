@@ -11,6 +11,7 @@ using namespace std;
 
 int myMain()
 {
+    Facade f;
 
 
     Ingredient cheese = Ingredient("cheese");
@@ -21,7 +22,7 @@ int myMain()
     cout << prep_cheese << endl;
 
 
-
+    /*
     sf::RenderWindow window(sf::VideoMode(1280,720), "My Program");
     window.setFramerateLimit(60);
 
@@ -73,9 +74,6 @@ int myMain()
         window.draw(tomate);
         window.display();
 
-    }
-
-    Facade f;
-    f.init();
+    }*/
     return 0;
 }
