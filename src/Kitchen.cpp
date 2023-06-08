@@ -1,12 +1,15 @@
 #include "Kitchen.h"
 #include <iostream>
+#include <SFML/Graphics.hpp>
 
 using namespace std;
 
 
-Kitchen::Kitchen(Ingredient ingr)
+Kitchen::Kitchen(Ingredient ingr,sf::Texture texture)
         : ingredient(ingr), selected(false)
-{}
+{
+    sprite.setTexture(texture);
+}
 
 Ingredient Kitchen::getIngredient() {
     return ingredient;

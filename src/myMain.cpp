@@ -11,16 +11,16 @@
 using namespace std;
 
 
-void onClick(sf::Event::MouseButtonEvent event, std::vector<sf::RectangleShape> objects) {
+void onClick(sf::Event::MouseButtonEvent event, std::vector<sf::CircleShape*> objects) {
     if (event.button == sf::Mouse::Left) {
         int x = event.x;
         int y = event.y;
 
         // Parcourir tous les objets pour vérifier si le clic est à l'intérieur de leur zone
-        for (const auto &obj: objects) {
-            sf::FloatRect bounds = obj.getGlobalBounds();
+        for (sf::CircleShape *obj: objects) {
+            sf::FloatRect bounds = obj->getGlobalBounds();
             if (bounds.contains(x, y)) {
-                cout << "Bonjour";
+                obj->setFillColor(sf::Color::Blue);
             }
         }
     }
@@ -70,11 +70,9 @@ int myMain()
     //movement
     float xVelocity = 3;
 
-    sf::RectangleShape rectpot1;
-    rectpot1.setPosition(sf::Vector2f(200,200));
-    rectpot1.setSize(sf::Vector2f(300,300));
-    std::vector<sf::RectangleShape> objects;
-    objects.push_back(rectpot1);
+
+    std::vector<sf::CircleShape*> objects;
+    objects.push_back(&pizza);
 
 
     while(window.isOpen()){
@@ -96,13 +94,14 @@ int myMain()
         window.clear();
         window.draw(sprite);
         window.draw(spritepot1);
-        window.draw(rectpot1);
         window.draw(pizza);
         window.draw(tomate);
         window.display();
 
     }
     return 0;
+
 }
+
 
 
