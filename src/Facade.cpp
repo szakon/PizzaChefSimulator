@@ -16,13 +16,14 @@ Facade::Facade() {
 
 void Facade::init(){
 
-    /*
     Ingredient tomatoe("tomatoe");
     Ingredient cheese("cheese");
     Ingredient pepperoni("pepperoni");
     ingredients.insert(std::make_pair("tomatoe", tomatoe));
     ingredients.insert(std::make_pair("cheese", cheese));
     ingredients.insert(std::make_pair("pepperoni", pepperoni));
+
+
 
 
     int i = 0;
@@ -58,7 +59,7 @@ void Facade::init(){
         std::cout << "the preparation number " << k << " is " << preparation.getIngredient() <<std::endl;
         k++;
     }
-     */
+
 
 
 }

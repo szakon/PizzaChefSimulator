@@ -10,7 +10,7 @@
 
 int Preparation::id_count = 0;
 
-Preparation::Preparation(Ingredient ingredient,sf::Texture texture) : Kitchen(ingredient,texture) {
+Preparation::Preparation(Ingredient ingredient) : Kitchen(ingredient) {
     id = id_count++;
     free = true;
     ready = false;

@@ -5,10 +5,9 @@
 using namespace std;
 
 
-Kitchen::Kitchen(Ingredient ingr,sf::Texture texture)
+Kitchen::Kitchen(Ingredient ingr)
         : ingredient(ingr), selected(false)
 {
-    sprite.setTexture(texture);
 }
 
 Ingredient Kitchen::getIngredient() {

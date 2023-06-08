@@ -13,7 +13,7 @@ protected:
     Ingredient ingredient;
     sf::Sprite sprite;
 public:
-    explicit Kitchen(Ingredient ingr,sf::Texture texture);
+    explicit Kitchen(Ingredient ingr);
     Ingredient getIngredient();
 
     bool getselected() const;
