@@ -1,6 +1,3 @@
-//
-// Created by Sarah Zakon on 06/06/2023.
-//
 #include "Facade.h"
 #include <unordered_map>
 #include <iostream>
