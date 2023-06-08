@@ -14,7 +14,7 @@ Ingredient Kitchen::getIngredient() {
     return ingredient;
 }
 
-bool Kitchen::getselected() const {
+bool Kitchen::getSelected() const {
     return selected;
 }
 
@@ -32,6 +32,10 @@ std::ostream& operator<<(std::ostream& os, const Kitchen& kitchen)
     os << "ingredient : " << kitchen.ingredient << endl;
     os << "selected : " << kitchen.selected << endl;
     return os;
+}
+
+void Kitchen::setSprite(sf::Texture texture) {
+    sprite.setTexture(texture);
 }
 
 

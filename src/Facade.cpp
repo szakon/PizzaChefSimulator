@@ -97,6 +97,30 @@ void Facade::draw_init() {
         cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
     }
 
+    //create the tomatoe jar
+    sf::Texture tomatoe_jar;
+    if (!tomatoe_jar.loadFromFile("resources/storage_tomatoe.png")) {
+        cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
+    }
+
+    //create the pepperoni jar
+    sf::Texture pepperoni_jar;
+    if (!pepperoni_jar.loadFromFile("resources/storage_peperoni.png")) {
+        cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
+    }
+
+    for(Storage storage : storages) {
+        if(storage.getIngredient().getlabel() == "tomatoe") {
+            storage.setSprite(tomatoe_jar);
+        }
+        else if (storage.getIngredient().getlabel() == "cheese") {
+            storage.setSprite(cheese_jar);
+        }
+        else if (storage.getIngredient().getlabel() == "pepperoni") {
+            storage.setSprite(pepperoni_jar);
+        }
+    }
+
     sf::Sprite spriteCJ;
     spriteCJ.setTexture(cheese_jar);
     float scaleFactorJar = 0.9f*screenWidth/2500;
@@ -109,11 +133,6 @@ void Facade::draw_init() {
     spriteCJ.setPosition(cheeseJPosition);
 
 
-    //create the tomatoe jar
-    sf::Texture tomatoe_jar;
-    if (!tomatoe_jar.loadFromFile("resources/storage_tomatoe.png")) {
-        cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
-    }
 
     sf::Sprite spriteTJ;
     spriteTJ.setTexture(tomatoe_jar);
@@ -122,11 +141,7 @@ void Facade::draw_init() {
     spriteTJ.setPosition(tomatoeJPosition);
 
 
-    //create the pepperoni jar
-    sf::Texture pepperoni_jar;
-    if (!pepperoni_jar.loadFromFile("resources/storage_peperoni.png")) {
-        cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
-    }
+
     sf::Sprite spritePJ;
     spritePJ.setTexture(pepperoni_jar);
     spritePJ.setScale(scaleFactorJar, scaleFactorJar);

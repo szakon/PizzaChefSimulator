@@ -44,7 +44,7 @@ std::vector<Preparation> Pizza::getPreparations() {
 
 int Pizza::addIngredient() {
     for(Preparation& prep : preparations) {
-        if(prep.getselected() && prep.getready() && !ingredients[prep.getIngredient()]) {
+        if(prep.getSelected() && prep.getready() && !ingredients[prep.getIngredient()]) {
             ingredients[prep.getIngredient()] = true;
             prep.reset();
         }

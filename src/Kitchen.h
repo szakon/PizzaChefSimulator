@@ -15,12 +15,14 @@ protected:
 public:
     explicit Kitchen(Ingredient ingr);
     Ingredient getIngredient();
-
-    bool getselected() const;
+    void setSprite(sf::Texture texture);
+    bool getSelected() const;
     void selection();
     void unselection();
     friend std::ostream& operator<<(std::ostream& os, const Kitchen& kitchen);
 };
+
+
 
 
 
