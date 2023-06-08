@@ -2,6 +2,6 @@
 #include "Kitchen.h"
 
 
-Storage::Storage(Ingredient ingredient) : Kitchen(ingredient) {
+Storage::Storage(Ingredient ingredient,sf::Texture texture) : Kitchen(ingredient,texture) {
 }
 

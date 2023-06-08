@@ -4,6 +4,6 @@
 
 class Storage : public Kitchen {
 public:
-    explicit Storage(Ingredient ingredient);
+    explicit Storage(Ingredient ingredient,sf::Texture texture);
 
 };

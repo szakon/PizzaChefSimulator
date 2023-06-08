@@ -31,7 +31,7 @@ int myMain()
 {
 //    Facade f;
 
-
+/*
     Ingredient cheese = Ingredient("cheese");
     cout << cheese << endl;
     Storage storage_cheese = Storage(cheese);
@@ -100,8 +100,9 @@ int myMain()
 
     }
     return 0;
-
+*/
 }
+
 
 
 

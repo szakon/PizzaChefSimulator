@@ -10,7 +10,7 @@ private:
     int time_prep;
     int time_left;
 public:
-    explicit Preparation(Ingredient ingredient);
+    explicit Preparation(Ingredient ingredient,sf::Texture texture);
     int prepare(Storage stock);
     void reset();
     friend std::ostream& operator<<(std::ostream& os, const Preparation& preparation);
