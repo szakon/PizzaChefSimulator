@@ -155,7 +155,7 @@ void Facade::draw_init() {
     }
     sf::Sprite spritePot1;
     spritePot1.setTexture(pot1);
-    float scaleFactorPot = 0.3f*screenWidth/2500;
+    float scaleFactorPot = 0.2f*screenWidth/2500;
     spritePot1.setScale(scaleFactorPot, scaleFactorPot);
     sf::Vector2f pot1Position(8*screenWidth/10, 20 + 1.2f * spriteTJ.getTextureRect().height*scaleFactorJar );
     spritePot1.setPosition(pot1Position);
