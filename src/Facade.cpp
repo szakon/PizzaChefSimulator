@@ -157,7 +157,7 @@ void Facade::draw_init() {
     spritePot1.setTexture(pot1);
     float scaleFactorPot = 0.2f;
     spritePot1.setScale(scaleFactorPot, scaleFactorPot);
-    sf::Vector2f pot1Position(8*screenWidth/10, 200);
+    sf::Vector2f pot1Position(8*screenWidth/10, 20 + 0.8f * spriteTJ.getTextureRect().height );
     spritePot1.setPosition(pot1Position);
 
     //create a pizza
