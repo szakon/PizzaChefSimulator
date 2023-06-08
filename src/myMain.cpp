@@ -7,11 +7,29 @@
 #include "Pizza.h"
 #include "Facade.h"
 
+
 using namespace std;
+
+
+void onClick(sf::Event::MouseButtonEvent event, std::vector<sf::RectangleShape> objects) {
+    if (event.button == sf::Mouse::Left) {
+        int x = event.x;
+        int y = event.y;
+
+        // Parcourir tous les objets pour vérifier si le clic est à l'intérieur de leur zone
+        for (const auto &obj: objects) {
+            sf::FloatRect bounds = obj.getGlobalBounds();
+            if (bounds.contains(x, y)) {
+                cout << "Bonjour";
+            }
+        }
+    }
+}
+
 
 int myMain()
 {
-    Facade f;
+//    Facade f;
 
 
     Ingredient cheese = Ingredient("cheese");
@@ -22,7 +40,7 @@ int myMain()
     cout << prep_cheese << endl;
 
 
-    /*
+
     sf::RenderWindow window(sf::VideoMode(1280,720), "My Program");
     window.setFramerateLimit(60);
 
@@ -52,12 +70,20 @@ int myMain()
     //movement
     float xVelocity = 3;
 
+    sf::RectangleShape rectpot1;
+    rectpot1.setPosition(sf::Vector2f(200,200));
+    rectpot1.setSize(sf::Vector2f(300,300));
+    std::vector<sf::RectangleShape> objects;
+    objects.push_back(rectpot1);
+
 
     while(window.isOpen()){
         sf::Event event;
         while(window.pollEvent(event)){
             if(event.type == sf::Event::Closed) window.close();
-
+            else if (event.type == sf::Event::MouseButtonPressed) {
+                onClick(event.mouseButton, objects);
+        }
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) window.close();
         }
         //physics
@@ -70,10 +96,13 @@ int myMain()
         window.clear();
         window.draw(sprite);
         window.draw(spritepot1);
+        window.draw(rectpot1);
         window.draw(pizza);
         window.draw(tomate);
         window.display();
 
-    }*/
+    }
     return 0;
 }
+
+
