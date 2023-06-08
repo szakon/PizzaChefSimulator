@@ -101,7 +101,7 @@ void Facade::draw_init() {
     spriteCJ.setTexture(cheese_jar);
     float scaleFactorJar = 0.9f; // Example scale factor, adjust as needed
     //spriteCJ.setScale(scaleFactorJar, scaleFactorJar);
-    sf::Vector2f cheeseJPosition(9*screenWidth/10-3.0f * spriteCJ.getTextureRect().width * scaleFactorJar, 20);
+    sf::Vector2f cheeseJPosition(8*screenWidth/10-3.0f * spriteCJ.getTextureRect().width * scaleFactorJar, 20);
     spriteCJ.setPosition(cheeseJPosition);
 
 
@@ -114,7 +114,7 @@ void Facade::draw_init() {
     sf::Sprite spriteTJ;
     spriteTJ.setTexture(tomatoe_jar);
     //spriteTJ.setScale(scaleFactorJar, scaleFactorJar);
-    sf::Vector2f tomatoeJPosition(9*screenWidth/10-1.5f * spriteTJ.getTextureRect().width * scaleFactorJar, 20);
+    sf::Vector2f tomatoeJPosition(8*screenWidth/10-1.5f * spriteTJ.getTextureRect().width * scaleFactorJar, 20);
     spriteTJ.setPosition(tomatoeJPosition);
 
 
@@ -126,7 +126,7 @@ void Facade::draw_init() {
     sf::Sprite spritePJ;
     spritePJ.setTexture(pepperoni_jar);
     //spritePJ.setScale(scaleFactorJar, scaleFactorJar);
-    sf::Vector2f pepperoniJPosition(9*screenWidth/10, 20);
+    sf::Vector2f pepperoniJPosition(8*screenWidth/10, 20);
     spritePJ.setPosition(pepperoniJPosition);
 
     //create a pot
@@ -138,18 +138,18 @@ void Facade::draw_init() {
     spritePot1.setTexture(pot1);
     float scaleFactorPot = 0.2f;
     spritePot1.setScale(scaleFactorPot, scaleFactorPot);
-    sf::Vector2f pot1Position(9*screenWidth/10, 200);
+    sf::Vector2f pot1Position(8*screenWidth/10, 200);
     spritePot1.setPosition(pot1Position);
 
     //create a pizza
     sf::CircleShape pizza;
     sf::CircleShape sauce;
     sf::Vector2f circlePosition(0,5*screenHeight/10);
-    sf::Vector2f saucePosition(40,5*screenHeight/10+40);
+    sf::Vector2f saucePosition(250*screenWidth/2500-210*screenWidth/2500,5*screenHeight/10+250*screenWidth/2500-210*screenWidth/2500);
     pizza.setPosition(circlePosition);
     sauce.setPosition(sf::Vector2f(100,100));
-    pizza.setRadius(250);
-    sauce.setRadius(210);
+    pizza.setRadius(250*screenWidth/2500);
+    sauce.setRadius(210*screenWidth/2500);
     sf::Color customColor(255, 228, 181);
     pizza.setFillColor(customColor);
     sauce.setFillColor(sf::Color::Red);
