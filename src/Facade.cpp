@@ -79,7 +79,7 @@ void Facade::draw_init() {
 
     sf::Texture texture;
     if (!texture.loadFromFile("image.png")) {
-        cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
+        cout << "ERROR wood IMAGE DIDN'T LOAD" << std::endl;
     }
     texture.loadFromFile("resources/bois1.jpg");
     sf::Sprite sprite;
@@ -95,7 +95,7 @@ void Facade::draw_init() {
     //create the cheese jar
     sf::Texture cheese_jar;
     if (!cheese_jar.loadFromFile("resources/storage_cheese.png")) {
-        cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
+        cout << "ERROR cheese jar IMAGE DIDN'T LOAD" << std::endl;
     }
     float positionCheese = 3.0f;
 
@@ -103,14 +103,14 @@ void Facade::draw_init() {
     //create the tomatoe jar
     sf::Texture tomatoe_jar;
     if (!tomatoe_jar.loadFromFile("resources/storage_tomatoe.png")) {
-        cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
+        cout << "ERROR tomatoe jar IMAGE DIDN'T LOAD" << std::endl;
     }
     float positionTomatoe = 1.5f;
 
     //create the pepperoni jar
     sf::Texture pepperoni_jar;
     if (!pepperoni_jar.loadFromFile("resources/storage_peperoni.png")) {
-        cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
+        cout << "ERROR pepperoni jar IMAGE DIDN'T LOAD" << std::endl;
     }
     float positionPepperoni = 0;
 
@@ -153,7 +153,7 @@ void Facade::draw_init() {
     //create a pot
     sf::Texture pot;
     if (!pot.loadFromFile("resources/pot.png")) {
-        cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
+        cout << "ERROR pot IMAGE DIDN'T LOAD" << std::endl;
     }
     float scaleFactorPot = 0.2f*screenWidth/2500;
     float potLine = 20 + 1.2f * spriteTomatoe.getTextureRect().height*scaleFactorJar;
@@ -164,7 +164,7 @@ void Facade::draw_init() {
     //create a cutting board
     sf::Texture cut;
     if (!cut.loadFromFile("resources/cutting_board.png")) {
-        cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
+        cout << "ERROR cutting board IMAGE DIDN'T LOAD" << std::endl;
     }
     cout << spriteTomatoe.getTextureRect().height << std::endl;
     cout << potLine << std::endl;
@@ -173,10 +173,18 @@ void Facade::draw_init() {
     //create a grater
     sf::Texture grater;
     if (!grater.loadFromFile("resources/grater.png")) {
-        cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
+        cout << "ERROR grater IMAGE DIDN'T LOAD" << std::endl;
     }
+    float scaleFactorGrater = 0.1f*screenWidth/2500;
+
+    /*
+    sf::Sprite spriteTest;
+    spriteTest.setTexture(grater);
+    spriteTest.setScale(scaleFactorPot/2,scaleFactorPot/2);
+    sf::Vector2f position_sprite(500, 500);
+    spriteTest.setPosition(position_sprite);
     cout << spriteTomatoe.getTextureRect().height << std::endl;
-    cout << potLine << std::endl;
+    cout << potLine << std::endl;*/
 
 
     //random sprite used for preparations
@@ -186,7 +194,8 @@ void Facade::draw_init() {
             cout << "TOMATOE" << endl;
         }
         else if (preparation.getIngredient().getlabel() == "cheese") {
-            preparation.setSprite(grater, 2.0, positionCheese, screenWidth, sprite, scaleFactorJar, potLine);
+            cout << "Position cheese" << positionCheese << endl;
+            preparation.setSprite(grater, scaleFactorGrater, positionCheese+1.5, screenWidth, spriteCheese, scaleFactorJar, potLine);
             cout << "CHEESE" << endl;
         }
         else if (preparation.getIngredient().getlabel() == "pepperoni") {
@@ -294,6 +303,8 @@ void Facade::draw_init() {
         window.draw(spriteCut1);
          */
         window.draw(pizza);
+
+        //window.draw(spriteTest);
         window.draw(sauce);
         window.display();
 
