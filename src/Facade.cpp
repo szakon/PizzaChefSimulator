@@ -114,17 +114,88 @@ void Facade::draw_init() {
     }
     float positionPepperoni = 0;
 
+    sf::Sprite spriteTomatoe;
+    sf::Sprite spriteCheese;
+    sf::Sprite spritePepperoni;
     for(Storage& storage : storages) {
         if(storage.getIngredient().getlabel() == "tomatoe") {
-            storage.setSprite(tomatoe_jar, scaleFactorJar, positionTomatoe, screenWidth);
+            storage.setSprite(tomatoe_jar, scaleFactorJar, positionTomatoe, screenWidth, sprite, 0.0, 0.0);
+            spriteTomatoe = storage.getSprite();
+            cout << spriteTomatoe.getTextureRect().height << std::endl;
         }
         else if (storage.getIngredient().getlabel() == "cheese") {
-            storage.setSprite(cheese_jar, scaleFactorJar, positionCheese, screenWidth);
+            storage.setSprite(cheese_jar, scaleFactorJar, positionCheese, screenWidth, sprite, 0.0, 0.0);
+            spriteCheese = storage.getSprite();
         }
         else if (storage.getIngredient().getlabel() == "pepperoni") {
-            storage.setSprite(pepperoni_jar, scaleFactorJar, positionPepperoni, screenWidth);
+            storage.setSprite(pepperoni_jar, scaleFactorJar, positionPepperoni, screenWidth, sprite, 0.0, 0.0);
+            spritePepperoni = storage.getSprite();
         }
     }
+    /*
+    //random sprite used for storages
+    for(Storage& storage : storages) {
+        if(storage.getIngredient().getlabel() == "tomatoe") {
+            storage.setSprite(tomatoe_jar, scaleFactorJar, positionTomatoe, screenWidth, sprite, 0.0);
+            sf::Sprite spriteTomatoe = storage.getSprite();
+        }
+        else if (storage.getIngredient().getlabel() == "cheese") {
+            storage.setSprite(cheese_jar, scaleFactorJar, positionCheese, screenWidth, sprite, 0.0);
+            sf::Sprite spriteCheese = storage.getSprite();
+        }
+        else if (storage.getIngredient().getlabel() == "pepperoni") {
+            storage.setSprite(pepperoni_jar, scaleFactorJar, positionPepperoni, screenWidth,sprite,0.0);
+            sf::Sprite spritePepperoni = storage.getSprite();
+        }
+    }*/
+
+
+    //create a pot
+    sf::Texture pot;
+    if (!pot.loadFromFile("resources/pot.png")) {
+        cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
+    }
+    float scaleFactorPot = 0.2f*screenWidth/2500;
+    float potLine = 20 + 1.2f * spriteTomatoe.getTextureRect().height*scaleFactorJar;
+    cout << spriteTomatoe.getTextureRect().height << std::endl;
+    cout << potLine << std::endl;
+
+
+    //create a cutting board
+    sf::Texture cut;
+    if (!cut.loadFromFile("resources/cutting_board.png")) {
+        cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
+    }
+    cout << spriteTomatoe.getTextureRect().height << std::endl;
+    cout << potLine << std::endl;
+
+
+    //create a grater
+    sf::Texture grater;
+    if (!grater.loadFromFile("resources/grater.png")) {
+        cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
+    }
+    cout << spriteTomatoe.getTextureRect().height << std::endl;
+    cout << potLine << std::endl;
+
+
+    //random sprite used for preparations
+    for(Preparation& preparation : preparations) {
+        if(preparation.getIngredient().getlabel() == "tomatoe") {
+            preparation.setSprite(pot, scaleFactorPot, positionTomatoe, screenWidth, spriteTomatoe, scaleFactorJar, potLine);
+            cout << "TOMATOE" << endl;
+        }
+        else if (preparation.getIngredient().getlabel() == "cheese") {
+            preparation.setSprite(grater, 2.0, positionCheese, screenWidth, sprite, scaleFactorJar, potLine);
+            cout << "CHEESE" << endl;
+        }
+        else if (preparation.getIngredient().getlabel() == "pepperoni") {
+            preparation.setSprite(cut, scaleFactorPot, positionPepperoni, screenWidth, spritePepperoni, scaleFactorJar, potLine);
+            cout << "PEPPERONI" << endl;
+        }
+    }
+
+
 
 
 /*
@@ -210,6 +281,9 @@ void Facade::draw_init() {
         window.draw(sprite);
         for(Storage& storage : storages) {
             storage.draw(window);
+        }
+        for(Preparation& preparation : preparations) {
+            preparation.draw(window);
         }
         /*
         window.draw(spriteCJ);

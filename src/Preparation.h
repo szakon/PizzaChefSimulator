@@ -9,6 +9,7 @@ private:
     bool free;
     int time_prep;
     int time_left;
+    sf::Sprite sprite2;
 public:
     explicit Preparation(Ingredient ingredient);
     int prepare(Storage stock);
@@ -19,6 +20,8 @@ public:
     int gettime_prep();
     int gettime_left();
     void freeprep();
+    void setSprite(sf::Texture& texture, float scaleFactor, float position, int screenWidth, sf::Sprite jar, float scaleJar, float y_position);
+    void draw(sf::RenderWindow& window);
 
     static int id_count;
 };

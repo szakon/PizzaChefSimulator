@@ -79,4 +79,25 @@ void Preparation::reset() {
     time_left = time_prep;
 }
 
+void Preparation::setSprite(sf::Texture& texture, float scaleFactor, float position, int screenWidth, sf::Sprite jar, float scaleJar, float y_position){
+    sprite.setTexture(texture);
+    sprite2.setTexture(texture);
+    sprite.setScale(scaleFactor,scaleFactor);
+    sprite2.setScale(scaleFactor,scaleFactor);
+    //sf::Vector2f spriteJar(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor, 20);
+    int center = jar.getTextureRect().width * scaleJar/2 - sprite.getTextureRect().width*scaleFactor/2;
+    int distance = 0.4*sprite.getTextureRect().width* scaleFactor;
+    sf::Vector2f pot1Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center + distance, y_position);
+    sf::Vector2f pot2Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center - distance, y_position);
+    //sf::Vector2f pot1Position(20 + 1.2f * jar.getTextureRect().height*scaleJar);
+    sf::Vector2f position_sprite(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor, 20);
+    sprite.setPosition(pot1Position);
+    cout << "DO WE COME HERE" << endl;
+    sprite2.setPosition(pot2Position);
+}
+
+void Preparation::draw(sf::RenderWindow& window){
+    window.draw(sprite);
+    window.draw(sprite2);
+}
 

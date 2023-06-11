@@ -15,12 +15,15 @@ protected:
 public:
     explicit Kitchen(Ingredient ingr);
     Ingredient getIngredient();
-    void setSprite(sf::Texture& texture, float scaleFactor, float position,int screenWidth);
+    virtual void setSprite(sf::Texture& texture, float scaleFactor, float position,int screenWidth, sf::Sprite jar, float scaleJar, float y_position);
+    virtual sf::Sprite getSprite() const;
     bool getSelected() const;
-    void draw(sf::RenderWindow& window);
+    virtual void draw(sf::RenderWindow& window);
     void selection();
     void unselection();
     friend std::ostream& operator<<(std::ostream& os, const Kitchen& kitchen);
+
+    virtual ~Kitchen() {} // Virtual destructor
 };
 
 
