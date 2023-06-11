@@ -9,9 +9,8 @@ private:
     bool free;
     int time_prep;
     int time_left;
-    sf::Sprite sprite2;
 public:
-    explicit Preparation(Ingredient ingredient);
+    explicit Preparation(Ingredient ingredient, int id);
     int prepare(Storage stock);
     void reset();
     friend std::ostream& operator<<(std::ostream& os, const Preparation& preparation);

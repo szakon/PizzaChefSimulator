@@ -29,9 +29,11 @@ void Facade::init(){
     int i = 0;
     for (const auto &ingredient: ingredients){
         Storage storage(ingredient.second);
-        Preparation preparation(ingredient.second);
+        Preparation preparation1(ingredient.second, 1);
+        Preparation preparation2(ingredient.second, 2);
         storages.push_back(storage);
-        preparations.push_back(preparation);
+        preparations.push_back(preparation1);
+        preparations.push_back(preparation2);
     }
 
     draw_init();
@@ -246,6 +248,7 @@ void Facade::draw_init() {
                     if (!isTouched){
                         selected.reset();
                         selected_type = "nothing";
+                        cout << "!!!touched the back !!!: " << endl;
                     }
                 }
 
