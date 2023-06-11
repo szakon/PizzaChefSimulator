@@ -96,6 +96,10 @@ void Preparation::setSprite(sf::Texture& texture, float scaleFactor, float posit
     sprite2.setPosition(pot2Position);
 }
 
+bool Preparation::isStorage(){
+    return false;
+}
+
 void Preparation::draw(sf::RenderWindow& window){
     window.draw(sprite);
     window.draw(sprite2);

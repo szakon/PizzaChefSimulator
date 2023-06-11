@@ -24,6 +24,8 @@ private:
     std::vector<Storage> storages;
     std::vector<Preparation> preparations;
     std::map< std::string, Ingredient> ingredients;
+    std::optional<Kitchen> selected;
+    std::string selected_type;
     // Declare other member functions and variables
 
 public:
@@ -31,4 +33,5 @@ public:
     Facade();  // Constructor
     void init();
     void draw_init();
+    void startCooking(Preparation preparation);
 };

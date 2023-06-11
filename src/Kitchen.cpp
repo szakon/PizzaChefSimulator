@@ -53,3 +53,4 @@ void Kitchen::draw(sf::RenderWindow& window) {
 }
 
 
+

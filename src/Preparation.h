@@ -22,6 +22,7 @@ public:
     void freeprep();
     void setSprite(sf::Texture& texture, float scaleFactor, float position, int screenWidth, sf::Sprite jar, float scaleJar, float y_position);
     void draw(sf::RenderWindow& window);
+    bool isStorage();
 
     static int id_count;
 };

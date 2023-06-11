@@ -132,23 +132,6 @@ void Facade::draw_init() {
             spritePepperoni = storage.getSprite();
         }
     }
-    /*
-    //random sprite used for storages
-    for(Storage& storage : storages) {
-        if(storage.getIngredient().getlabel() == "tomatoe") {
-            storage.setSprite(tomatoe_jar, scaleFactorJar, positionTomatoe, screenWidth, sprite, 0.0);
-            sf::Sprite spriteTomatoe = storage.getSprite();
-        }
-        else if (storage.getIngredient().getlabel() == "cheese") {
-            storage.setSprite(cheese_jar, scaleFactorJar, positionCheese, screenWidth, sprite, 0.0);
-            sf::Sprite spriteCheese = storage.getSprite();
-        }
-        else if (storage.getIngredient().getlabel() == "pepperoni") {
-            storage.setSprite(pepperoni_jar, scaleFactorJar, positionPepperoni, screenWidth,sprite,0.0);
-            sf::Sprite spritePepperoni = storage.getSprite();
-        }
-    }*/
-
 
     //create a pot
     sf::Texture pot;
@@ -205,56 +188,6 @@ void Facade::draw_init() {
     }
 
 
-
-
-/*
-    //create a pot
-    sf::Texture pot1;
-    if (!pot1.loadFromFile("resources/pot.png")) {
-        cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
-    }
-    sf::Sprite spritePot1;
-    spritePot1.setTexture(pot1);
-    float scaleFactorPot = 0.2f*screenWidth/2500;
-    spritePot1.setScale(scaleFactorPot, scaleFactorPot);
-    //to align the pot to the left of the tomato jar
-    int center = spriteTJ.getTextureRect().width * scaleFactorJar/2 - spritePot1.getTextureRect().width*scaleFactorPot/2;
-    //int center_left = spriteTJ.getTextureRect().width * scaleFactorJar/2 - spritePot1.getTextureRect().width*scaleFactorPot/2 -1*spritePot1.getTextureRect().width * 2*scaleFactorPot/5;
-    int center_left = -1*spritePot1.getTextureRect().width * 2*scaleFactorPot/5;
-    sf::Vector2f pot1Position(8*screenWidth/10-1.5f * spriteTJ.getTextureRect().width * scaleFactorJar + center_left + center, 20 + 1.2f * spriteTJ.getTextureRect().height*scaleFactorJar );
-    spritePot1.setPosition(pot1Position);
-*/
-/*
-
-    //create second pot
-    sf::Texture pot2;
-    if (!pot2.loadFromFile("resources/pot.png")) {
-        cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
-    }
-    sf::Sprite spritePot2;
-    spritePot2.setTexture(pot2);
-    spritePot2.setScale(scaleFactorPot, scaleFactorPot);
-    //to align the pot to the left of the tomato jar
-    sf::Vector2f pot2Position(8*screenWidth/10-1.5f * spriteTJ.getTextureRect().width * scaleFactorJar - center_left + center, 20 + 1.2f * spriteTJ.getTextureRect().height*scaleFactorJar );
-    spritePot2.setPosition(pot2Position);
-
-    //create a cutting board
-    sf::Texture cut1;
-    if (!cut1.loadFromFile("resources/cutting_board.png")) {
-        cout << "ERROR IMAGE DIDN'T LOAD" << std::endl;
-    }
-    sf::Sprite spriteCut1;
-    spriteCut1.setTexture(cut1);
-    float scaleFactorCut = 0.2f*screenWidth/2500;
-    spriteCut1.setScale(scaleFactorCut, scaleFactorCut);
-    //to align the pot to the left of the tomato jar
-    //int center = spriteTJ.getTextureRect().width * scaleFactorJar/2 - spriteCut1.getTextureRect().width*scaleFactorCut/2;
-    //int center_left = spriteTJ.getTextureRect().width * scaleFactorJar/2 - spriteCut1.getTextureRect().width*scaleFactorCut/2 -1*spriteCut1.getTextureRect().width * 2*scaleFactorCut/5;
-    //int center_left = -1*spriteCut1.getTextureRect().width * 2*scaleFactorCut/5;
-    sf::Vector2f cut1Position(5*screenWidth/10-0.0f * spriteTJ.getTextureRect().width * scaleFactorJar + center_left + center, 20 + 1.2f * spriteTJ.getTextureRect().height*scaleFactorJar );
-    spriteCut1.setPosition(cut1Position);
-*/
-
     //create a pizza
     sf::CircleShape pizza;
     sf::CircleShape sauce;
@@ -269,15 +202,55 @@ void Facade::draw_init() {
     sauce.setFillColor(sf::Color::Red);
 
     //movement
-    float xVelocity = 3;
+    float xVelocity = 1;
 
-
+    bool isTouched = false; //to test if no object was touched
     while(window.isOpen()){
         sf::Event event;
         while(window.pollEvent(event)){
             if(event.type == sf::Event::Closed) window.close();
 
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) window.close();
+
+
+            else if (event.type == sf::Event::MouseButtonPressed) {
+                cout << "PRESSED" << endl;
+                if (event.mouseButton.button == sf::Mouse::Left) {
+                    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+                    cout << "MOUS POSITION x: " << mousePos.x << "AND y: "<< mousePos.y << endl;
+                    // Check for storage click
+                    for (Storage &storage: storages) {
+                        if (storage.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                            cout << "WE ARE TOUCHING" << endl;
+                            cout << storage.getIngredient() << endl;
+                            selected.emplace(storage);
+                            selected_type = "storage";
+                            cout << "SELECTED HAS CHANGED TO: " << selected.value().getIngredient() << endl;
+                            pizza.setFillColor(sf::Color::Blue);
+                            isTouched = true;
+                            break; // Exit the loop if a storage is clicked
+                        }
+                    }
+
+                    for (Preparation &preparation: preparations) {
+                        if (preparation.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                            cout << "WE ARE PREPARING ";
+                            cout << preparation.getIngredient() << endl;
+                            pizza.setFillColor(sf::Color::Green);
+                            startCooking(preparation);
+                            isTouched = true;
+                            break; // Exit the loop if a preparation is clicked
+                        }
+                    }
+
+                    if (!isTouched){
+                        selected.reset();
+                        selected_type = "nothing";
+                    }
+                }
+
+
+            }
         }
         //physics
         circlePosition.x += xVelocity;
@@ -294,22 +267,36 @@ void Facade::draw_init() {
         for(Preparation& preparation : preparations) {
             preparation.draw(window);
         }
-        /*
-        window.draw(spriteCJ);
-        window.draw(spriteTJ);
-        window.draw(spritePJ);
-        window.draw(spritePot1);
-        window.draw(spritePot2);
-        window.draw(spriteCut1);
-         */
         window.draw(pizza);
 
         //window.draw(spriteTest);
         window.draw(sauce);
+
         window.display();
 
     }
 
+}
+
+void Facade::startCooking(Preparation preparation){
+    cout << "START COOKING" << endl;
+    if (selected.has_value()){ //is something selected
+        cout << "Selected is the following: " << selected.value().getIngredient() << endl;
+        if (selected_type == "storage"){  //if the last selected object is a storage
+            if (selected.value().getIngredient() == preparation.getIngredient()){ //if the selected storage corresponds to the right ingredient
+                selected.emplace(preparation);
+                cout<< "SUCCESS" << preparation.getIngredient() << endl;
+
+            }else{
+                cout << "ERROR: you selected the wrong ingredient" << endl;
+            }
+
+        }else{
+            cout << "ERROR: you didn't select a storage" << endl;
+        }
+    }else{
+        cout << "ERROR: nothing was selected" << endl;
+    }
 }
 
 
