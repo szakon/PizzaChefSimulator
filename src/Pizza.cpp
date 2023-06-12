@@ -52,7 +52,7 @@ int Pizza::addIngredient() {
 }
 */
 
-void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelocity, sf::Vector2f saucePosition, bool tomato){
+void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelocity, sf::Vector2f saucePosition,sf::Texture cooked_cheese, bool tomato, bool cheese){
     dough.setPosition(circlePosition);
     dough.setRadius(200*screenWidth/2500);
     sf::Color customColor(255, 228, 181);
@@ -65,10 +65,24 @@ void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelo
         sauce.setFillColor(sf::Color::Transparent); // Set fill color to transparent
         sauce.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
         sauce.setOutlineThickness(0.f);
-    }else{
+    }else{ //visible sauce
         sauce.setFillColor(sf::Color::Red); // Set fill color to transparent
         sauce.setOutlineColor(sf::Color::Red); // Set outline color to transparent
     }
+
+    //set invisible cheese
+    melted_cheese.setPosition(saucePosition);
+    melted_cheese.setRadius(170*screenWidth/2500);
+    if(!cheese){
+        cout << 9 << endl;
+        melted_cheese.setFillColor(sf::Color::Green); // Set fill color to transparent
+        melted_cheese.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
+        melted_cheese.setOutlineThickness(0.f);
+    }else{ //visible cheese
+        cout << 10 << endl;
+        melted_cheese.setTexture(&cooked_cheese);
+    }
+
 }
 
 sf::CircleShape Pizza::getDough(){
@@ -87,7 +101,7 @@ void Pizza::addTomato(){
 
 void Pizza::addIngredient(Ingredient ingredient) {
     cout << 3 << endl;
-    for (const auto& pair: ingredients){
+    for (auto& pair: ingredients){
         cout << 4 << endl;
         Ingredient ingr = pair.first;
         if (ingr == ingredient){
@@ -96,7 +110,11 @@ void Pizza::addIngredient(Ingredient ingredient) {
                 cout << 6 << endl;
                 if (ingr.getlabel() == "tomatoe"){
                     cout << 7 << endl;
-                    addTomato();
+                    pair.second = true;
+                }
+                else if(ingr.getlabel() == "cheese"){
+                    cout << 7.5 << endl;
+                    pair.second = true;
                 }
             }
         }

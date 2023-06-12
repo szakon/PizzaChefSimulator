@@ -25,7 +25,7 @@ void Facade::init(){
     ingredients.insert(std::make_pair("tomatoe", tom));
     ingredients.insert(std::make_pair("cheese", che));
     ingredients.insert(std::make_pair("pepperoni", pep));
-    std::vector<Ingredient> pizzaIngredients = {tomatoe};
+    std::vector<Ingredient> pizzaIngredients = {tomatoe, cheese, pepperoni};
     Pizza pizza(pizzaIngredients);
     pizzas.push_back(pizza);
 
@@ -197,12 +197,23 @@ void Facade::draw_init() {
     }
 
 
-    //create a pizza
+    //create a PIZZA
     //TEST TO BE CHANGED LATER!!!!!!!!!!!!!!
+    //dough
     sf::CircleShape pizzaShape;
     sf::Vector2f circlePosition(0,5*screenHeight/10);
+
+    //sauce
     sf::Vector2f saucePosition(200*screenWidth/2500-170*screenWidth/2500,5*screenHeight/10+200*screenWidth/2500-170*screenWidth/2500);
-    pizzas[0].setDough(screenWidth, circlePosition, xVelocity, saucePosition, false);
+
+    //cheese
+    sf::Texture cooked_cheese;
+    if (!cooked_cheese.loadFromFile("cooked-cheese/grater.png")) {
+        cout << "ERROR cooked-cheese IMAGE DIDN'T LOAD" << std::endl;
+    }
+
+    pizzas[0].setDough(screenWidth, circlePosition, xVelocity, saucePosition, cooked_cheese, ingredients.at("tomatoe").added, true);
+
 
     /*
     sf::CircleShape pizza;
@@ -277,11 +288,15 @@ void Facade::draw_init() {
         //physics
         circlePosition.x += xVelocity;
         saucePosition.x += xVelocity;
-        pizzas[0].setDough(screenWidth, circlePosition, xVelocity, saucePosition, ingredients.at("tomatoe").added);
+        pizzas[0].setDough(screenWidth, circlePosition, xVelocity, saucePosition,cooked_cheese, ingredients.at("tomatoe").added, true);
 
         //saucePosition.x += xVelocity;
         //sauce.setPosition(saucePosition);
 
+        sf::CircleShape melted_cheese;
+        melted_cheese.setPosition(500,500);
+        melted_cheese.setRadius(170*screenWidth/2500);
+        melted_cheese.setTexture(&cooked_cheese);
         //render
         window.clear();
         window.draw(sprite);
@@ -291,6 +306,7 @@ void Facade::draw_init() {
         for(Preparation& preparation : preparations) {
             preparation.draw(window);
         }
+        window.draw(melted_cheese);
         window.draw(pizzas[0].getDough());
         window.draw(pizzas[0].getSauce());
 
@@ -331,7 +347,7 @@ void Facade::addIngredient(Pizza pizza){
     if (selected_type == "preparation") {
         cout << 2 << endl;
         pizza.addIngredient(selected->getIngredient());
-        ingredients.at("tomatoe").added = true;
+        ingredients.at(selected->getIngredient().getlabel()).added = true;
     }
 }
 
