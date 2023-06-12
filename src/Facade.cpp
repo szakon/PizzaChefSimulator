@@ -19,18 +19,23 @@ void Facade::init(){
     Ingredient tomatoe("tomatoe");
     Ingredient cheese("cheese");
     Ingredient pepperoni("pepperoni");
-    ingredients.insert(std::make_pair("tomatoe", tomatoe));
-    ingredients.insert(std::make_pair("cheese", cheese));
-    ingredients.insert(std::make_pair("pepperoni", pepperoni));
-
+    Ingr tom = {tomatoe, false};
+    Ingr che = {cheese, false};
+    Ingr pep = {pepperoni, false};
+    ingredients.insert(std::make_pair("tomatoe", tom));
+    ingredients.insert(std::make_pair("cheese", che));
+    ingredients.insert(std::make_pair("pepperoni", pep));
+    std::vector<Ingredient> pizzaIngredients = {tomatoe};
+    Pizza pizza(pizzaIngredients);
+    pizzas.push_back(pizza);
 
 
 
     int i = 0;
     for (const auto &ingredient: ingredients){
-        Storage storage(ingredient.second);
-        Preparation preparation1(ingredient.second, 1);
-        Preparation preparation2(ingredient.second, 2);
+        Storage storage(ingredient.second.ingredient);
+        Preparation preparation1(ingredient.second.ingredient, 1);
+        Preparation preparation2(ingredient.second.ingredient, 2);
         storages.push_back(storage);
         preparations.push_back(preparation1);
         preparations.push_back(preparation2);
@@ -42,7 +47,7 @@ void Facade::init(){
     std::cout << "The ingredient list is: ";
     int n=0;
     for (const auto &ingredient: ingredients){
-        std::cout << "the ingredient number " << i << " is " << ingredient.second.getlabel() <<std::endl;
+        std::cout << "the ingredient number " << i << " is " << ingredient.second.ingredient.getlabel() <<std::endl;
         i++;
     }
 
@@ -67,6 +72,8 @@ void Facade::init(){
 }
 
 void Facade::draw_init() {
+    //movement
+    float xVelocity = 1;
     // Get the screen resolution
     sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
     unsigned int screenWidth = desktopMode.width;
@@ -191,6 +198,13 @@ void Facade::draw_init() {
 
 
     //create a pizza
+    //TEST TO BE CHANGED LATER!!!!!!!!!!!!!!
+    sf::CircleShape pizzaShape;
+    sf::Vector2f circlePosition(0,5*screenHeight/10);
+    sf::Vector2f saucePosition(200*screenWidth/2500-170*screenWidth/2500,5*screenHeight/10+200*screenWidth/2500-170*screenWidth/2500);
+    pizzas[0].setDough(screenWidth, circlePosition, xVelocity, saucePosition, false);
+
+    /*
     sf::CircleShape pizza;
     sf::CircleShape sauce;
     sf::Vector2f circlePosition(0,5*screenHeight/10);
@@ -201,10 +215,7 @@ void Facade::draw_init() {
     sauce.setRadius(170*screenWidth/2500);
     sf::Color customColor(255, 228, 181);
     pizza.setFillColor(customColor);
-    sauce.setFillColor(sf::Color::Red);
-
-    //movement
-    float xVelocity = 1;
+    sauce.setFillColor(sf::Color::Red);*/
 
     bool isTouched = false; //to test if no object was touched
     while(window.isOpen()){
@@ -228,7 +239,7 @@ void Facade::draw_init() {
                             selected.emplace(storage);
                             selected_type = "storage";
                             cout << "SELECTED HAS CHANGED TO: " << selected.value().getIngredient() << endl;
-                            pizza.setFillColor(sf::Color::Blue);
+                            pizzas[0].getDough().setFillColor(sf::Color::Blue); // TO BE REMOVED
                             isTouched = true;
                             break; // Exit the loop if a storage is clicked
                         }
@@ -238,11 +249,19 @@ void Facade::draw_init() {
                         if (preparation.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
                             cout << "WE ARE PREPARING ";
                             cout << preparation.getIngredient() << endl;
-                            pizza.setFillColor(sf::Color::Green);
+                            pizzas[0].getDough().setFillColor(sf::Color::Green);  //TO BE REMOVED
                             startCooking(preparation);
                             isTouched = true;
                             break; // Exit the loop if a preparation is clicked
                         }
+                    }
+
+                    for (Pizza &pizza: pizzas){
+                        if (pizza.getDough().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                            cout << "!!DOUGH HIT !!"<< endl;
+                            addIngredient(pizza);
+                        }
+                        //if (pizza.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y))
                     }
 
                     if (!isTouched){
@@ -258,8 +277,10 @@ void Facade::draw_init() {
         //physics
         circlePosition.x += xVelocity;
         saucePosition.x += xVelocity;
-        pizza.setPosition(circlePosition);
-        sauce.setPosition(saucePosition);
+        pizzas[0].setDough(screenWidth, circlePosition, xVelocity, saucePosition, ingredients.at("tomatoe").added);
+
+        //saucePosition.x += xVelocity;
+        //sauce.setPosition(saucePosition);
 
         //render
         window.clear();
@@ -270,10 +291,12 @@ void Facade::draw_init() {
         for(Preparation& preparation : preparations) {
             preparation.draw(window);
         }
-        window.draw(pizza);
+        window.draw(pizzas[0].getDough());
+        window.draw(pizzas[0].getSauce());
+
 
         //window.draw(spriteTest);
-        window.draw(sauce);
+        //window.draw(sauce);
 
         window.display();
 
@@ -288,6 +311,7 @@ void Facade::startCooking(Preparation preparation){
         if (selected_type == "storage"){  //if the last selected object is a storage
             if (selected.value().getIngredient() == preparation.getIngredient()){ //if the selected storage corresponds to the right ingredient
                 selected.emplace(preparation);
+                selected_type = "preparation";
                 cout<< "SUCCESS" << preparation.getIngredient() << endl;
 
             }else{
@@ -300,6 +324,20 @@ void Facade::startCooking(Preparation preparation){
     }else{
         cout << "ERROR: nothing was selected" << endl;
     }
+}
+
+void Facade::addIngredient(Pizza pizza){
+    cout << 1 << endl;
+    if (selected_type == "preparation") {
+        cout << 2 << endl;
+        pizza.addIngredient(selected->getIngredient());
+        ingredients.at("tomatoe").added = true;
+    }
+}
+
+
+void pizzaGenerator(){
+
 }
 
 

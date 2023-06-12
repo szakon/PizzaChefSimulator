@@ -18,12 +18,22 @@
 
 #endif //GLOUTON_FACADE_H
 
+#ifndef VALUES_H
+#define VALUES_H
+
+struct Ingr {
+    Ingredient ingredient;
+    bool added;
+};
+
+#endif // VALUES_H
+
 class Facade {
 private:
     std::vector<Pizza> pizzas;
     std::vector<Storage> storages;
     std::vector<Preparation> preparations;
-    std::map< std::string, Ingredient> ingredients;
+    std::map<std::string, Ingr> ingredients;
     std::optional<Kitchen> selected;
     std::string selected_type;
     // Declare other member functions and variables
@@ -34,4 +44,5 @@ public:
     void init();
     void draw_init();
     void startCooking(Preparation preparation);
+    void addIngredient(Pizza pizza);
 };
