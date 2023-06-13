@@ -206,13 +206,15 @@ void Facade::draw_init() {
     //sauce
     sf::Vector2f saucePosition(200*screenWidth/2500-170*screenWidth/2500,5*screenHeight/10+200*screenWidth/2500-170*screenWidth/2500);
 
-    //cheese
+    //texture
     sf::Texture cooked_cheese;
-    if (!cooked_cheese.loadFromFile("cooked-cheese/grater.png")) {
+    if (!cooked_cheese.loadFromFile("resources/cooked-cheese.png")) {
         cout << "ERROR cooked-cheese IMAGE DIDN'T LOAD" << std::endl;
     }
 
-    pizzas[0].setDough(screenWidth, circlePosition, xVelocity, saucePosition, cooked_cheese, ingredients.at("tomatoe").added, true);
+
+
+    pizzas[0].setDough(screenWidth, circlePosition, xVelocity, saucePosition,cooked_cheese, ingredients.at("tomatoe").added, ingredients.at("cheese").added);
 
 
     /*
@@ -288,15 +290,12 @@ void Facade::draw_init() {
         //physics
         circlePosition.x += xVelocity;
         saucePosition.x += xVelocity;
-        pizzas[0].setDough(screenWidth, circlePosition, xVelocity, saucePosition,cooked_cheese, ingredients.at("tomatoe").added, true);
+        pizzas[0].setDough(screenWidth, circlePosition, xVelocity, saucePosition,cooked_cheese, ingredients.at("tomatoe").added, ingredients.at("cheese").added);
 
         //saucePosition.x += xVelocity;
         //sauce.setPosition(saucePosition);
 
-        sf::CircleShape melted_cheese;
-        melted_cheese.setPosition(500,500);
-        melted_cheese.setRadius(170*screenWidth/2500);
-        melted_cheese.setTexture(&cooked_cheese);
+
         //render
         window.clear();
         window.draw(sprite);
@@ -306,14 +305,14 @@ void Facade::draw_init() {
         for(Preparation& preparation : preparations) {
             preparation.draw(window);
         }
-        window.draw(melted_cheese);
+
         window.draw(pizzas[0].getDough());
         window.draw(pizzas[0].getSauce());
+        window.draw(pizzas[0].getCheese());
 
 
         //window.draw(spriteTest);
         //window.draw(sauce);
-
         window.display();
 
     }
@@ -348,6 +347,7 @@ void Facade::addIngredient(Pizza pizza){
         cout << 2 << endl;
         pizza.addIngredient(selected->getIngredient());
         ingredients.at(selected->getIngredient().getlabel()).added = true;
+        cout << "PLEASE WORK!!!!!"<< selected->getIngredient() << "and we have" << ingredients.at(selected->getIngredient().getlabel()).added <<endl;
     }
 }
 

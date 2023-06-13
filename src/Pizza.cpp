@@ -52,7 +52,7 @@ int Pizza::addIngredient() {
 }
 */
 
-void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelocity, sf::Vector2f saucePosition,sf::Texture cooked_cheese, bool tomato, bool cheese){
+void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelocity, sf::Vector2f saucePosition, const sf::Texture& cooked_cheese, bool tomato, bool cheese){
     dough.setPosition(circlePosition);
     dough.setRadius(200*screenWidth/2500);
     sf::Color customColor(255, 228, 181);
@@ -72,15 +72,24 @@ void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelo
 
     //set invisible cheese
     melted_cheese.setPosition(saucePosition);
-    melted_cheese.setRadius(170*screenWidth/2500);
+    melted_cheese.setRadius((170*screenWidth-20)/2500);
+    /*//texture
+    sf::Texture cooked_cheese;
+    if (!cooked_cheese.loadFromFile("resources/cooked-cheese.png")) {
+        cout << "ERROR cooked-cheese IMAGE DIDN'T LOAD" << std::endl;
+    }*/
     if(!cheese){
-        cout << 9 << endl;
-        melted_cheese.setFillColor(sf::Color::Green); // Set fill color to transparent
+        melted_cheese.setFillColor(sf::Color::Transparent); // Set fill color to transparent
         melted_cheese.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
         melted_cheese.setOutlineThickness(0.f);
     }else{ //visible cheese
-        cout << 10 << endl;
+
+        melted_cheese.setFillColor(sf::Color::Yellow);// Set fill color to transparent
+        melted_cheese.setOutlineColor(sf::Color::Yellow);
         melted_cheese.setTexture(&cooked_cheese);
+
+        //melted_cheese.setFillColor(sf::Color::Green);
+        //melted_cheese.setOutlineColor(sf::Color::Green);
     }
 
 }
@@ -92,6 +101,10 @@ sf::CircleShape Pizza::getDough(){
 
 sf::CircleShape Pizza::getSauce(){
     return sauce;
+}
+
+sf::CircleShape Pizza::getCheese(){
+    return melted_cheese;
 }
 
 void Pizza::addTomato(){
