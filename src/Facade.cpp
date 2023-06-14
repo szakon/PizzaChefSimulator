@@ -2,15 +2,7 @@
 #include <unordered_map>
 #include <iostream>
 
-const sf::Time Facade::TimePerFrame = sf::seconds(1.f/60.f); // On considère que le jeu tourne à 60 FPS
-const float Facade::xVelocity = 1; //movement
-
-void Facade::run() {
-
-    // Set up the clock
-    sf::Clock clock;
-    sf::Time timeSinceLastUpdate = sf::Time::Zero;
-
+Facade::Facade() {
     // Get the screen resolution
     sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
     unsigned int screenWidth = desktopMode.width;
@@ -19,31 +11,11 @@ void Facade::run() {
     // Create the SFML window with the screen size
     window.create(sf::VideoMode(screenWidth, screenHeight), "My Program");
 
-    //Initialize the game
     init();
-    draw_init(desktopMode, screenWidth, screenHeight);
-
-    while(window.isOpen()){
-        sf::Time elapsedTime = clock.restart();
-        timeSinceLastUpdate += elapsedTime;
-        while (timeSinceLastUpdate > TimePerFrame)
-        {
-            timeSinceLastUpdate -= TimePerFrame;
-
-            update(TimePerFrame, desktopMode, screenWidth, screenHeight);
-        }
-        render();
-    }
-
-    cout_test();
-
-
-
 }
 
 void Facade::init(){
 
-    //Set up the pizzas
     Ingredient tomatoe("tomatoe");
     Ingredient cheese("cheese");
     Ingredient pepperoni("pepperoni");
@@ -57,7 +29,8 @@ void Facade::init(){
     Pizza pizza(pizzaIngredients);
     pizzas.push_back(pizza);
 
-    //Set up the storages and preparations
+
+
     int i = 0;
     for (const auto &ingredient: ingredients){
         Storage storage(ingredient.second.ingredient);
@@ -68,27 +41,63 @@ void Facade::init(){
         preparations.push_back(preparation2);
     }
 
+    draw_init();
+
+    //test
+    std::cout << "The ingredient list is: ";
+    int n=0;
+    for (const auto &ingredient: ingredients){
+        std::cout << "the ingredient number " << i << " is " << ingredient.second.ingredient.getlabel() <<std::endl;
+        i++;
+    }
+
+
+    std::cout << "The storage list is: ";
+    int j=0;
+    for (auto &storage: storages){
+        std::cout << "the storage number " << j << " is " << storage.getIngredient() <<std::endl;
+        j++;
+    }
+
+
+    std::cout << "The preparation list is: ";
+    int k=0;
+    for (auto &preparation: preparations){
+        std::cout << "the preparation number " << k << " is " << preparation.getIngredient() <<std::endl;
+        k++;
+    }
+
+
+
 }
 
-void Facade::draw_init(sf::VideoMode desktopMode, unsigned int screenWidth, unsigned int screenHeight) {
-
+void Facade::draw_init() {
+    //movement
+    float xVelocity = 1;
+    // Get the screen resolution
+    sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
+    unsigned int screenWidth = desktopMode.width;
+    unsigned int screenHeight = desktopMode.height;
+    //unsigned int screenWidth = window.getSize().x;
     cout << "WIDTH" << screenWidth << endl;
+    //unsigned int screenHeight = window.getSize().y;
     cout << "HEIGHT" << screenHeight << endl;
 
     window.setFramerateLimit(60);
     sf::Vector2u windowSize = window.getSize();
 
-    //Draw the background
-    sf::Texture bois;
-    if (!bois.loadFromFile("resources/bois1.jpg")) {
+    sf::Texture texture;
+    if (!texture.loadFromFile("image.png")) {
         cout << "ERROR wood IMAGE DIDN'T LOAD" << std::endl;
     }
-    sprite_background.setTexture(bois);
+    texture.loadFromFile("resources/bois1.jpg");
+    sf::Sprite sprite;
+    sprite.setTexture(texture);
     // Calculate the scale factors to fill the window
-    float scaleX = static_cast<float>(window.getSize().x) / bois.getSize().x;
-    float scaleY = static_cast<float>(window.getSize().y) / bois.getSize().y;
+    float scaleX = static_cast<float>(window.getSize().x) / texture.getSize().x;
+    float scaleY = static_cast<float>(window.getSize().y) / texture.getSize().y;
     // Set the scale of the sprite to fill the window
-    sprite_background.setScale(scaleX, scaleY);
+    sprite.setScale(scaleX, scaleY);
 
     float scaleFactorJar = 0.9f*screenWidth/2500;
 
@@ -98,7 +107,7 @@ void Facade::draw_init(sf::VideoMode desktopMode, unsigned int screenWidth, unsi
         cout << "ERROR cheese jar IMAGE DIDN'T LOAD" << std::endl;
     }
     float positionCheese = 3.0f;
-    sf::Sprite spriteCheese;
+
 
     //create the tomatoe jar
     sf::Texture tomatoe_jar;
@@ -106,7 +115,6 @@ void Facade::draw_init(sf::VideoMode desktopMode, unsigned int screenWidth, unsi
         cout << "ERROR tomatoe jar IMAGE DIDN'T LOAD" << std::endl;
     }
     float positionTomatoe = 1.5f;
-    sf::Sprite spriteTomatoe;
 
     //create the pepperoni jar
     sf::Texture pepperoni_jar;
@@ -114,20 +122,22 @@ void Facade::draw_init(sf::VideoMode desktopMode, unsigned int screenWidth, unsi
         cout << "ERROR pepperoni jar IMAGE DIDN'T LOAD" << std::endl;
     }
     float positionPepperoni = 0;
-    sf::Sprite spritePepperoni;
 
+    sf::Sprite spriteTomatoe;
+    sf::Sprite spriteCheese;
+    sf::Sprite spritePepperoni;
     for(Storage& storage : storages) {
         if(storage.getIngredient().getlabel() == "tomatoe") {
-            storage.setSprite(tomatoe_jar, scaleFactorJar, positionTomatoe, screenWidth, sprite_background, 0.0, 0.0);
+            storage.setSprite(tomatoe_jar, scaleFactorJar, positionTomatoe, screenWidth, sprite, 0.0, 0.0);
             spriteTomatoe = storage.getSprite();
             cout << spriteTomatoe.getTextureRect().height << std::endl;
         }
         else if (storage.getIngredient().getlabel() == "cheese") {
-            storage.setSprite(cheese_jar, scaleFactorJar, positionCheese, screenWidth, sprite_background, 0.0, 0.0);
+            storage.setSprite(cheese_jar, scaleFactorJar, positionCheese, screenWidth, sprite, 0.0, 0.0);
             spriteCheese = storage.getSprite();
         }
         else if (storage.getIngredient().getlabel() == "pepperoni") {
-            storage.setSprite(pepperoni_jar, scaleFactorJar, positionPepperoni, screenWidth, sprite_background, 0.0, 0.0);
+            storage.setSprite(pepperoni_jar, scaleFactorJar, positionPepperoni, screenWidth, sprite, 0.0, 0.0);
             spritePepperoni = storage.getSprite();
         }
     }
@@ -159,6 +169,16 @@ void Facade::draw_init(sf::VideoMode desktopMode, unsigned int screenWidth, unsi
     }
     float scaleFactorGrater = 0.1f*screenWidth/2500;
 
+    /*
+    sf::Sprite spriteTest;
+    spriteTest.setTexture(grater);
+    spriteTest.setScale(scaleFactorPot/2,scaleFactorPot/2);
+    sf::Vector2f position_sprite(500, 500);
+    spriteTest.setPosition(position_sprite);
+    cout << spriteTomatoe.getTextureRect().height << std::endl;
+    cout << potLine << std::endl;*/
+
+
     //random sprite used for preparations
     for(Preparation& preparation : preparations) {
         if(preparation.getIngredient().getlabel() == "tomatoe") {
@@ -183,16 +203,128 @@ void Facade::draw_init(sf::VideoMode desktopMode, unsigned int screenWidth, unsi
     sf::CircleShape pizzaShape;
     sf::Vector2f circlePosition(0,5*screenHeight/10);
 
+    //sauce
+    sf::Vector2f saucePosition(200*screenWidth/2500-170*screenWidth/2500,5*screenHeight/10+200*screenWidth/2500-170*screenWidth/2500);
+
     //texture
     sf::Texture cooked_cheese;
     if (!cooked_cheese.loadFromFile("resources/cooked-cheese.png")) {
         cout << "ERROR cooked-cheese IMAGE DIDN'T LOAD" << std::endl;
     }
 
-    pizzas[0].setPosition(circlePosition);
-    pizzas[0].setDough(screenWidth, xVelocity, cooked_cheese, ingredients.at("tomatoe").added, ingredients.at("cheese").added, ingredients.at("pepperoni").added);
 
 
+    pizzas[0].setDough(screenWidth, circlePosition, xVelocity, saucePosition,cooked_cheese, ingredients.at("tomatoe").added, ingredients.at("cheese").added, ingredients.at("pepperoni").added);
+
+
+    /*
+    sf::CircleShape pizza;
+    sf::CircleShape sauce;
+    sf::Vector2f circlePosition(0,5*screenHeight/10);
+    sf::Vector2f saucePosition(200*screenWidth/2500-170*screenWidth/2500,5*screenHeight/10+200*screenWidth/2500-170*screenWidth/2500);
+    pizza.setPosition(circlePosition);
+    sauce.setPosition(sf::Vector2f(100,100));
+    pizza.setRadius(200*screenWidth/2500);
+    sauce.setRadius(170*screenWidth/2500);
+    sf::Color customColor(255, 228, 181);
+    pizza.setFillColor(customColor);
+    sauce.setFillColor(sf::Color::Red);*/
+
+    bool isTouched = false; //to test if no object was touched
+    while(window.isOpen()){
+        sf::Event event;
+        while(window.pollEvent(event)){
+            if(event.type == sf::Event::Closed) window.close();
+
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) window.close();
+
+
+            else if (event.type == sf::Event::MouseButtonPressed) {
+                cout << "PRESSED" << endl;
+                if (event.mouseButton.button == sf::Mouse::Left) {
+                    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+                    cout << "MOUS POSITION x: " << mousePos.x << "AND y: "<< mousePos.y << endl;
+                    // Check for storage click
+                    for (Storage &storage: storages) {
+                        if (storage.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                            cout << "WE ARE TOUCHING" << endl;
+                            cout << storage.getIngredient() << endl;
+                            selected.emplace(storage);
+                            selected_type = "storage";
+                            cout << "SELECTED HAS CHANGED TO: " << selected.value().getIngredient() << endl;
+                            pizzas[0].getDough().setFillColor(sf::Color::Blue); // TO BE REMOVED
+                            isTouched = true;
+                            break; // Exit the loop if a storage is clicked
+                        }
+                    }
+
+                    for (Preparation &preparation: preparations) {
+                        if (preparation.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                            cout << "WE ARE PREPARING ";
+                            cout << preparation.getIngredient() << endl;
+                            pizzas[0].getDough().setFillColor(sf::Color::Green);  //TO BE REMOVED
+                            startCooking(preparation);
+                            isTouched = true;
+                            break; // Exit the loop if a preparation is clicked
+                        }
+                    }
+
+                    for (Pizza &pizza: pizzas){
+                        if (pizza.getDough().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                            cout << "!!DOUGH HIT !!"<< endl;
+                            addIngredient(pizza);
+                        }
+                        //if (pizza.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y))
+                    }
+
+                    if (!isTouched){
+                        selected.reset();
+                        selected_type = "nothing";
+                        cout << "!!!touched the back !!!: " << endl;
+                    }
+                }
+
+
+            }
+        }
+        //physics
+        circlePosition.x += xVelocity;
+        saucePosition.x += xVelocity;
+        pizzas[0].setDough(screenWidth, circlePosition, xVelocity, saucePosition,cooked_cheese, ingredients.at("tomatoe").added, ingredients.at("cheese").added, ingredients.at("pepperoni").added) ;
+
+        //saucePosition.x += xVelocity;
+        //sauce.setPosition(saucePosition);
+
+        sf::CircleShape test;
+        test.setPosition(500,500);
+        test.setRadius(40*2500/screenWidth);
+        sf::Color customColor(170, 68, 0);
+        test.setFillColor(customColor);
+
+
+        //render
+        window.clear();
+        window.draw(sprite);
+        for(Storage& storage : storages) {
+            storage.draw(window);
+        }
+        for(Preparation& preparation : preparations) {
+            preparation.draw(window);
+        }
+
+        window.draw(pizzas[0].getDough());
+        window.draw(pizzas[0].getSauce());
+        window.draw(pizzas[0].getCheese());
+        for (size_t i = 0; i<pizzas[0].getPepperoni().size(); i++) {
+            window.draw(pizzas[0].getPepperoni()[i]);
+        }
+
+        window.draw(test);
+        //window.draw(spriteTest);
+        //window.draw(sauce);
+        window.display();
+
+    }
 
 }
 
@@ -226,125 +358,6 @@ void Facade::addIngredient(Pizza pizza){
         ingredients.at(selected->getIngredient().getlabel()).added = true;
         cout << "PLEASE WORK!!!!!"<< selected->getIngredient() << "and we have" << ingredients.at(selected->getIngredient().getlabel()).added <<endl;
     }
-}
-
-void Facade::cout_test() {
-    //test
-    std::cout << "The ingredient list is: ";
-    int i=0;
-    for (const auto &ingredient: ingredients){
-        std::cout << "the ingredient number " << i << " is " << ingredient.second.ingredient.getlabel() <<std::endl;
-        i++;
-    }
-
-    std::cout << "The storage list is: ";
-    int j=0;
-    for (auto &storage: storages){
-        std::cout << "the storage number " << j << " is " << storage.getIngredient() <<std::endl;
-        j++;
-    }
-
-
-    std::cout << "The preparation list is: ";
-    int k=0;
-    for (auto &preparation: preparations){
-        std::cout << "the preparation number " << k << " is " << preparation.getIngredient() <<std::endl;
-        k++;
-    }
-
-}
-
-
-void Facade::render() {
-
-    //render
-    window.clear();
-    window.draw(sprite_background);
-    for(Storage& storage : storages) {
-        storage.draw(window);
-    }
-    for(Preparation& preparation : preparations) {
-        preparation.draw(window);
-    }
-
-    window.draw(pizzas[0].getDough());
-    window.draw(pizzas[0].getSauce());
-    window.draw(pizzas[0].getCheese());
-    for (size_t i = 0; i<pizzas[0].getPepperoni().size(); i++) {
-        window.draw(pizzas[0].getPepperoni()[i]);
-    }
-
-    window.display();
-
-}
-
-void Facade::update(const sf::Time time,sf::VideoMode desktopMode, unsigned int screenWidth, unsigned int screenHeight) {
-    bool isTouched = false; //to test if an object was touched
-    sf::Event event;
-    while(window.pollEvent(event)){
-        if(event.type == sf::Event::Closed) window.close();
-
-        else if (event.type == sf::Event::MouseButtonPressed) {
-
-            cout << "PRESSED" << endl;
-            if (event.mouseButton.button == sf::Mouse::Left) {
-                sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-                cout << "MOUSE POSITION x: " << mousePos.x << "AND y: "<< mousePos.y << endl;
-                // Check for storage click
-                for (Storage &storage: storages) {
-                    if (storage.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                        cout << "WE ARE TOUCHING" << endl;
-                        cout << storage.getIngredient() << endl;
-                        selected.emplace(storage);
-                        selected_type = "storage";
-                        cout << "SELECTED HAS CHANGED TO: " << selected.value().getIngredient() << endl;
-                        pizzas[0].getDough().setFillColor(sf::Color::Blue); // TO BE REMOVED
-                        isTouched = true;
-                        break; // Exit the loop if a storage is clicked
-                    }
-                }
-
-                for (Preparation &preparation: preparations) {
-                    if (preparation.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                        cout << "WE ARE PREPARING ";
-                        cout << preparation.getIngredient() << endl;
-                        pizzas[0].getDough().setFillColor(sf::Color::Green);  //TO BE REMOVED
-                        startCooking(preparation);
-                        isTouched = true;
-                        break; // Exit the loop if a preparation is clicked
-                    }
-                }
-
-                for (Pizza &pizza: pizzas){
-                    if (pizza.getDough().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                        cout << "!!DOUGH HIT !!"<< endl;
-                        addIngredient(pizza);
-                    }
-                    //if (pizza.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y))
-                }
-
-                if (!isTouched){
-                    selected.reset();
-                    selected_type = "nothing";
-                    cout << "!!!touched the back !!!: " << endl;
-                }
-            }
-
-            //physics
-            auto circlePosition = pizzas[0].getPosition();
-            pizzas[0].setPosition(sf::Vector2f(circlePosition.x + xVelocity, circlePosition.y));
-
-
-            //texture
-            sf::Texture cooked_cheese;
-            if (!cooked_cheese.loadFromFile("resources/cooked-cheese.png")) {
-                cout << "ERROR cooked-cheese IMAGE DIDN'T LOAD" << std::endl;
-            }
-            pizzas[0].setDough(screenWidth, xVelocity, cooked_cheese, ingredients.at("tomatoe").added, ingredients.at("cheese").added, ingredients.at("pepperoni").added) ;
-
-        }
-    }
-
 }
 
 

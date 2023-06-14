@@ -4,7 +4,6 @@
 #include <vector>
 #include "Ingredient.h"
 #include <unordered_map>
-#include <SFML/Graphics.hpp>
 
 using namespace std;
 

@@ -27,12 +27,9 @@ void onClick(sf::Event::MouseButtonEvent event, std::vector<sf::CircleShape*> ob
 }
 
 
-int myMain() {
+int myMain()
+{
     Facade f;
-    f.run();
-
-    return 0;
-}
 
 /*
     Ingredient cheese = Ingredient("cheese");
@@ -104,7 +101,7 @@ int myMain() {
     }
     return 0;
 */
-
+}
 
 
 

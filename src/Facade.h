@@ -23,7 +23,6 @@ struct Ingr {
 
 class Facade {
 private:
-    sf::Sprite sprite_background;
     std::vector<Pizza> pizzas;
     std::vector<Storage> storages;
     std::vector<Preparation> preparations;
@@ -34,16 +33,9 @@ private:
 
 public:
     sf::RenderWindow window;
-    void run();  // Constructor
+    Facade();  // Constructor
     void init();
-    void render();
-    void update(sf::Time time, sf::VideoMode desktopMode, unsigned int screenWidth, unsigned int screenHeight);
-    void cout_test();
-    void draw_init(sf::VideoMode desktopMode, unsigned int screenWidth, unsigned int screenHeight);
-    void processEvents();
+    void draw_init();
     void startCooking(Preparation preparation);
     void addIngredient(Pizza pizza);
-
-    static const sf::Time TimePerFrame;
-    static const float xVelocity;
 };
