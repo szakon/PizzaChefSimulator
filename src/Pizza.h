@@ -15,16 +15,18 @@ private :
     sf::CircleShape dough;
     sf::CircleShape sauce;
     sf::CircleShape melted_cheese;
+    vector<sf::CircleShape> pepperonis;
 public:
     explicit Pizza(const std::vector< Ingredient>& ingr);
     std::map< Ingredient , bool> getIngredients();
     std::vector<Preparation> getPreparations();
     friend std::ostream& operator<<(std::ostream& os, const Pizza& pizza);
     void addIngredient(Ingredient ingredient);
-    void setDough(float screenWidth, sf::Vector2f circlePosition, float xVelocity, sf::Vector2f saucePosition, const sf::Texture& cooked_cheese, bool tomato, bool cheese);
+    void setDough(float screenWidth, sf::Vector2f circlePosition, float xVelocity, sf::Vector2f saucePosition, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni);
     sf::CircleShape getDough();
     sf::CircleShape getSauce();
     sf::CircleShape getCheese();
+    vector<sf::CircleShape> getPepperoni();
     void addTomato();
 
     static int id_count;

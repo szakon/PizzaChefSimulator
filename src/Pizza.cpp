@@ -19,6 +19,12 @@ Pizza::Pizza(const std::vector<Ingredient>& ingr)
     for (const auto &ingredient: ingr) {
         ingredients.insert(std::make_pair(ingredient, false));
     }
+
+    sf::CircleShape pepperoni1;
+    sf::CircleShape pepperoni2;
+    sf::CircleShape pepperoni3;
+    sf::CircleShape pepperoni4;
+    pepperonis = {pepperoni1, pepperoni2,pepperoni3, pepperoni4};
 }
 
 std::ostream& operator<<(std::ostream& os, const Pizza& pizza)
@@ -52,7 +58,7 @@ int Pizza::addIngredient() {
 }
 */
 
-void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelocity, sf::Vector2f saucePosition, const sf::Texture& cooked_cheese, bool tomato, bool cheese){
+void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelocity, sf::Vector2f saucePosition, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni){
     dough.setPosition(circlePosition);
     dough.setRadius(200*screenWidth/2500);
     sf::Color customColor(255, 228, 181);
@@ -71,7 +77,7 @@ void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelo
     }
 
     //set invisible cheese
-    melted_cheese.setPosition(saucePosition);
+    melted_cheese.setPosition(saucePosition.x+20/2500, saucePosition.y);
     melted_cheese.setRadius((170*screenWidth-20)/2500);
     /*//texture
     sf::Texture cooked_cheese;
@@ -92,6 +98,39 @@ void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelo
         //melted_cheese.setOutlineColor(sf::Color::Green);
     }
 
+    //sets pepperoni;
+    float i = 1.0;
+    float j = 1.0;
+    for(sf::CircleShape &pepp: pepperonis){
+        pepp.setPosition(saucePosition.x + (i*170*screenWidth-20)/2500/2, saucePosition.y + (j*170*screenWidth-20)/2500/2);
+        pepp.setRadius(40*2500/screenWidth);
+        //position the pepperonis
+        if(i==1){
+            i -=0.5;
+            j++; //2,5 ; 2
+            cout << "first if: " << i << " et " << j << endl;
+        }else if(j==2){
+            i = i+1.5 ;
+            j++; //2,3
+            cout << "second if: " <<i << " et " << j << endl;
+        }else{
+            i = i+0.2;
+            j = j- 1.7;  //3.5, 2.5
+            cout <<"third if: " << i << " et " << j << endl;
+        }
+
+        //make visible/invisible the pepperonis
+        if(!pepperoni){
+            pepp.setFillColor(sf::Color::Transparent); // Set fill color to transparent
+            pepp.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
+            melted_cheese.setOutlineThickness(0.f);
+        }else{ //visible cheese
+            sf::Color customColor(170, 68, 0);
+            pepp.setFillColor(customColor);
+        }
+
+    }
+
 }
 
 sf::CircleShape Pizza::getDough(){
@@ -105,6 +144,10 @@ sf::CircleShape Pizza::getSauce(){
 
 sf::CircleShape Pizza::getCheese(){
     return melted_cheese;
+}
+
+vector<sf::CircleShape> Pizza::getPepperoni(){
+    return pepperonis;
 }
 
 void Pizza::addTomato(){
@@ -126,6 +169,11 @@ void Pizza::addIngredient(Ingredient ingredient) {
                     pair.second = true;
                 }
                 else if(ingr.getlabel() == "cheese"){
+                    cout << 7.5 << endl;
+                    pair.second = true;
+                }
+
+                else if(ingr.getlabel() == "pepperoni"){
                     cout << 7.5 << endl;
                     pair.second = true;
                 }
