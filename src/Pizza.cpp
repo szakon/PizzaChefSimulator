@@ -7,6 +7,7 @@
 #include <iostream>
 #include "Ingredient.h"
 #include "Preparation.h"
+#include <SFML/Graphics.hpp>
 
 using namespace std;
 
@@ -58,8 +59,11 @@ int Pizza::addIngredient() {
 }
 */
 
-void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelocity, sf::Vector2f saucePosition, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni){
-    dough.setPosition(circlePosition);
+void Pizza::setDough(float screenWidth, float xVelocity, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni){
+    //sauce
+    sf::Vector2f saucePosition(200*screenWidth/2500-170*screenWidth/2500+position.x,position.y+200*screenWidth/2500-170*screenWidth/2500);
+
+    dough.setPosition(position);
     dough.setRadius(200*screenWidth/2500);
     sf::Color customColor(255, 228, 181);
     dough.setFillColor(customColor);
@@ -184,5 +188,13 @@ void Pizza::addIngredient(Ingredient ingredient) {
             }
         }
     }
+}
+
+void Pizza::setPosition(sf::Vector2f circleposition) {
+    position = circleposition;
+}
+
+sf::Vector2f Pizza::getPosition() {
+    return position;
 }
 
