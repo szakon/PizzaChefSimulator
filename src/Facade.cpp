@@ -214,7 +214,7 @@ void Facade::draw_init() {
 
 
 
-    pizzas[0].setDough(screenWidth, circlePosition, xVelocity, saucePosition,cooked_cheese, ingredients.at("tomatoe").added, ingredients.at("cheese").added);
+    pizzas[0].setDough(screenWidth, circlePosition, xVelocity, saucePosition,cooked_cheese, ingredients.at("tomatoe").added, ingredients.at("cheese").added, ingredients.at("pepperoni").added);
 
 
     /*
@@ -290,10 +290,16 @@ void Facade::draw_init() {
         //physics
         circlePosition.x += xVelocity;
         saucePosition.x += xVelocity;
-        pizzas[0].setDough(screenWidth, circlePosition, xVelocity, saucePosition,cooked_cheese, ingredients.at("tomatoe").added, ingredients.at("cheese").added);
+        pizzas[0].setDough(screenWidth, circlePosition, xVelocity, saucePosition,cooked_cheese, ingredients.at("tomatoe").added, ingredients.at("cheese").added, ingredients.at("pepperoni").added) ;
 
         //saucePosition.x += xVelocity;
         //sauce.setPosition(saucePosition);
+
+        sf::CircleShape test;
+        test.setPosition(500,500);
+        test.setRadius(40*2500/screenWidth);
+        sf::Color customColor(170, 68, 0);
+        test.setFillColor(customColor);
 
 
         //render
@@ -309,8 +315,11 @@ void Facade::draw_init() {
         window.draw(pizzas[0].getDough());
         window.draw(pizzas[0].getSauce());
         window.draw(pizzas[0].getCheese());
+        for (size_t i = 0; i<pizzas[0].getPepperoni().size(); i++) {
+            window.draw(pizzas[0].getPepperoni()[i]);
+        }
 
-
+        window.draw(test);
         //window.draw(spriteTest);
         //window.draw(sauce);
         window.display();
