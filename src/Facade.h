@@ -11,15 +11,11 @@
 #include "colors.h"
 #include <SFML/Graphics.hpp>
 
-#ifndef VALUES_H
-#define VALUES_H
-
 struct Ingr {
     Ingredient ingredient;
     bool added;
 };
 
-#endif // VALUES_H
 
 class Facade {
 private:
@@ -29,6 +25,7 @@ private:
     std::map<std::string, Ingr> ingredients;
     std::optional<Kitchen> selected;
     std::string selected_type;
+    int score;
     // Declare other member functions and variables
 
 public:
@@ -37,5 +34,5 @@ public:
     void init();
     void draw_init();
     void startCooking(Preparation preparation);
-    void addIngredient(Pizza pizza);
+    int addIngredient(Pizza pizza);
 };

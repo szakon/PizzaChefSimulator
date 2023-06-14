@@ -159,7 +159,8 @@ void Pizza::addTomato(){
     sauce.setFillColor(sf::Color::Red);
 }
 
-void Pizza::addIngredient(Ingredient ingredient) {
+int Pizza::addIngredient(Ingredient ingredient) {
+    int res;
     cout << 3 << endl;
     for (auto& pair: ingredients){
         cout << 4 << endl;
@@ -176,13 +177,18 @@ void Pizza::addIngredient(Ingredient ingredient) {
                     cout << 7.5 << endl;
                     pair.second = true;
                 }
-
                 else if(ingr.getlabel() == "pepperoni"){
                     cout << 7.5 << endl;
                     pair.second = true;
                 }
+                res = 3;
+            }
+            else {
+                res = -2;
             }
         }
     }
+
+    return res;
 }
 

@@ -21,7 +21,7 @@ public:
     std::map< Ingredient , bool> getIngredients();
     std::vector<Preparation> getPreparations();
     friend std::ostream& operator<<(std::ostream& os, const Pizza& pizza);
-    void addIngredient(Ingredient ingredient);
+    int addIngredient(Ingredient ingredient);
     void setDough(float screenWidth, sf::Vector2f circlePosition, float xVelocity, sf::Vector2f saucePosition, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni);
     sf::CircleShape getDough();
     sf::CircleShape getSauce();
