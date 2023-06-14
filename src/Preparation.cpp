@@ -107,3 +107,7 @@ void Preparation::draw(sf::RenderWindow& window){
     window.draw(sprite);
 }
 
+int Preparation::getId() {
+    return id;
+}
+

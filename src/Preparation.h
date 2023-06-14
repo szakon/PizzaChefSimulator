@@ -19,6 +19,7 @@ public:
     int gettime_prep();
     int gettime_left();
     void freeprep();
+    int getId();
     void setSprite(sf::Texture& texture, float scaleFactor, float position, int screenWidth, sf::Sprite jar, float scaleJar, float y_position);
     void draw(sf::RenderWindow& window);
     bool isStorage();
