@@ -4,5 +4,7 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/cmake-build-debug/_deps/pugixml-src" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/cmake-build-debug/unitTests/googletest-src" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/cmake-build-release/_deps/pugixml-src" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/cmake-build-release/unitTests/googletest-src" vcs="Git" />
   </component>
 </project>

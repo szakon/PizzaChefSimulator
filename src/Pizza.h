@@ -11,14 +11,21 @@ class Pizza {
 private :
     int id;
     std::map< Ingredient, bool> ingredients;
-    std::vector<Preparation> preparations;
     bool completed;
+    sf::CircleShape dough;
+    sf::CircleShape sauce;
+    sf::CircleShape melted_cheese;
 public:
-    explicit Pizza(const std::vector< Ingredient>& ingr, std::vector<Preparation> prep);
+    explicit Pizza(const std::vector< Ingredient>& ingr);
     std::map< Ingredient , bool> getIngredients();
     std::vector<Preparation> getPreparations();
     friend std::ostream& operator<<(std::ostream& os, const Pizza& pizza);
-    int addIngredient();
+    void addIngredient(Ingredient ingredient);
+    void setDough(float screenWidth, sf::Vector2f circlePosition, float xVelocity, sf::Vector2f saucePosition, const sf::Texture& cooked_cheese, bool tomato, bool cheese);
+    sf::CircleShape getDough();
+    sf::CircleShape getSauce();
+    sf::CircleShape getCheese();
+    void addTomato();
 
     static int id_count;
 };

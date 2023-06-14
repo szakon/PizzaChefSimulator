@@ -1,6 +1,3 @@
-//
-// Created by Sarah Zakon on 06/06/2023.
-//
 #pragma once
 #include "Ingredient.h"
 #include <vector>
@@ -9,21 +6,29 @@
 #include "Kitchen.h"
 #include "Storage.h"
 #include <memory>
+#include <optional>
 #include "Drawing.h"
 #include "colors.h"
 #include <SFML/Graphics.hpp>
 
-#ifndef GLOUTON_FACADE_H
-#define GLOUTON_FACADE_H
+#ifndef VALUES_H
+#define VALUES_H
 
-#endif //GLOUTON_FACADE_H
+struct Ingr {
+    Ingredient ingredient;
+    bool added;
+};
+
+#endif // VALUES_H
 
 class Facade {
 private:
     std::vector<Pizza> pizzas;
     std::vector<Storage> storages;
     std::vector<Preparation> preparations;
-    std::map< std::string, Ingredient> ingredients;
+    std::map<std::string, Ingr> ingredients;
+    std::optional<Kitchen> selected;
+    std::string selected_type;
     // Declare other member functions and variables
 
 public:
@@ -31,4 +36,6 @@ public:
     Facade();  // Constructor
     void init();
     void draw_init();
+    void startCooking(Preparation preparation);
+    void addIngredient(Pizza pizza);
 };

@@ -10,7 +10,7 @@ private:
     int time_prep;
     int time_left;
 public:
-    explicit Preparation(Ingredient ingredient);
+    explicit Preparation(Ingredient ingredient, int id);
     int prepare(Storage stock);
     void reset();
     friend std::ostream& operator<<(std::ostream& os, const Preparation& preparation);
@@ -19,6 +19,9 @@ public:
     int gettime_prep();
     int gettime_left();
     void freeprep();
+    void setSprite(sf::Texture& texture, float scaleFactor, float position, int screenWidth, sf::Sprite jar, float scaleJar, float y_position);
+    void draw(sf::RenderWindow& window);
+    bool isStorage();
 
     static int id_count;
 };

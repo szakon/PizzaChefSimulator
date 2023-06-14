@@ -5,5 +5,6 @@
 class Storage : public Kitchen {
 public:
     explicit Storage(Ingredient ingredient);
+    bool isStorage();
 
 };

@@ -5,3 +5,7 @@
 Storage::Storage(Ingredient ingredient) : Kitchen(ingredient) {
 }
 
+
+bool Storage::isStorage(){
+    return true;
+}

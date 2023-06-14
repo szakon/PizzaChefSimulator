@@ -8,10 +8,9 @@
 #include <unistd.h>
 
 
-int Preparation::id_count = 0;
 
-Preparation::Preparation(Ingredient ingredient) : Kitchen(ingredient) {
-    id = id_count++;
+Preparation::Preparation(Ingredient ingredient, int id) : Kitchen(ingredient) {
+    this->id = id;
     free = true;
     ready = false;
     time_prep = 3;
@@ -79,4 +78,32 @@ void Preparation::reset() {
     time_left = time_prep;
 }
 
+void Preparation::setSprite(sf::Texture& texture, float scaleFactor, float position, int screenWidth, sf::Sprite jar, float scaleJar, float y_position){
+    sprite.setTexture(texture);
+    sprite.setScale(scaleFactor,scaleFactor);
+    //sf::Vector2f spriteJar(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor, 20);
+    int center = jar.getTextureRect().width * scaleJar/2 - sprite.getTextureRect().width*scaleFactor/2;
+    int distance = 0.4*sprite.getTextureRect().width* scaleFactor;
+    if (id == 1){
+        cout << "FIRST SPRITE" << endl;
+        sf::Vector2f pot1Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center - distance, y_position);
+        sprite.setPosition(pot1Position);
+    }else{
+        cout << "SECOND SPRITE" << endl;
+        sf::Vector2f pot2Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center + distance, y_position);
+        sprite.setPosition(pot2Position);
+    }
+    //sf::Vector2f pot1Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center + distance, y_position);
+    //sf::Vector2f pot2Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center - distance, y_position);
+    //sf::Vector2f pot1Position(20 + 1.2f * jar.getTextureRect().height*scaleJar);
+    //sf::Vector2f position_sprite(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor, 20);
+}
+
+bool Preparation::isStorage(){
+    return false;
+}
+
+void Preparation::draw(sf::RenderWindow& window){
+    window.draw(sprite);
+}
 
