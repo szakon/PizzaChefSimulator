@@ -103,31 +103,27 @@ void Pizza::setDough(float screenWidth, float xVelocity, const sf::Texture& cook
     }
 
     //sets pepperoni;
-    float i = 1.0*screenWidth/2500;
-    float j = 1.0*screenWidth/2500;
+    float i = 1.0;
+    float j = 1.0;
     for(sf::CircleShape &pepp: pepperonis){
         pepp.setPosition(saucePosition.x + (i*170*screenWidth-20)/2500/2, saucePosition.y + (j*170*screenWidth-20)/2500/2);
-        pepp.setRadius(30*screenWidth/2500);
+        pepp.setRadius(40*2500/screenWidth);
         //position the pepperonis
-        if(i==1*screenWidth/2500){
-            i = (i-0.5)*screenWidth/2500;
-            j= (j+2)*screenWidth/2500; //2,5 ; 2
-            //pepp.setFillColor(sf::Color::Red);
+        if(i==1){
+            i -=0.5;
+            j++; //2,5 ; 2
             cout << "first if: " << i << " et " << j << endl;
-        }else if(j==(2+1*screenWidth/2500)*screenWidth/2500){
-            i = (i+3.2)*screenWidth/2500 ;
-            j = (j+1.2)*screenWidth/2500; //2,3
-            //pepp.setFillColor(sf::Color::Green);
+        }else if(j==2){
+            i = i+1.5 ;
+            j++; //2,3
             cout << "second if: " <<i << " et " << j << endl;
         }else{
-            i = (i+0.4)*screenWidth/2500;
-            j = (j- 1.7)*screenWidth/2500;  //3.5, 2.5
-            //pepp.setFillColor(sf::Color::Blue);
+            i = i+0.2;
+            j = j- 1.7;  //3.5, 2.5
             cout <<"third if: " << i << " et " << j << endl;
         }
 
         //make visible/invisible the pepperonis
-
         if(!pepperoni){
             pepp.setFillColor(sf::Color::Transparent); // Set fill color to transparent
             pepp.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
