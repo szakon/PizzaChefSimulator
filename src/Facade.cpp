@@ -5,13 +5,7 @@
 const sf::Time Facade::TimePerFrame = sf::seconds(1.f/60.f); // On considère que le jeu tourne à 60 FPS
 const float Facade::xVelocity = 1; //movement
 
-void Facade::run() {
-
-    // Set up the clock
-    sf::Clock clock;
-    sf::Time timeSinceLastUpdate = sf::Time::Zero;
-
-    // Get the screen resolution
+Facade::Facade(){
     sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
     unsigned int screenWidth = desktopMode.width;
     unsigned int screenHeight = desktopMode.height;
@@ -19,9 +13,40 @@ void Facade::run() {
     // Create the SFML window with the screen size
     window.create(sf::VideoMode(screenWidth, screenHeight), "My Program");
 
+    sf::Texture bois;
+    if (!bois.loadFromFile("resources/bois1.jpg")) {
+        cout << "ERROR wood IMAGE DIDN'T LOAD" << std::endl;
+    }
+    sprite_background.setTexture(bois);
+    // Calculate the scale factors to fill the window
+    float scaleX = static_cast<float>(window.getSize().x) / bois.getSize().x;
+    float scaleY = static_cast<float>(window.getSize().y) / bois.getSize().y;
+    // Set the scale of the sprite to fill the window
+    sprite_background.setScale(scaleX, scaleY);
+
+    run();
+}
+
+void Facade::run() {
+
+    // Set up the clock
+    sf::Clock clock;
+    sf::Time timeSinceLastUpdate = sf::Time::Zero;
+
+    /*
+    // Get the screen resolution
+    sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
+    unsigned int screenWidth = desktopMode.width;
+    unsigned int screenHeight = desktopMode.height;
+
+
+    // Create the SFML window with the screen size
+    window.create(sf::VideoMode(screenWidth, screenHeight), "My Program");
+     */
+
     //Initialize the game
     init();
-    draw_init(desktopMode, screenWidth, screenHeight);
+    draw_init( window.getSize().x, window.getSize().y);
 
     while(window.isOpen()){
         sf::Time elapsedTime = clock.restart();
@@ -30,7 +55,7 @@ void Facade::run() {
         {
             timeSinceLastUpdate -= TimePerFrame;
 
-            update(TimePerFrame, desktopMode, screenWidth, screenHeight);
+            update(TimePerFrame, window.getSize().x, window.getSize().y);
         }
         render();
     }
@@ -70,7 +95,7 @@ void Facade::init(){
 
 }
 
-void Facade::draw_init(sf::VideoMode desktopMode, unsigned int screenWidth, unsigned int screenHeight) {
+void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
 
     cout << "WIDTH" << screenWidth << endl;
     cout << "HEIGHT" << screenHeight << endl;
@@ -83,12 +108,13 @@ void Facade::draw_init(sf::VideoMode desktopMode, unsigned int screenWidth, unsi
     if (!bois.loadFromFile("resources/bois1.jpg")) {
         cout << "ERROR wood IMAGE DIDN'T LOAD" << std::endl;
     }
+    /*
     sprite_background.setTexture(bois);
     // Calculate the scale factors to fill the window
     float scaleX = static_cast<float>(window.getSize().x) / bois.getSize().x;
     float scaleY = static_cast<float>(window.getSize().y) / bois.getSize().y;
     // Set the scale of the sprite to fill the window
-    sprite_background.setScale(scaleX, scaleY);
+    sprite_background.setScale(scaleX, scaleY);*/
 
     float scaleFactorJar = 0.9f*screenWidth/2500;
 
@@ -278,7 +304,7 @@ void Facade::render() {
 
 }
 
-void Facade::update(const sf::Time time,sf::VideoMode desktopMode, unsigned int screenWidth, unsigned int screenHeight) {
+void Facade::update(const sf::Time time, unsigned int screenWidth, unsigned int screenHeight) {
     bool isTouched = false; //to test if an object was touched
     sf::Event event;
     while(window.pollEvent(event)){

@@ -34,12 +34,13 @@ private:
 
 public:
     sf::RenderWindow window;
+    Facade();
     void run();  // Constructor
     void init();
     void render();
-    void update(sf::Time time, sf::VideoMode desktopMode, unsigned int screenWidth, unsigned int screenHeight);
+    void update(sf::Time time, unsigned int screenWidth, unsigned int screenHeight);
     void cout_test();
-    void draw_init(sf::VideoMode desktopMode, unsigned int screenWidth, unsigned int screenHeight);
+    void draw_init(unsigned int screenWidth, unsigned int screenHeight);
     void processEvents();
     void startCooking(Preparation preparation);
     void addIngredient(Pizza pizza);
