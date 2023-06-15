@@ -46,7 +46,7 @@ public:
     void run();  // Constructor
     void init();
     void render();
-    void update(sf::Time time, unsigned int screenWidth, unsigned int screenHeight);
+    void update(unsigned int screenWidth, unsigned int screenHeight);
     void cout_test();
     sf::Vector2f draw_init(unsigned int screenWidth, unsigned int screenHeight);
     void processEvents();

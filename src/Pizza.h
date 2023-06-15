@@ -10,7 +10,7 @@ using namespace std;
 class Pizza {
 private :
     int id;
-    std::map< Ingredient, bool> ingredients;
+    std::map< Ingredient, shared_ptr<bool>> ingredients;
     bool completed;
     sf::CircleShape dough;
     sf::CircleShape sauce;
@@ -19,10 +19,10 @@ private :
     sf::Vector2f position;
 public:
     explicit Pizza(const std::vector< Ingredient>& ingr);
-    std::map< Ingredient , bool> getIngredients();
+    std::map< Ingredient , shared_ptr<bool>> getIngredients();
     std::vector<Preparation> getPreparations();
     friend std::ostream& operator<<(std::ostream& os, const Pizza& pizza);
-    void addIngredient(Ingredient ingredient);
+    int addIngredient(Ingredient ingredient);
     void setPosition(sf::Vector2f circleposition);
     sf::Vector2f getPosition();
     //void setDough(float screenWidth,float xVelocity, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni);
