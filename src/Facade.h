@@ -33,6 +33,9 @@ private:
     //sf::Texture texture;
     //sf::Texture texture1;
     std::map<std::string, sf::Texture> textures;
+    int score;
+    sf::Text scoreText;
+    sf::RectangleShape score_board;
     // Declare other member functions and variables
 
 public:

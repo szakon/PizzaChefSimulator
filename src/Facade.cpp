@@ -6,6 +6,8 @@ const sf::Time Facade::TimePerFrame = sf::seconds(1.f/60.f); // On considère qu
 const float Facade::xVelocity = 6; //movement
 
 Facade::Facade(){
+    score = 0;
+    cout << 1 << endl;
     sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
     unsigned int screenWidth = desktopMode.width;
     unsigned int screenHeight = desktopMode.height;
@@ -61,6 +63,7 @@ void Facade::run() {
     //Initialize the game
     init();
     sf::Vector2f cPosition = draw_init( window.getSize().x, window.getSize().y);
+    cout << 2 << endl;
 
     while(window.isOpen()){
         sf::Time elapsedTime = clock.restart();
@@ -131,6 +134,24 @@ sf::Vector2f Facade::draw_init(unsigned int screenWidth, unsigned int screenHeig
     float scaleY = static_cast<float>(window.getSize().y) / bois.getSize().y;
     // Set the scale of the sprite to fill the window
     sprite_background.setScale(scaleX, scaleY);*/
+
+
+    //Set up the score
+    sf::Font font;
+    if (!font.loadFromFile("resources/font.ttf")) {
+        cout << "ERROR FONT DIDN'T LOAD";
+    }
+    score_board.setSize(sf::Vector2f (400,100));
+    score_board.setPosition(20,20);
+    score_board.setFillColor(sf::Color::Black);
+    score_board.setOutlineColor(sf::Color::White);
+    score_board.setOutlineThickness(3);
+
+    scoreText.setFont(font);
+    scoreText.setCharacterSize(50);
+    scoreText.setFillColor(sf::Color::White);
+    scoreText.setPosition(40, 30);
+    scoreText.setString("Your Score: " + std::to_string(score));
 
     float scaleFactorJar = 0.9f*screenWidth/2500;
 
@@ -211,7 +232,7 @@ sf::Vector2f Facade::draw_init(unsigned int screenWidth, unsigned int screenHeig
     sf::Texture cooked_cheese = loadTextureFromFile("resources/cooked-cheese.png");
     pizzas[0].setPosition(circlePosition);
     pizzas[0].setDough(screenWidth,circlePosition, xVelocity, cooked_cheese, ingredients.at("tomatoe").added, ingredients.at("cheese").added, ingredients.at("pepperoni").added);
-
+    cout << 1 << endl;
     return circlePosition;
 
 }
@@ -277,6 +298,8 @@ void Facade::cout_test() {
 
 void Facade::render() {
 
+    cout << 4 << endl;
+
     //render
     window.clear();
     window.draw(sprite_background);
@@ -286,6 +309,15 @@ void Facade::render() {
     for(Preparation& preparation : preparations) {
         preparation.draw(window);
     }
+
+    window.draw(score_board);
+
+    cout << 5 << endl;
+    //scoreText.setString("Your Score: " + std::to_string(score));
+    cout << 6 << endl;
+    //window.draw(scoreText);
+    cout << 7 << endl;
+
 
     window.draw(pizzas[0].getDough());
     window.draw(pizzas[0].getSauce());
@@ -299,6 +331,7 @@ void Facade::render() {
 }
 
 void Facade::update(const sf::Time time, unsigned int screenWidth, unsigned int screenHeight) {
+    cout << 3 << endl;
     bool isTouched = false; //to test if an object was touched
     sf::Event event;
     while(window.pollEvent(event)){
@@ -340,6 +373,7 @@ void Facade::update(const sf::Time time, unsigned int screenWidth, unsigned int 
                     if (pizza.getDough().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
                         cout << "!!DOUGH HIT !!"<< endl;
                         addIngredient(pizza);
+                        //score += res;
                     }
                     //if (pizza.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y))
                 }
