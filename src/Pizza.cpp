@@ -98,30 +98,33 @@ void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelo
     }
 
     //sets pepperoni;
-    float i = 1.0*screenWidth/2500;
-    float j = 1.0*screenWidth/2500;
+    float i = 1.0*screenWidth/2500*2/3;
+    float j = 1.0*screenWidth/2500*2/3;
     for(sf::CircleShape &pepp: pepperonis){
         pepp.setPosition(saucePosition.x + (i*170*screenWidth-20)/2500/2, saucePosition.y + (j*170*screenWidth-20)/2500/2);
         pepp.setRadius(30*screenWidth/2500);
         //position the pepperonis
-        if(i==1*screenWidth/2500){
-            i = (i-0.5)*screenWidth/2500;
-            j= (j+2)*screenWidth/2500; //2,5 ; 2
+        if(i==1*screenWidth/2500*2/3){
+            cout << "first if" << endl;
+            i = (i-0.5)*screenWidth/2500*2/3;
+            j= (j+2)*screenWidth/2500*2/3; //2,5 ; 2
             //pepp.setFillColor(sf::Color::Red);
-        }else if(j==(2+1*screenWidth/2500)*screenWidth/2500){
-            i = (i+3.2)*screenWidth/2500 ;
-            j = (j+1.2)*screenWidth/2500; //2,3
+        }else if(j==(2+1*screenWidth/2500*2/3)*screenWidth/2500*2/3){
+            i = (i+3.2)*screenWidth/2500*2/3 ;
+            j = (j+1.2)*screenWidth/2500*2/3; //2,3
+            cout << "second if" << endl;
             //pepp.setFillColor(sf::Color::Green);
 
         }else{
-            i = (i+0.4)*screenWidth/2500;
-            j = (j- 1.7)*screenWidth/2500;  //3.5, 2.5
+            i = (i+0.4)*screenWidth/2500*2/3;
+            j = (j- 1.7)*screenWidth/2500*2/3;  //3.5, 2.5
+            cout << "third if" << endl;
             //pepp.setFillColor(sf::Color::Blue);
         }
 
         //make visible/invisible the pepperonis
 
-        if(!pepperoni){
+        if(pepperoni){
             pepp.setFillColor(sf::Color::Transparent); // Set fill color to transparent
             pepp.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
             melted_cheese.setOutlineThickness(0.f);
@@ -133,90 +136,6 @@ void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelo
     }
 
 }
-
-
-/*
-void Pizza::setDough(float screenWidth, float xVelocity, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni){
-    //sauce
-    sf::Vector2f saucePosition(200*screenWidth/2500-170*screenWidth/2500+position.x,position.y+200*screenWidth/2500-170*screenWidth/2500);
-
-    dough.setPosition(position);
-    dough.setRadius(200*screenWidth/2500);
-    sf::Color customColor(255, 228, 181);
-    dough.setFillColor(customColor);
-
-    //set invisible sauce
-    sauce.setPosition(saucePosition);
-    sauce.setRadius(170*screenWidth/2500);
-    if(!tomato){
-        sauce.setFillColor(sf::Color::Transparent); // Set fill color to transparent
-        sauce.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
-        sauce.setOutlineThickness(0.f);
-    }else{ //visible sauce
-        sauce.setFillColor(sf::Color::Red); // Set fill color to transparent
-        sauce.setOutlineColor(sf::Color::Red); // Set outline color to transparent
-    }
-
-    //set invisible cheese
-    melted_cheese.setPosition(saucePosition.x+20/2500, saucePosition.y);
-    melted_cheese.setRadius((170*screenWidth-20)/2500);*/
-    /*//texture
-    sf::Texture cooked_cheese;
-    if (!cooked_cheese.loadFromFile("resources/cooked-cheese.png")) {
-        cout << "ERROR cooked-cheese IMAGE DIDN'T LOAD" << std::endl;
-    }*//*
-    if(!cheese){
-        melted_cheese.setFillColor(sf::Color::Transparent); // Set fill color to transparent
-        melted_cheese.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
-        melted_cheese.setOutlineThickness(0.f);
-    }else{ //visible cheese
-
-        melted_cheese.setFillColor(sf::Color::Yellow);// Set fill color to transparent
-        melted_cheese.setOutlineColor(sf::Color::Yellow);
-        melted_cheese.setTexture(&cooked_cheese);
-
-        //melted_cheese.setFillColor(sf::Color::Green);
-        //melted_cheese.setOutlineColor(sf::Color::Green);
-    }
-
-    //sets pepperoni;
-    float i = 1.0*screenWidth/2500;
-    float j = 1.0*screenWidth/2500;
-    for(sf::CircleShape &pepp: pepperonis){
-        pepp.setPosition(saucePosition.x + (i*170*screenWidth-20)/2500/2, saucePosition.y + (j*170*screenWidth-20)/2500/2);
-        pepp.setRadius(30*screenWidth/2500);
-        //position the pepperonis
-        if(i==1*screenWidth/2500){
-            i = (i-0.5)*screenWidth/2500;
-            j= (j+2)*screenWidth/2500; //2,5 ; 2
-            //pepp.setFillColor(sf::Color::Red);
-            cout << "first if: " << i << " et " << j << endl;
-        }else if(j==(2+1*screenWidth/2500)*screenWidth/2500){
-            i = (i+3.2)*screenWidth/2500 ;
-            j = (j+1.2)*screenWidth/2500; //2,3
-            //pepp.setFillColor(sf::Color::Green);
-            cout << "second if: " <<i << " et " << j << endl;
-        }else{
-            i = (i+0.4)*screenWidth/2500;
-            j = (j- 1.7)*screenWidth/2500;  //3.5, 2.5
-            //pepp.setFillColor(sf::Color::Blue);
-            cout <<"third if: " << i << " et " << j << endl;
-        }
-
-        //make visible/invisible the pepperonis
-
-        if(!pepperoni){
-            pepp.setFillColor(sf::Color::Transparent); // Set fill color to transparent
-            pepp.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
-            melted_cheese.setOutlineThickness(0.f);
-        }else{ //visible cheese
-            sf::Color customColor(170, 68, 0);
-            pepp.setFillColor(customColor);
-        }
-
-    }
-
-}*/
 
 sf::CircleShape Pizza::getDough(){
     return dough;
