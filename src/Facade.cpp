@@ -101,6 +101,8 @@ void Facade::init(){
     ingredients.insert(std::make_pair("cheese", che));
     ingredients.insert(std::make_pair("pepperoni", pep));
     std::vector<Ingredient> pizzaIngredients = {tomatoe, cheese, pepperoni};
+    //*pool = PizzaPool(pizzaIngredients);
+    //
     Pizza pizza(pizzaIngredients);
     pizzas.push_back(pizza);
 
@@ -411,7 +413,9 @@ sf::Texture Facade::loadTextureFromFile(const std::string& filePath) {
     return texture;
 }
 
-void pizzaGenerator(){
+void Facade::pizzaGenerator(){
+    //pool->acquirePizza();
+
 
 }
 

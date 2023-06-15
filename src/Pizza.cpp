@@ -2,6 +2,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <random>
 #include <map>
 #include <unordered_map>
 #include <iostream>
@@ -124,7 +125,7 @@ void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelo
 
         //make visible/invisible the pepperonis
 
-        if(pepperoni){
+        if(!pepperoni){
             pepp.setFillColor(sf::Color::Transparent); // Set fill color to transparent
             pepp.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
             melted_cheese.setOutlineThickness(0.f);
@@ -192,5 +193,28 @@ void Pizza::setPosition(sf::Vector2f circleposition) {
 
 sf::Vector2f Pizza::getPosition() {
     return position;
+}
+
+
+void Pizza::randomIngr(){
+    std::random_device rd;
+    std::mt19937 mt(rd());  // Mersenne Twister engine
+    // Define the vector of values
+    std::vector<int> values = {0, 1};
+    std::uniform_real_distribution<double> distribution(0.0, 1.0);
+    int randomIndex = distribution(mt);
+    int numIngredients = values[randomIndex];
+
+    if (numIngredients == 1){
+        std::vector<Ingredient> ingrs;
+        for (auto& ingredient: ingredients){
+            ingrs.push_back(ingredient.first);
+        }
+        int randomIndex2 = distribution(mt);
+        Ingredient ingredient = ingrs[randomIndex2];
+    }
+
+
+
 }
 

@@ -9,6 +9,7 @@
 #include <optional>
 #include "Drawing.h"
 #include "colors.h"
+#include "PizzaPool.h"
 #include <SFML/Graphics.hpp>
 
 #ifndef VALUES_H
@@ -36,6 +37,7 @@ private:
     int score;
     sf::Text scoreText;
     sf::RectangleShape score_board;
+    PizzaPool* pool;
     // Declare other member functions and variables
 
 public:
@@ -51,6 +53,7 @@ public:
     void startCooking(Preparation preparation);
     void addIngredient(Pizza pizza);
     sf::Texture loadTextureFromFile(const std::string& filePath);
+    void pizzaGenerator();
 
     static const sf::Time TimePerFrame;
     static const float xVelocity;

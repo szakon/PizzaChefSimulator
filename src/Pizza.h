@@ -32,6 +32,7 @@ public:
     sf::CircleShape getCheese();
     vector<sf::CircleShape> getPepperoni();
     void addTomato();
+    void randomIngr();
 
     static int id_count;
 };
