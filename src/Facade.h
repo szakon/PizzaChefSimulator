@@ -44,6 +44,7 @@ public:
     void processEvents();
     void startCooking(Preparation preparation);
     void addIngredient(Pizza pizza);
+    sf::Texture loadTextureFromFile(const std::string& filePath);
 
     static const sf::Time TimePerFrame;
     static const float xVelocity;
