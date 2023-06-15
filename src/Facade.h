@@ -30,6 +30,9 @@ private:
     std::map<std::string, Ingr> ingredients;
     std::optional<Kitchen> selected;
     std::string selected_type;
+    //sf::Texture texture;
+    //sf::Texture texture1;
+    std::map<std::string, sf::Texture> textures;
     // Declare other member functions and variables
 
 public:
@@ -40,7 +43,7 @@ public:
     void render();
     void update(sf::Time time, unsigned int screenWidth, unsigned int screenHeight);
     void cout_test();
-    void draw_init(unsigned int screenWidth, unsigned int screenHeight);
+    sf::Vector2f draw_init(unsigned int screenWidth, unsigned int screenHeight);
     void processEvents();
     void startCooking(Preparation preparation);
     void addIngredient(Pizza pizza);

@@ -3,7 +3,7 @@
 #include <iostream>
 
 const sf::Time Facade::TimePerFrame = sf::seconds(1.f/60.f); // On considère que le jeu tourne à 60 FPS
-const float Facade::xVelocity = 1; //movement
+const float Facade::xVelocity = 6; //movement
 
 Facade::Facade(){
     sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
@@ -20,6 +20,23 @@ Facade::Facade(){
     float scaleY = static_cast<float>(window.getSize().y) / bois.getSize().y;
     // Set the scale of the sprite to fill the window
     sprite_background.setScale(scaleX, scaleY);
+
+
+    //setting textures
+    sf::Texture cheese_jar = loadTextureFromFile("resources/storage_cheese.png");
+    sf::Texture tomatoe_jar = loadTextureFromFile("resources/storage_tomatoe.png");
+    sf::Texture pepperoni_jar = loadTextureFromFile("resources/storage_pepperoni.png");
+    sf::Texture grater = loadTextureFromFile("resources/grater.png");
+    sf::Texture pot = loadTextureFromFile("resources/pot.png");
+    sf::Texture cut = loadTextureFromFile("resources/cutting_board.png");
+    textures.insert(std::make_pair("cheese_jar", cheese_jar));
+    textures.insert(std::make_pair("tomatoe_jar", tomatoe_jar));
+    textures.insert(std::make_pair("pepperoni_jar", pepperoni_jar));
+    textures.insert(std::make_pair("grater", grater));
+    textures.insert(std::make_pair("pot", pot));
+    textures.insert(std::make_pair("cut", cut));
+
+
 
     run();
 }
@@ -43,7 +60,7 @@ void Facade::run() {
 
     //Initialize the game
     init();
-    draw_init( window.getSize().x, window.getSize().y);
+    sf::Vector2f cPosition = draw_init( window.getSize().x, window.getSize().y);
 
     while(window.isOpen()){
         sf::Time elapsedTime = clock.restart();
@@ -53,7 +70,12 @@ void Facade::run() {
             timeSinceLastUpdate -= TimePerFrame;
 
             update(TimePerFrame, window.getSize().x, window.getSize().y);
+
         }
+        cPosition.x += xVelocity;
+        sf::Texture cooked_cheese = loadTextureFromFile("resources/cooked-cheese.png");
+        pizzas[0].setDough(window.getSize().x, cPosition, xVelocity, cooked_cheese, ingredients.at("tomatoe").added, ingredients.at("cheese").added, ingredients.at("pepperoni").added) ;
+
         render();
     }
 
@@ -92,7 +114,7 @@ void Facade::init(){
 
 }
 
-void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
+sf::Vector2f Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
 
     cout << "WIDTH" << screenWidth << endl;
     cout << "HEIGHT" << screenHeight << endl;
@@ -101,7 +123,7 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     sf::Vector2u windowSize = window.getSize();
 
     //Draw the background
-    sf::Texture bois = loadTextureFromFile("resouces/bois1.jpg");
+    //sf::Texture bois = loadTextureFromFile("resouces/bois1.jpg");
     /*
     sprite_background.setTexture(bois);
     // Calculate the scale factors to fill the window
@@ -113,38 +135,38 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     float scaleFactorJar = 0.9f*screenWidth/2500;
 
     //create the cheese jar
-    sf::Texture cheese_jar = loadTextureFromFile("resources/storage_cheese.png");
+    //sf::Texture cheese_jar = loadTextureFromFile("resources/storage_cheese.png");
     float positionCheese = 3.0f;
     sf::Sprite spriteCheese;
 
     //create the tomatoe jar
-    sf::Texture tomatoe_jar = loadTextureFromFile("resources/storage_tomatoe.png");
+    //sf::Texture tomatoe_jar = loadTextureFromFile("resources/storage_tomatoe.png");
     float positionTomatoe = 1.5f;
     sf::Sprite spriteTomatoe;
 
     //create the pepperoni jar
-    sf::Texture pepperoni_jar = loadTextureFromFile("resources/storage_peperoni.png");
+    //sf::Texture pepperoni_jar = loadTextureFromFile("resources/storage_peperoni.png");
     float positionPepperoni = 0;
     sf::Sprite spritePepperoni;
 
     for(Storage& storage : storages) {
         if(storage.getIngredient().getlabel() == "tomatoe") {
-            storage.setSprite(tomatoe_jar, scaleFactorJar, positionTomatoe, screenWidth, sprite_background, 0.0, 0.0);
+            storage.setSprite(textures.at("tomatoe_jar"), scaleFactorJar, positionTomatoe, screenWidth, sprite_background, 0.0, 0.0);
             spriteTomatoe = storage.getSprite();
             cout << spriteTomatoe.getTextureRect().height << std::endl;
         }
         else if (storage.getIngredient().getlabel() == "cheese") {
-            storage.setSprite(cheese_jar, scaleFactorJar, positionCheese, screenWidth, sprite_background, 0.0, 0.0);
+            storage.setSprite(textures.at("cheese_jar"), scaleFactorJar, positionCheese, screenWidth, sprite_background, 0.0, 0.0);
             spriteCheese = storage.getSprite();
         }
         else if (storage.getIngredient().getlabel() == "pepperoni") {
-            storage.setSprite(pepperoni_jar, scaleFactorJar, positionPepperoni, screenWidth, sprite_background, 0.0, 0.0);
+            storage.setSprite(textures.at("pepperoni_jar"), scaleFactorJar, positionPepperoni, screenWidth, sprite_background, 0.0, 0.0);
             spritePepperoni = storage.getSprite();
         }
     }
 
     //create a pot
-    sf::Texture pot = loadTextureFromFile("resources/pot.png");
+    //sf::Texture pot = loadTextureFromFile("resources/pot.png");
     float scaleFactorPot = 0.2f*screenWidth/2500;
     float potLine = 20 + 1.2f * spriteTomatoe.getTextureRect().height*scaleFactorJar;
     cout << spriteTomatoe.getTextureRect().height << std::endl;
@@ -152,28 +174,28 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
 
 
     //create a cutting board
-    sf::Texture cut = loadTextureFromFile("resources/cutting_board.png");
+    //sf::Texture cut = loadTextureFromFile("resources/cutting_board.png");
     cout << spriteTomatoe.getTextureRect().height << std::endl;
     cout << potLine << std::endl;
 
 
     //create a grater
-    sf::Texture grater = loadTextureFromFile("resources/grater.png");
+    //sf::Texture grater = loadTextureFromFile("resources/grater.png");
     float scaleFactorGrater = 0.1f*screenWidth/2500;
 
     //random sprite used for preparations
     for(Preparation& preparation : preparations) {
         if(preparation.getIngredient().getlabel() == "tomatoe") {
-            preparation.setSprite(pot, scaleFactorPot, positionTomatoe, screenWidth, spriteTomatoe, scaleFactorJar, potLine);
+            preparation.setSprite(textures.at("pot"), scaleFactorPot, positionTomatoe, screenWidth, spriteTomatoe, scaleFactorJar, potLine);
             cout << "TOMATOE" << endl;
         }
         else if (preparation.getIngredient().getlabel() == "cheese") {
             cout << "Position cheese" << positionCheese << endl;
-            preparation.setSprite(grater, scaleFactorGrater, positionCheese+1.5, screenWidth, spriteCheese, scaleFactorJar, potLine);
+            preparation.setSprite(textures.at("grater"), scaleFactorGrater, positionCheese+1.5, screenWidth, spriteCheese, scaleFactorJar, potLine);
             cout << "CHEESE" << endl;
         }
         else if (preparation.getIngredient().getlabel() == "pepperoni") {
-            preparation.setSprite(cut, scaleFactorPot, positionPepperoni, screenWidth, spritePepperoni, scaleFactorJar, potLine);
+            preparation.setSprite(textures.at("cut"), scaleFactorPot, positionPepperoni, screenWidth, spritePepperoni, scaleFactorJar, potLine);
             cout << "PEPPERONI" << endl;
         }
     }
@@ -188,9 +210,9 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     //texture
     sf::Texture cooked_cheese = loadTextureFromFile("resources/cooked-cheese.png");
     pizzas[0].setPosition(circlePosition);
-    pizzas[0].setDough(screenWidth, xVelocity, cooked_cheese, ingredients.at("tomatoe").added, ingredients.at("cheese").added, ingredients.at("pepperoni").added);
+    pizzas[0].setDough(screenWidth,circlePosition, xVelocity, cooked_cheese, ingredients.at("tomatoe").added, ingredients.at("cheese").added, ingredients.at("pepperoni").added);
 
-
+    return circlePosition;
 
 }
 
@@ -330,6 +352,7 @@ void Facade::update(const sf::Time time, unsigned int screenWidth, unsigned int 
             }
 
             //physics
+            /*
             auto circlePosition = pizzas[0].getPosition();
             pizzas[0].setPosition(sf::Vector2f(circlePosition.x + xVelocity, circlePosition.y));
 
@@ -339,8 +362,8 @@ void Facade::update(const sf::Time time, unsigned int screenWidth, unsigned int 
             if (!cooked_cheese.loadFromFile("resources/cooked-cheese.png")) {
                 cout << "ERROR cooked-cheese IMAGE DIDN'T LOAD" << std::endl;
             }
-            pizzas[0].setDough(screenWidth, xVelocity, cooked_cheese, ingredients.at("tomatoe").added, ingredients.at("cheese").added, ingredients.at("pepperoni").added) ;
-
+            pizzas[0].setDough(screenWidth,circlePosition, xVelocity, cooked_cheese, ingredients.at("tomatoe").added, ingredients.at("cheese").added, ingredients.at("pepperoni").added) ;
+            */
         }
     }
 

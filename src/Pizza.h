@@ -25,7 +25,8 @@ public:
     void addIngredient(Ingredient ingredient);
     void setPosition(sf::Vector2f circleposition);
     sf::Vector2f getPosition();
-    void setDough(float screenWidth,float xVelocity, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni);
+    //void setDough(float screenWidth,float xVelocity, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni);
+    void setDough(float screenWidth, sf::Vector2f circlePosition, float xVelocity, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni);
     sf::CircleShape getDough();
     sf::CircleShape getSauce();
     sf::CircleShape getCheese();
