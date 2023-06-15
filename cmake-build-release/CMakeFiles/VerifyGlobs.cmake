@@ -5,6 +5,16 @@ cmake_policy(SET CMP0009 NEW)
 # RESOURCES at mainLauncher/CMakeLists.txt:7 (file)
 file(GLOB NEW_GLOB LIST_DIRECTORIES true "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/*.*")
 set(OLD_GLOB
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/background.png"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/bois1.jpg"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/cooked-cheese.png"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/cutting_board.png"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/grater.png"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/grater_cheese.png"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/pot.png"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/storage_cheese.png"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/storage_peperoni.png"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/storage_tomatoe.png"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/visage.xml"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
