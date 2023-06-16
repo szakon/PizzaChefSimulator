@@ -15,7 +15,7 @@ protected:
 public:
     explicit Kitchen(Ingredient ingr);
     Ingredient getIngredient();
-    virtual void setSprite(sf::Texture& texture, float scaleFactor, float position,int screenWidth, sf::Sprite jar, float scaleJar, float y_position);
+    virtual void setSprite(sf::Texture& texture, float scaleFactor, float position,int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& timer);
     virtual sf::Sprite getSprite() const;
     bool getSelected() const;
     virtual void draw(sf::RenderWindow& window);

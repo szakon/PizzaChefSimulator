@@ -6,7 +6,7 @@
 #include <thread>
 
 const sf::Time Facade::TimePerFrame = sf::seconds(1.f/60.f); // On considère que le jeu tourne à 60 FPS
-const float Facade::xVelocity = 19; //movement
+const float Facade::xVelocity = 10; //movement
 
 Facade::Facade(){
     score = 0;
@@ -35,8 +35,8 @@ Facade::Facade(){
     sf::Texture pot = loadTextureFromFile("resources/pot.png");
     sf::Texture cut = loadTextureFromFile("resources/cutting_board.png");
     sf::Texture cooked_cheese = loadTextureFromFile("resources/cooked-cheese.png");
-    sf::Texture check = loadTextureFromFile("resources/check.png");
-    sf::Texture timer = loadTextureFromFile("resources/timer.png");
+    sf::Texture check = loadTextureFromFile("resources/check_mark.png");
+    sf::Texture timer = loadTextureFromFile("resources/stopwatch.png");
     textures.insert(std::make_pair("cheese_jar", cheese_jar));
     textures.insert(std::make_pair("tomatoe_jar", tomatoe_jar));
     textures.insert(std::make_pair("pepperoni_jar", pepperoni_jar));
@@ -226,16 +226,16 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
 
     for(Storage& storage : storages) {
         if(storage.getIngredient().getlabel() == "tomatoe") {
-            storage.setSprite(textures.at("tomatoe_jar"), scaleFactorJar, positionTomatoe, screenWidth, sprite_background, 0.0, 0.0);
+            storage.setSprite(textures.at("tomatoe_jar"), scaleFactorJar, positionTomatoe, screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
             spriteTomatoe = storage.getSprite();
             cout << spriteTomatoe.getTextureRect().height << std::endl;
         }
         else if (storage.getIngredient().getlabel() == "cheese") {
-            storage.setSprite(textures.at("cheese_jar"), scaleFactorJar, positionCheese, screenWidth, sprite_background, 0.0, 0.0);
+            storage.setSprite(textures.at("cheese_jar"), scaleFactorJar, positionCheese, screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
             spriteCheese = storage.getSprite();
         }
         else if (storage.getIngredient().getlabel() == "pepperoni") {
-            storage.setSprite(textures.at("pepperoni_jar"), scaleFactorJar, positionPepperoni, screenWidth, sprite_background, 0.0, 0.0);
+            storage.setSprite(textures.at("pepperoni_jar"), scaleFactorJar, positionPepperoni, screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
             spritePepperoni = storage.getSprite();
         }
     }
@@ -257,17 +257,17 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     //random sprite used for preparations
     for(Preparation& preparation : preparations) {
         if(preparation.getIngredient().getlabel() == "tomatoe") {
-            preparation.setSprite(textures.at("pot"), scaleFactorPot, positionTomatoe, screenWidth, spriteTomatoe, scaleFactorJar, potLine);
+            preparation.setSprite(textures.at("pot"), scaleFactorPot, positionTomatoe, screenWidth, spriteTomatoe, scaleFactorJar, potLine, textures.at("timer"), textures.at("check"));
         }
         else if (preparation.getIngredient().getlabel() == "cheese") {
             cout << "Position cheese" << positionCheese << endl;
-            preparation.setSprite(textures.at("grater"), scaleFactorGrater, positionCheese+1.5, screenWidth, spriteCheese, scaleFactorJar, potLine);
+            preparation.setSprite(textures.at("grater"), scaleFactorGrater, positionCheese+1.5, screenWidth, spriteCheese, scaleFactorJar, potLine, textures.at("timer"), textures.at("check"));
         }
         else if (preparation.getIngredient().getlabel() == "pepperoni") {
-            preparation.setSprite(textures.at("cut"), scaleFactorPot, positionPepperoni, screenWidth, spritePepperoni, scaleFactorJar, potLine);
+            preparation.setSprite(textures.at("cut"), scaleFactorPot, positionPepperoni, screenWidth, spritePepperoni, scaleFactorJar, potLine, textures.at("timer"), textures.at("check"));
         }
         cout << "Set timer";
-        preparation.addTimer(textures.at("timer"));
+        //preparation.addTimer(textures.at("timer"));
     }
 
 
@@ -340,9 +340,16 @@ void Facade::render() {
 
     //render
     sf::Sprite test;
-    test.setTexture(textures.at("pot"));
-    test.setPosition(sf::Vector2f (200,20));
-    test.setScale(sf::Vector2f(300,300));
+    test.setTexture(textures.at("timer"));
+    test.setPosition(sf::Vector2f (500,500));
+    test.setScale(sf::Vector2f(0.05,0.05));
+
+
+    sf::Sprite test2;
+    test2.setTexture(textures.at("check"));
+    test2.setPosition(sf::Vector2f (500,500));
+    test2.setScale(sf::Vector2f(0.05,0.05));
+
     window.clear();
     window.draw(sprite_background);
     for(Storage& storage : storages) {
@@ -359,6 +366,7 @@ void Facade::render() {
 
     window.draw(belt);
 
+
     for (auto &pair: pizzas) {
         window.draw(pair.second.pizza.getDough());
         window.draw(pair.second.pizza.getSauce());
@@ -367,7 +375,6 @@ void Facade::render() {
             window.draw(pair.second.pizza.getPepperoni()[i]);
         }
     }
-    window.draw(test);
 
     window.display();
 
@@ -500,13 +507,13 @@ void Facade::randomIngr(Pizza pizza){
 
     std::random_device rd;
     std::mt19937 mt(rd());
-    std::vector<int> values = {0, 1, 2};
+    std::vector<int> values = {0, 1};
     std::uniform_int_distribution<int> distribution(0, 1);
     int randomIndex = distribution(mt);
     int numIngredients = values[randomIndex];
     //numIngredients = 1;
     cout << "NUMBER OF INGREDIENTS " << numIngredients << endl;
-    if (numIngredients != 0){
+    if (numIngredients == 1){
         std::vector<Ingredient> ingrs;
         for (auto& ingredient: ingredients){
             ingrs.push_back(ingredient.second.ingredient);

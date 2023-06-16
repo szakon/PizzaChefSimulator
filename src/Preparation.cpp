@@ -71,22 +71,34 @@ void Preparation::reset() {
     *time_left = time_prep;
 }
 
-void Preparation::setSprite(sf::Texture& texture, float scaleFactor, float position, int screenWidth, sf::Sprite jar, float scaleJar, float y_position){
+void Preparation::setSprite(sf::Texture& texture, float scaleFactor, float position, int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& clock, sf::Texture& check){
     sprite.setTexture(texture);
     sprite.setScale(scaleFactor,scaleFactor);
 
     int center = jar.getTextureRect().width * scaleJar/2 - sprite.getTextureRect().width*scaleFactor/2;
     int distance = 0.4*sprite.getTextureRect().width* scaleFactor;
 
+    timer.setTexture(clock);
+    timer.setScale(sf::Vector2f(0.05,0.05));
+
+
+    checkMark.setTexture(check);
+    checkMark.setScale(sf::Vector2f(0.2,0.2));
+
+
     if (id == 1){
         cout << "FIRST SPRITE" << endl;
         sf::Vector2f pot1Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center - distance, y_position);
         sprite.setPosition(pot1Position);
+        timer.setPosition(pot1Position);
+        checkMark.setPosition(pot1Position);
 
     }else{
         cout << "SECOND SPRITE" << endl;
         sf::Vector2f pot2Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center + distance, y_position);
         sprite.setPosition(pot2Position);
+        timer.setPosition(pot2Position);
+        checkMark.setPosition(pot2Position);
     }
 }
 
@@ -98,17 +110,21 @@ void Preparation::draw(sf::RenderWindow& window){
     window.draw(sprite);
     cout << "AVANT";
     if(*status == inprep) {
+        cout << "OK C4EST TIMER";
+        window.draw(timer);
+    }else if (*status == ready){
+
         cout << "OK C4EST BON";
-        window.draw(sprite_prep);
+        window.draw(checkMark);
     }
 }
-
+/*
 void Preparation::addTimer(sf::Texture &texture) {
     sf::Vector2f position = sf::Vector2f(200,200);
     sprite_prep.setTexture(texture);
     sprite_prep.setScale(sf::Vector2f (300,300));
     sprite_prep.setPosition(position);
-}
+}*/
 
 
 
