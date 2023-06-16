@@ -85,20 +85,17 @@ void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelo
         pepp.setRadius(30*screenWidth/2500);
         //position the pepperonis
         if(i==1*screenWidth/2500*2/3){
-            cout << "first if" << endl;
             i = (i-0.5)*screenWidth/2500*2/3;
             j= (j+2)*screenWidth/2500*2/3; //2,5 ; 2
             //pepp.setFillColor(sf::Color::Red);
         }else if(j==(2+1*screenWidth/2500*2/3)*screenWidth/2500*2/3){
             i = (i+3.2)*screenWidth/2500*2/3 ;
             j = (j+1.2)*screenWidth/2500*2/3; //2,3
-            cout << "second if" << endl;
             //pepp.setFillColor(sf::Color::Green);
 
         }else{
             i = (i+0.4)*screenWidth/2500*2/3;
             j = (j- 1.7)*screenWidth/2500*2/3;  //3.5, 2.5
-            cout << "third if" << endl;
             //pepp.setFillColor(sf::Color::Blue);
         }
 

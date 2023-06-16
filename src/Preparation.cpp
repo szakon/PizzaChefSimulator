@@ -11,77 +11,69 @@
 
 Preparation::Preparation(Ingredient ingredient, int id) : Kitchen(ingredient) {
     this->id = id;
-    free = true;
-    ready = false;
+    status = notused;
     time_prep = 3;
     time_left = 3;
 }
 
 std::ostream& operator<<(std::ostream& os, const Preparation& preparation)
 {
-    os << "This is the Preparation :" << endl;
-    os << "free : " << preparation.free << endl;
-    os << "ready : " << preparation.ready << endl;
+    os << "Preparation :" << endl;
+    os << "status" << preparation.status;
     os << "time_prep : " << preparation.time_prep << endl;
     os << "time_left : " << preparation.time_left << endl;
     return os;
 }
 
-int Preparation::prepare(Storage stock) {
-    if(ingredient == stock.getIngredient()) {
-        if(free) {
-            free = false;
-            while(time_left > 0) {
-                time_left -=1;
-                sleep(1);
-            }
-
-            ready = true;
-
-        }
-        else{
-            return 1;
-        }
+bool Preparation::preparing_if_needed() {
+    if(inprep) {
+        time_left -= 1;
     }
-    else{
-        return 1;
+    if(time_left == 0) {
+        status = ready;
+    };
+}
+
+std::string Preparation::getStatus() const {
+    if(status == inprep) {
+        return "inprep";
     }
-    return 0; //preparation time is done : preparation is ready to be used
+    else if (status == notused) {
+        return "notused";
+    }
+    else if (status == ready) {
+        return "ready";
+    }
 }
 
-
-void Preparation::freeprep() {
-    ready = false;
-    free = true;
+void Preparation::setStatus( const std::string& stat) {
+    if(stat == "inprep") {
+        status = inprep;
+    }
+    else if (stat == "notused") {
+        status = notused;
+    }
+    else if (stat == "ready") {
+        status = ready;
+    }
 }
 
-bool Preparation::getready() const {
-    return ready;
-}
-
-bool Preparation::getfree() {
-    return free;
-}
-
-int Preparation::gettime_prep() {
+int Preparation::getTimePrep() {
     return time_prep;
 }
 
-int Preparation::gettime_left() {
+int Preparation::getTimeLeft() {
     return time_left;
 }
 
 void Preparation::reset() {
-    selected = false;
-    free = true;
-    ready = false;
+    status = notused;
     time_left = time_prep;
 }
 
 void Preparation::setSprite(sf::Texture& texture, float scaleFactor, float position, int screenWidth, sf::Sprite jar, float scaleJar, float y_position){
     sprite.setTexture(texture);
     sprite.setScale(scaleFactor,scaleFactor);
-    //sf::Vector2f spriteJar(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor, 20);
     int center = jar.getTextureRect().width * scaleJar/2 - sprite.getTextureRect().width*scaleFactor/2;
     int distance = 0.4*sprite.getTextureRect().width* scaleFactor;
     if (id == 1){
@@ -93,10 +85,6 @@ void Preparation::setSprite(sf::Texture& texture, float scaleFactor, float posit
         sf::Vector2f pot2Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center + distance, y_position);
         sprite.setPosition(pot2Position);
     }
-    //sf::Vector2f pot1Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center + distance, y_position);
-    //sf::Vector2f pot2Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center - distance, y_position);
-    //sf::Vector2f pot1Position(20 + 1.2f * jar.getTextureRect().height*scaleJar);
-    //sf::Vector2f position_sprite(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor, 20);
 }
 
 bool Preparation::isStorage(){
@@ -106,4 +94,6 @@ bool Preparation::isStorage(){
 void Preparation::draw(sf::RenderWindow& window){
     window.draw(sprite);
 }
+
+
 

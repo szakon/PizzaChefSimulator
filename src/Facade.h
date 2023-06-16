@@ -25,6 +25,7 @@ struct Ingr {
 class Facade {
 private:
     sf::Sprite sprite_background;
+    sf::RectangleShape belt;
     std::vector<Pizza> pizzas;
     std::vector<Storage> storages;
     std::vector<Preparation> preparations;
