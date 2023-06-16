@@ -32,13 +32,16 @@ Facade::Facade(){
     sf::Texture grater = loadTextureFromFile("resources/grater.png");
     sf::Texture pot = loadTextureFromFile("resources/pot.png");
     sf::Texture cut = loadTextureFromFile("resources/cutting_board.png");
+    sf::Texture check = loadTextureFromFile("resources/check.png");
+    sf::Texture timer = loadTextureFromFile("resources/timer.png");
     textures.insert(std::make_pair("cheese_jar", cheese_jar));
     textures.insert(std::make_pair("tomatoe_jar", tomatoe_jar));
     textures.insert(std::make_pair("pepperoni_jar", pepperoni_jar));
     textures.insert(std::make_pair("grater", grater));
     textures.insert(std::make_pair("pot", pot));
     textures.insert(std::make_pair("cut", cut));
-
+    textures.insert(std::make_pair("check", check));
+    textures.insert(std::make_pair("timer", timer));
 
 
     Ingredient tomatoe("tomatoe");
@@ -193,15 +196,11 @@ sf::Vector2f Facade::draw_init(unsigned int screenWidth, unsigned int screenHeig
     //sf::Texture pot = loadTextureFromFile("resources/pot.png");
     float scaleFactorPot = 0.2f*screenWidth/2500;
     float potLine = 20 + 1.2f * spriteTomatoe.getTextureRect().height*scaleFactorJar;
-    cout << spriteTomatoe.getTextureRect().height << std::endl;
-    cout << potLine << std::endl;
-
 
     //create a cutting board
     //sf::Texture cut = loadTextureFromFile("resources/cutting_board.png");
     cout << spriteTomatoe.getTextureRect().height << std::endl;
     cout << potLine << std::endl;
-
 
     //create a grater
     //sf::Texture grater = loadTextureFromFile("resources/grater.png");
@@ -211,17 +210,16 @@ sf::Vector2f Facade::draw_init(unsigned int screenWidth, unsigned int screenHeig
     for(Preparation& preparation : preparations) {
         if(preparation.getIngredient().getlabel() == "tomatoe") {
             preparation.setSprite(textures.at("pot"), scaleFactorPot, positionTomatoe, screenWidth, spriteTomatoe, scaleFactorJar, potLine);
-            cout << "TOMATOE" << endl;
         }
         else if (preparation.getIngredient().getlabel() == "cheese") {
             cout << "Position cheese" << positionCheese << endl;
             preparation.setSprite(textures.at("grater"), scaleFactorGrater, positionCheese+1.5, screenWidth, spriteCheese, scaleFactorJar, potLine);
-            cout << "CHEESE" << endl;
         }
         else if (preparation.getIngredient().getlabel() == "pepperoni") {
             preparation.setSprite(textures.at("cut"), scaleFactorPot, positionPepperoni, screenWidth, spritePepperoni, scaleFactorJar, potLine);
-            cout << "PEPPERONI" << endl;
         }
+        cout << "Set timer";
+        preparation.addTimer(textures.at("timer"));
     }
 
 
@@ -289,6 +287,10 @@ void Facade::addRandomIngredient(Pizza pizza, Ingredient ingredient) {
 void Facade::render() {
 
     //render
+    sf::Sprite test;
+    test.setTexture(textures.at("pot"));
+    test.setPosition(sf::Vector2f (200,20));
+    test.setScale(sf::Vector2f(300,300));
     window.clear();
     window.draw(sprite_background);
     for(Storage& storage : storages) {
@@ -304,6 +306,8 @@ void Facade::render() {
     window.draw(scoreText);
 
     window.draw(belt);
+
+    window.draw(test);
 
 
     window.draw(pizzas[0].getDough());
@@ -324,7 +328,6 @@ void Facade::update(unsigned int screenWidth, unsigned int screenHeight) {
     //Update the preparations preparing
     for (Preparation prep : preparations) {
         prep.preparing_if_needed();
-        cout << "Preparation of : " << prep.getIngredient() << " status " << prep.getStatus() << " time left : " << prep.getTimeLeft() << endl;
     }
 
     sf::Event event;
