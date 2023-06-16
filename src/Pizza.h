@@ -9,7 +9,6 @@ using namespace std;
 
 class Pizza {
 private :
-    int id;
     int nextId;
     std::map< Ingredient, shared_ptr<bool>> ingredients;
     bool completed;
@@ -18,7 +17,11 @@ private :
     sf::CircleShape melted_cheese;
     vector<sf::CircleShape> pepperonis;
     sf::Vector2f position;
+    sf::Vector2f circlePosition;
+
 public:
+    int id;
+
     explicit Pizza(const std::vector< Ingredient>& ingr);
     std::map< Ingredient , shared_ptr<bool>> getIngredients();
     std::vector<Preparation> getPreparations();
@@ -27,10 +30,10 @@ public:
     void setPosition(sf::Vector2f circleposition);
     sf::Vector2f getPosition();
     //void setDough(float screenWidth,float xVelocity, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni);
-    void setDough(float screenWidth, sf::Vector2f circlePosition, float xVelocity, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni);
+    void setDough(unsigned int screenWidth, unsigned int screenHeight, float circlePosition, float xVelocity, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni);
     sf::CircleShape getDough() const;
-    sf::CircleShape getSauce();
-    sf::CircleShape getCheese();
+    sf::CircleShape getSauce() ;
+    sf::CircleShape getCheese() ;
     vector<sf::CircleShape> getPepperoni();
     void addTomato();
     void randomIngr();
@@ -38,5 +41,8 @@ public:
     bool operator==(const Pizza& other) const;
     int getId();
     static int id_count;
+    sf::Vector2f getCirclePosition();
+
+    bool getIngredientStatus(std::string string) const;
 };
 

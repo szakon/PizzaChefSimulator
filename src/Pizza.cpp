@@ -27,7 +27,12 @@ Pizza::Pizza(const std::vector<Ingredient>& ingr)
     sf::CircleShape pepperoni3;
     sf::CircleShape pepperoni4;
     pepperonis = {pepperoni1, pepperoni2,pepperoni3, pepperoni4};
+    circlePosition.x = 0;
 
+}
+
+sf::Vector2f Pizza::getCirclePosition(){
+    return circlePosition;
 }
 
 int Pizza::getId(){
@@ -47,7 +52,9 @@ bool Pizza::operator==(const Pizza& other) const {
     return this->id == other.id;
 }
 
-void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelocity, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni){
+void Pizza::setDough(unsigned int screenWidth, unsigned int screenHeight, float circlePositionX, float xVelocity, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni){
+    circlePosition.x=circlePositionX;
+    circlePosition.y = 5*screenHeight/10;
     sf::Vector2f saucePosition(200*screenWidth/2500-170*screenWidth/2500+circlePosition.x,circlePosition.y+200*screenWidth/2500-170*screenWidth/2500);
     dough.setPosition(circlePosition);
     dough.setRadius(200*screenWidth/2500);
@@ -76,7 +83,7 @@ void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelo
         melted_cheese.setOutlineThickness(0.f);
     }else{ //visible cheese
         for(auto& ingredient: ingredients){
-            cout<< "true or false of ingredient: " << ingredient.first.getlabel() << "status " << ingredient.second << endl;
+            //cout<< "true or false of ingredient: " << ingredient.first.getlabel() << "status " << ingredient.second << endl;
         }
         melted_cheese.setFillColor(sf::Color::Yellow);// Set fill color to transparent
         melted_cheese.setOutlineColor(sf::Color::Yellow);
@@ -145,6 +152,12 @@ void Pizza::addTomato(){
 }
 
 
+// Define the less-than operator implementation
+bool operator<(const Pizza& lhs, const Pizza& rhs) {
+    // Compare the labels of the ingredients for ordering
+    return lhs.id < rhs.id;
+}
+
 
 int Pizza::addIngredient(Ingredient ingredient) {
     int res = -2;
@@ -159,6 +172,7 @@ int Pizza::addIngredient(Ingredient ingredient) {
                 if (ingr.getlabel() == "tomatoe"){
                     cout << 7 << endl;
                     *pair.second = true;
+                    cout << 8 << endl;
                 }
                 else if(ingr.getlabel() == "cheese"){
                     cout << 7.5 << endl;
@@ -185,6 +199,15 @@ void Pizza::setPosition(sf::Vector2f circleposition) {
 
 sf::Vector2f Pizza::getPosition() {
     return position;
+}
+
+bool Pizza::getIngredientStatus(std::string string) const{
+    for (auto& pair: ingredients) {
+        if (pair.first.getlabel() == string){
+            bool rtrn = *pair.second;
+            return rtrn;
+        }
+    }
 }
 
 void Pizza::resetPizza(){

@@ -73,7 +73,7 @@ void Facade::run() {
     //Initialize the game
     init();
     pizzaGenerator();
-    sf::Vector2f cPosition = draw_init( window.getSize().x, window.getSize().y);
+    draw_init( window.getSize().x, window.getSize().y);
     cout << 2 << endl;
 
 
@@ -89,23 +89,36 @@ void Facade::run() {
         }
 
         sf::Texture cooked_cheese = loadTextureFromFile("resources/cooked-cheese.png");
-        if(cPosition.x > window.getSize().x*0.65) {
-            //we are at the end of the line
-            //circlePosition = sf::Vector2f(0,5*screenHeight/10);
-            //saucePosition = sf::Vector2f(200*screenWidth/2500-170*screenWidth/2500,5*screenHeight/10+200*screenWidth/2500-170*screenWidth/2500);
-            //pizzas.front().invisible();
-            cout << "HIT" << endl;
-            releasePizza(pizzas.front());
-            if (pizzas.empty()){
-                window.close();
+        for(auto &pair: pizzas){
+            if(pair.second.pizza.getCirclePosition().x > window.getSize().x*0.65) {
+                //we are at the end of the line
+                //circlePosition = sf::Vector2f(0,5*screenHeight/10);
+                //saucePosition = sf::Vector2f(200*screenWidth/2500-170*screenWidth/2500,5*screenHeight/10+200*screenWidth/2500-170*screenWidth/2500);
+                //pizzas.front().invisible();
+                cout << "HIT" << endl;
+                releasePizza(pair.second.pizza);
+                if (pizzas.empty()){
+                    window.close();
+                }
+
+
+            }else if(pair.second.pizza.getCirclePosition().x > window.getSize().x*0.2){
+                //cout << "nestle" << endl;
+                if (pair.second.newPizzaGenerated == false){
+                    cout << "nestle22" << endl;
+                    pizzaGenerator();
+                    pair.second.newPizzaGenerated = true;
+                }
+                unsigned int cPosition = pair.second.pizza.getCirclePosition().x + xVelocity;
+                pair.second.pizza.setDough(window.getSize().x, window.getSize().y, cPosition, xVelocity, cooked_cheese, pair.second.pizza.getIngredientStatus("tomatoe"), pair.second.pizza.getIngredientStatus("cheese"), pair.second.pizza.getIngredientStatus("pepperoni")) ;
+
             }
-
-
+            else {
+                unsigned int cPosition = pair.second.pizza.getCirclePosition().x + xVelocity;
+                pair.second.pizza.setDough(window.getSize().x, window.getSize().y, cPosition, xVelocity, cooked_cheese, pair.second.pizza.getIngredientStatus("tomatoe"), pair.second.pizza.getIngredientStatus("cheese"), pair.second.pizza.getIngredientStatus("pepperoni")) ;
+            }
         }
-        else {
-            cPosition.x += xVelocity;
-            pizzas.front().setDough(window.getSize().x, cPosition, xVelocity, cooked_cheese, ingredients.at("tomatoe").added, ingredients.at("cheese").added, ingredients.at("pepperoni").added) ;
-        }
+
         render();
     }
 
@@ -145,7 +158,7 @@ void Facade::init(){
 
 }
 
-sf::Vector2f Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
+void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
 
     cout << "WIDTH" << screenWidth << endl;
     cout << "HEIGHT" << screenHeight << endl;
@@ -243,15 +256,19 @@ sf::Vector2f Facade::draw_init(unsigned int screenWidth, unsigned int screenHeig
     //create a PIZZA
     //TEST TO BE CHANGED LATER!!!!!!!!!!!!!!
     //dough
-    sf::CircleShape pizzaShape;
-    sf::Vector2f circlePosition(0,5*screenHeight/10);
+    //sf::CircleShape pizzaShape;
+    //sf::Vector2f circlePosition(0,5*screenHeight/10);
+    //float circlePositionY = 5*screenHeight/10;
+    float circlePositionX = 0;
 
     //texture
     sf::Texture cooked_cheese = loadTextureFromFile("resources/cooked-cheese.png");
-    pizzas[0].setPosition(circlePosition);
-    pizzas[0].setDough(screenWidth,circlePosition, xVelocity, cooked_cheese, ingredients.at("tomatoe").added, ingredients.at("cheese").added, ingredients.at("pepperoni").added);
+    for (auto pair: pizzas){
+        //pizza.setPosition(circlePosition);
+        pair.second.pizza.setDough(screenWidth, screenHeight, circlePositionX, xVelocity, cooked_cheese, pair.second.pizza.getIngredientStatus("tomatoe"), pair.second.pizza.getIngredientStatus("cheese"), pair.second.pizza.getIngredientStatus("pepperoni"));
+
+    }
     cout << 1 << endl;
-    return circlePosition;
 
 }
 
@@ -350,12 +367,13 @@ void Facade::render() {
 
     window.draw(belt);
 
-
-    window.draw(pizzas[0].getDough());
-    window.draw(pizzas[0].getSauce());
-    window.draw(pizzas[0].getCheese());
-    for (size_t i = 0; i<pizzas[0].getPepperoni().size(); i++) {
-        window.draw(pizzas[0].getPepperoni()[i]);
+    for (auto &pair: pizzas){
+        window.draw(pair.second.pizza.getDough());
+        window.draw(pair.second.pizza.getSauce());
+        window.draw(pair.second.pizza.getCheese());
+        for (size_t i = 0; i<pair.second.pizza.getPepperoni().size(); i++) {
+            window.draw(pair.second.pizza.getPepperoni()[i]);
+        }
     }
 
     window.display();
@@ -419,10 +437,10 @@ void Facade::update(unsigned int screenWidth, unsigned int screenHeight) {
                     }
                 }
 
-                for (Pizza pizza: pizzas){
-                    if (pizza.getDough().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                for (auto pair: pizzas){
+                    if (pair.second.pizza.getDough().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
                         cout << "!!DOUGH HIT !!"<< endl;
-                        addIngredient(pizza);
+                        addIngredient(pair.second.pizza);
                     }
                     //if (pizza.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y))
                 }
@@ -454,7 +472,12 @@ void Facade::pizzaGenerator(){
     //std::shared_ptr<Pizza> pizzaPtr = std::make_shared<Pizza>(pizza);
     //pizza.randomIngr();
     randomIngr(pizza);
-    pizzas.push_back(pizza);
+    Piz piz = {pizza, false};
+    pizzas.insert(std::make_pair(pizza.getId(), piz));
+    //pizzas.push_back(pizza);
+    sf::Texture cooked_cheese = loadTextureFromFile("resources/cooked-cheese.png");
+    pizza.setDough(window.getSize().x, window.getSize().y, 0, xVelocity, cooked_cheese, pizza.getIngredientStatus("tomatoe"), pizza.getIngredientStatus("cheese"), pizza.getIngredientStatus("pepperoni"));
+
 
 
 }
@@ -463,9 +486,9 @@ void Facade::pizzaGenerator(){
 void Facade::releasePizza(Pizza pizza){
     pizza.resetPizza();
     int pizzasIndex = 0;
-    for (Pizza &piz: pizzas){
-        if(piz == pizza){
-            pizzas.erase(pizzas.begin() + pizzasIndex);
+    for (auto &pair: pizzas){
+        if(pair.second.pizza == pizza){
+            pizzas.erase(pair.first);
             break;
         }
         pizzasIndex++;

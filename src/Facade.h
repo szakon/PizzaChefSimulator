@@ -21,13 +21,17 @@ struct Ingr {
     bool added;
 };
 
+struct Piz {
+    Pizza pizza;
+    bool newPizzaGenerated;
+};
 #endif // VALUES_H
 
 class Facade {
 private:
     sf::Sprite sprite_background;
     sf::RectangleShape belt;
-    std::vector<Pizza> pizzas;
+    std::map<int, Piz> pizzas;
     std::vector<Storage> storages;
     std::vector<Preparation> preparations;
     std::map<std::string, Ingr> ingredients;
@@ -51,7 +55,7 @@ public:
     void render();
     void update(unsigned int screenWidth, unsigned int screenHeight);
     void cout_test();
-    sf::Vector2f draw_init(unsigned int screenWidth, unsigned int screenHeight);
+    void draw_init(unsigned int screenWidth, unsigned int screenHeight);
     void processEvents();
     void startCooking(Preparation preparation);
     void addIngredient(Pizza pizza);
