@@ -11,14 +11,14 @@ enum Status {
 class Preparation : public Kitchen {
 private:
     int id;
-    Status status;
+    shared_ptr<Status> status;
     int time_prep;
-    int time_left;
+    shared_ptr<int> time_left;
 public:
     explicit Preparation(Ingredient ingredient, int id);
     bool preparing_if_needed();
     std::string getStatus() const;
-    void setStatus( const std::string& stat);
+    void setStatus( const std::string stat);
     void reset();
     friend std::ostream& operator<<(std::ostream& os, const Preparation& preparation);
     void SetReady();
@@ -30,6 +30,7 @@ public:
     bool isStorage();
 
     static int id_count;
+    static int TIMEPREP;
 };
 
 

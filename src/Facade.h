@@ -57,7 +57,8 @@ public:
     void cout_test();
     void draw_init(unsigned int screenWidth, unsigned int screenHeight);
     void processEvents();
-    void startCooking(Preparation preparation);
+    void startCooking(Preparation& preparation);
+    void selectReady(Preparation& preparation);
     void addIngredient(Pizza pizza);
     sf::Texture loadTextureFromFile(const std::string& filePath);
     void pizzaGenerator();

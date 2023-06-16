@@ -19,8 +19,8 @@ std::string Ingredient::getlabel() const {
 
 std::ostream& operator<<(std::ostream& os, const Ingredient& ingredient)
 {
-    os << "This is the Ingredient :" << endl;
-    os << "label : " << ingredient.label << endl;
+    os << "Ingredient : {";
+    os << "label : " << ingredient.label << "}" << endl;
     return os;
 }
 

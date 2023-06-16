@@ -2,9 +2,11 @@
 #include <unordered_map>
 #include <iostream>
 #include <map>
+#include <chrono>
+#include <thread>
 
 const sf::Time Facade::TimePerFrame = sf::seconds(1.f/60.f); // On considère que le jeu tourne à 60 FPS
-const float Facade::xVelocity = 13; //movement
+const float Facade::xVelocity = 19; //movement
 
 Facade::Facade(){
     score = 0;
@@ -32,12 +34,14 @@ Facade::Facade(){
     sf::Texture grater = loadTextureFromFile("resources/grater.png");
     sf::Texture pot = loadTextureFromFile("resources/pot.png");
     sf::Texture cut = loadTextureFromFile("resources/cutting_board.png");
+    sf::Texture cooked_cheese = loadTextureFromFile("resources/cooked-cheese.png");
     textures.insert(std::make_pair("cheese_jar", cheese_jar));
     textures.insert(std::make_pair("tomatoe_jar", tomatoe_jar));
     textures.insert(std::make_pair("pepperoni_jar", pepperoni_jar));
     textures.insert(std::make_pair("grater", grater));
     textures.insert(std::make_pair("pot", pot));
     textures.insert(std::make_pair("cut", cut));
+    textures.insert(std::make_pair("cooked_cheese", cooked_cheese));
 
 
 
@@ -87,9 +91,13 @@ void Facade::run() {
             timeSinceLastUpdate -= TimePerFrame;
             update(window.getSize().x, window.getSize().y);
         }
+        //update(window.getSize().x, window.getSize().y);
 
-        sf::Texture cooked_cheese = loadTextureFromFile("resources/cooked-cheese.png");
+        int i = 0;
         for(auto &pair: pizzas){
+            cout << "LOOP N: " << i << endl;
+            i++;
+            cout << "post release beg for" << endl;
             if(pair.second.pizza.getCirclePosition().x > window.getSize().x*0.65) {
                 //we are at the end of the line
                 //circlePosition = sf::Vector2f(0,5*screenHeight/10);
@@ -97,12 +105,16 @@ void Facade::run() {
                 //pizzas.front().invisible();
                 cout << "HIT" << endl;
                 releasePizza(pair.second.pizza);
+                cout << "post release 2" << endl;
                 if (pizzas.empty()){
                     window.close();
                 }
+                break;
+                cout << "post release 3" << endl;
 
 
             }else if(pair.second.pizza.getCirclePosition().x > window.getSize().x*0.2){
+                cout << "post release else if" << endl;
                 //cout << "nestle" << endl;
                 if (pair.second.newPizzaGenerated == false){
                     cout << "nestle22" << endl;
@@ -110,16 +122,24 @@ void Facade::run() {
                     pair.second.newPizzaGenerated = true;
                 }
                 unsigned int cPosition = pair.second.pizza.getCirclePosition().x + xVelocity;
-                pair.second.pizza.setDough(window.getSize().x, window.getSize().y, cPosition, xVelocity, cooked_cheese, pair.second.pizza.getIngredientStatus("tomatoe"), pair.second.pizza.getIngredientStatus("cheese"), pair.second.pizza.getIngredientStatus("pepperoni")) ;
+                pair.second.pizza.setDough(window.getSize().x, window.getSize().y, cPosition, xVelocity, textures.at("cooked_cheese"), pair.second.pizza.getIngredientStatus("tomatoe"), pair.second.pizza.getIngredientStatus("cheese"), pair.second.pizza.getIngredientStatus("pepperoni")) ;
 
             }
             else {
+                cout << "post release else" << endl;
                 unsigned int cPosition = pair.second.pizza.getCirclePosition().x + xVelocity;
-                pair.second.pizza.setDough(window.getSize().x, window.getSize().y, cPosition, xVelocity, cooked_cheese, pair.second.pizza.getIngredientStatus("tomatoe"), pair.second.pizza.getIngredientStatus("cheese"), pair.second.pizza.getIngredientStatus("pepperoni")) ;
+                pair.second.pizza.setDough(window.getSize().x, window.getSize().y, cPosition, xVelocity, textures.at("cooked_cheese"), pair.second.pizza.getIngredientStatus("tomatoe"), pair.second.pizza.getIngredientStatus("cheese"), pair.second.pizza.getIngredientStatus("pepperoni")) ;
             }
+
+            cout << "post release 4" << endl;
+            cout << "SIZE PIZZAS: " << pizzas.size() << endl;
         }
 
+        cout << "post release 5" << endl;
+
         render();
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 
     //cout_test();
@@ -262,28 +282,26 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     float circlePositionX = 0;
 
     //texture
-    sf::Texture cooked_cheese = loadTextureFromFile("resources/cooked-cheese.png");
+    //sf::Texture cooked_cheese = loadTextureFromFile("resources/cooked-cheese.png");
     for (auto pair: pizzas){
         //pizza.setPosition(circlePosition);
-        pair.second.pizza.setDough(screenWidth, screenHeight, circlePositionX, xVelocity, cooked_cheese, pair.second.pizza.getIngredientStatus("tomatoe"), pair.second.pizza.getIngredientStatus("cheese"), pair.second.pizza.getIngredientStatus("pepperoni"));
+        pair.second.pizza.setDough(screenWidth, screenHeight, circlePositionX, xVelocity, textures.at("cooked_cheese"), pair.second.pizza.getIngredientStatus("tomatoe"), pair.second.pizza.getIngredientStatus("cheese"), pair.second.pizza.getIngredientStatus("pepperoni"));
 
     }
     cout << 1 << endl;
 
 }
 
-void Facade::startCooking(Preparation preparation){
+void Facade::startCooking(Preparation &preparation){
     cout << "START COOKING" << endl;
     if (selected.has_value()){ //is something selected
         cout << "Selected is the following: " << selected.value().getIngredient() << endl;
         if (selected_type == "storage"){  //if the last selected object is a storage
             if (selected.value().getIngredient() == preparation.getIngredient()){ //if the selected storage corresponds to the right ingredient
-                preparation.setStatus("cooking");
-                cout << "Beginning prep : change status";
+                preparation.setStatus("inprep");
+                cout << "Beginning prep : change status to : " << preparation.getStatus() << endl;
                 selected.emplace(preparation);
                 selected_type = "preparation";
-
-                cout<< "SUCCESS" << preparation.getIngredient() << endl;
 
             }else{
                 cout << "ERROR: you selected the wrong ingredient" << endl;
@@ -297,9 +315,14 @@ void Facade::startCooking(Preparation preparation){
     }
 }
 
+void Facade::selectReady(Preparation &preparation) {
+    selected.emplace(preparation);
+    selected_type = "preparation";
+}
+
+
 void Facade::addIngredient(Pizza pizza){
     cout << "ADD INGREDIENTS" << endl;
-    //cout << 1 << endl;
     if (selected_type == "preparation") {
         cout << 2 << endl;
         score += pizza.addIngredient(selected->getIngredient());
@@ -308,45 +331,12 @@ void Facade::addIngredient(Pizza pizza){
     }
 }
 
-void Facade::addRandomIngredient(Pizza pizza, Ingredient ingredient){
+void Facade::addRandomIngredient(Pizza pizza, Ingredient ingredient) {
     cout << "ADD RANDOM INGREDIENTS" << endl;
-    //cout << 1 << endl;
-    /*
-    if (selected_type == "random") {
-
-    }*/
-    cout << 2 << endl;
     pizza.addIngredient(ingredient);
     ingredients.at(ingredient.getlabel()).added = true;
-    //cout << "PLEASE WORK!!!!!"<< ingredient << "and we have" << ingredients.at(selected->getIngredient().getlabel()).added <<endl;
+
 }
-/*
-void Facade::cout_test() {
-    //test
-    std::cout << "The ingredient list is: ";
-    int i=0;
-    for (const auto &ingredient: ingredients){
-        std::cout << "the ingredient number " << i << " is " << ingredient.second.ingredient.getlabel() <<std::endl;
-        i++;
-    }
-
-    std::cout << "The storage list is: ";
-    int j=0;
-    for (auto &storage: storages){
-        std::cout << "the storage number " << j << " is " << storage.getIngredient() <<std::endl;
-        j++;
-    }
-
-
-    std::cout << "The preparation list is: ";
-    int k=0;
-    for (auto &preparation: preparations){
-        std::cout << "the preparation number " << k << " is " << preparation.getIngredient() <<std::endl;
-        k++;
-    }
-
-}*/
-
 
 void Facade::render() {
 
@@ -387,12 +377,7 @@ void Facade::update(unsigned int screenWidth, unsigned int screenHeight) {
     //Update the preparations preparing
     for (Preparation prep : preparations) {
         prep.preparing_if_needed();
-        if(prep.getStatus() == "ready") {
-            cout << "preparation finito";
-        }
-        else if(prep.getStatus() == "cooking") {
-            cout <<  "a preparation is still in prep";
-        }
+        //cout << "Preparation of : " << prep.getIngredient() << " status " << prep.getStatus() << " time left : " << prep.getTimeLeft() << endl;
     }
 
     sf::Event event;
@@ -421,17 +406,23 @@ void Facade::update(unsigned int screenWidth, unsigned int screenHeight) {
                 //Check for preparation click
                 for (Preparation &preparation: preparations) {
                     if (preparation.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                        if(preparation.getStatus() != "cooking") { //If the preparartion is not already cooking
-                            if(preparation.getStatus() == "ready") { //If the preparation is ready to be put on the pizza
-                                cout << "WE ARE READY TO BE PUT ON PIZZA";
-                                isTouched = true;
-                            }
-                            else { //If we need to cook the ingredient
-                                cout << "WE ARE PREPARING ";
-                                cout << preparation.getIngredient() << endl;
-                                startCooking(preparation);
-                                isTouched = true;
-                            }
+                        cout << "THIS IS THE STATUS " << preparation.getStatus() << endl;
+                        if(preparation.getStatus() == "ready") { //If the preparation is ready to be put on the pizza
+                            cout << "WE ARE READY TO BE PUT ON PIZZA";
+                            selectReady(preparation);
+                            isTouched = true;
+                            //change sprite
+                        }
+                        else if (preparation.getStatus() == "notused"){ //If we need to cook the ingredient
+                            cout << "WE ARE PREPARING ";
+                            cout << preparation.getIngredient() << endl;
+                            startCooking(preparation);
+                            isTouched = false;
+                            selected = nullopt;
+                        }
+                        else {
+                            isTouched = false;
+                            selected = nullopt;
                         }
 
                     }
@@ -471,13 +462,17 @@ void Facade::pizzaGenerator(){
     Pizza pizza = pool->acquirePizza();
     //std::shared_ptr<Pizza> pizzaPtr = std::make_shared<Pizza>(pizza);
     //pizza.randomIngr();
+    cout << 1 << endl;
     randomIngr(pizza);
     Piz piz = {pizza, false};
+
+    cout << 2 << endl;
     pizzas.insert(std::make_pair(pizza.getId(), piz));
     //pizzas.push_back(pizza);
-    sf::Texture cooked_cheese = loadTextureFromFile("resources/cooked-cheese.png");
-    pizza.setDough(window.getSize().x, window.getSize().y, 0, xVelocity, cooked_cheese, pizza.getIngredientStatus("tomatoe"), pizza.getIngredientStatus("cheese"), pizza.getIngredientStatus("pepperoni"));
+    //sf::Texture cooked_cheese = loadTextureFromFile("resources/cooked-cheese.png");
+    pizza.setDough(window.getSize().x, window.getSize().y, 0, xVelocity, textures.at("cooked_cheese"), pizza.getIngredientStatus("tomatoe"), pizza.getIngredientStatus("cheese"), pizza.getIngredientStatus("pepperoni"));
 
+    cout << 3 << endl;
 
 
 }
@@ -494,6 +489,7 @@ void Facade::releasePizza(Pizza pizza){
         pizzasIndex++;
     }
     pool->releasePizza(pizza);
+    cout << "post release 1" << endl;
 }
 
 void Facade::randomIngr(Pizza pizza){
@@ -522,25 +518,11 @@ void Facade::randomIngr(Pizza pizza){
         //this->addIngredient(ingrs[0]);
         //addIngredient(pizza);
         addRandomIngredient(pizza, ingredient);
-
     }
 
-    /*
-    std::vector<Ingredient> ingrs;
-    for (auto& ingredient: ingredients){
-        if (ingredient.second.ingredient.getlabel() == "tomatoe"){
-            ingrs.emplace_back(ingredient.second.ingredient.getlabel());
-            break;
-        }
-
-    }
-    cout << "RANDOM: " << ingrs[0] << endl;
-    //int randomIndex2 = distribution(mt);
-    //Ingredient ingredient = ingrs[randomIndex2];
-    addRandomIngredient(pizza, ingrs[0]);
-    */
 
 }
+
 
 
 

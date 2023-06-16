@@ -12,7 +12,8 @@
 
 using namespace std;
 
-int Pizza::id_count = 0;
+//int Pizza::nextId = 0;
+int nextId = 0;
 
 Pizza::Pizza(const std::vector<Ingredient>& ingr)
 {
@@ -82,37 +83,42 @@ void Pizza::setDough(unsigned int screenWidth, unsigned int screenHeight, float 
         melted_cheese.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
         melted_cheese.setOutlineThickness(0.f);
     }else{ //visible cheese
-        for(auto& ingredient: ingredients){
-            //cout<< "true or false of ingredient: " << ingredient.first.getlabel() << "status " << ingredient.second << endl;
-        }
+
         melted_cheese.setFillColor(sf::Color::Yellow);// Set fill color to transparent
         melted_cheese.setOutlineColor(sf::Color::Yellow);
         melted_cheese.setTexture(&cooked_cheese);
 
-
+        //melted_cheese.setFillColor(sf::Color::Green);
+        //melted_cheese.setOutlineColor(sf::Color::Green);
     }
 
     //sets pepperoni;
     float i = 1.0*screenWidth/2500*2/3;
     float j = 1.0*screenWidth/2500*2/3;
+    int loop=0;
     for(sf::CircleShape &pepp: pepperonis){
         pepp.setPosition(saucePosition.x + (i*170*screenWidth-20)/2500/2, saucePosition.y + (j*170*screenWidth-20)/2500/2);
         pepp.setRadius(30*screenWidth/2500);
         //position the pepperonis
-        if(i==1*screenWidth/2500*2/3){
-
+        if(loop == 0){
+            //cout << "first" << endl;
             i = (i-0.5)*screenWidth/2500*2/3;
             j= (j+2)*screenWidth/2500*2/3; //2,5 ; 2
             //pepp.setFillColor(sf::Color::Red);
-        }else if(j==(2+1*screenWidth/2500*2/3)*screenWidth/2500*2/3){
+        }else if(loop == 1){
+
+            //cout << "second" << endl;
             i = (i+3.2)*screenWidth/2500*2/3 ;
             j = (j+1.2)*screenWidth/2500*2/3; //2,3
 
 
         }else{
+            //cout << "third" << endl;
             i = (i+0.4)*screenWidth/2500*2/3;
             j = (j- 1.7)*screenWidth/2500*2/3;  //3.5, 2.5
         }
+        //cout << "LOOP IS: " << loop <<endl;
+        loop++;
 
         //make visible/invisible the pepperonis
 
