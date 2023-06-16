@@ -39,6 +39,19 @@ Facade::Facade(){
     textures.insert(std::make_pair("cut", cut));
 
 
+    Ingredient tomatoe("tomatoe");
+    Ingredient cheese("cheese");
+    Ingredient pepperoni("pepperoni");
+    Ingr tom = {tomatoe, false};
+    Ingr che = {cheese, false};
+    Ingr pep = {pepperoni, false};
+    ingredients.insert(std::make_pair("tomatoe", tom));
+    ingredients.insert(std::make_pair("cheese", che));
+    ingredients.insert(std::make_pair("pepperoni", pep));
+    std::vector<Ingredient> pizzaIngredients = {tomatoe, cheese, pepperoni};
+    pool.emplace(PizzaPool(pizzaIngredients));
+
+
 
     run();
 }
@@ -62,9 +75,12 @@ void Facade::run() {
 
     //Initialize the game
     init();
+    pizzaGenerator();
     sf::Vector2f cPosition = draw_init( window.getSize().x, window.getSize().y);
     cout << 2 << endl;
 
+
+    cout << "size of the pizza vector: " << pizzas.size() << endl;
     while(window.isOpen()){
         sf::Time elapsedTime = clock.restart();
         timeSinceLastUpdate += elapsedTime;
@@ -82,7 +98,7 @@ void Facade::run() {
         render();
     }
 
-    cout_test();
+    //cout_test();
 
 
 
@@ -91,6 +107,8 @@ void Facade::run() {
 void Facade::init(){
 
     //Set up the pizzas
+    //
+    /*
     Ingredient tomatoe("tomatoe");
     Ingredient cheese("cheese");
     Ingredient pepperoni("pepperoni");
@@ -101,10 +119,9 @@ void Facade::init(){
     ingredients.insert(std::make_pair("cheese", che));
     ingredients.insert(std::make_pair("pepperoni", pep));
     std::vector<Ingredient> pizzaIngredients = {tomatoe, cheese, pepperoni};
-    //*pool = PizzaPool(pizzaIngredients);
-    //
     Pizza pizza(pizzaIngredients);
     pizzas.push_back(pizza);
+    */
 
     //Set up the storages and preparations
     int i = 0;
@@ -262,7 +279,8 @@ void Facade::startCooking(Preparation preparation){
 }
 
 void Facade::addIngredient(Pizza pizza){
-    cout << 1 << endl;
+    cout << "ADD INGREDIENTS" << endl;
+    //cout << 1 << endl;
     if (selected_type == "preparation") {
         cout << 2 << endl;
         pizza.addIngredient(selected->getIngredient());
@@ -271,6 +289,19 @@ void Facade::addIngredient(Pizza pizza){
     }
 }
 
+void Facade::addRandomIngredient(Pizza pizza, Ingredient ingredient){
+    cout << "ADD RANDOM INGREDIENTS" << endl;
+    //cout << 1 << endl;
+    /*
+    if (selected_type == "random") {
+
+    }*/
+    cout << 2 << endl;
+    pizza.addIngredient(ingredient);
+    ingredients.at(ingredient.getlabel()).added = true;
+    //cout << "PLEASE WORK!!!!!"<< ingredient << "and we have" << ingredients.at(selected->getIngredient().getlabel()).added <<endl;
+}
+/*
 void Facade::cout_test() {
     //test
     std::cout << "The ingredient list is: ";
@@ -295,7 +326,7 @@ void Facade::cout_test() {
         k++;
     }
 
-}
+}*/
 
 
 void Facade::render() {
@@ -333,7 +364,7 @@ void Facade::render() {
 }
 
 void Facade::update(const sf::Time time, unsigned int screenWidth, unsigned int screenHeight) {
-    cout << 3 << endl;
+    //cout << 3 << endl;
     bool isTouched = false; //to test if an object was touched
     sf::Event event;
     while(window.pollEvent(event)){
@@ -371,7 +402,7 @@ void Facade::update(const sf::Time time, unsigned int screenWidth, unsigned int 
                     }
                 }
 
-                for (Pizza &pizza: pizzas){
+                for (Pizza pizza: pizzas){
                     if (pizza.getDough().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
                         cout << "!!DOUGH HIT !!"<< endl;
                         addIngredient(pizza);
@@ -414,8 +445,60 @@ sf::Texture Facade::loadTextureFromFile(const std::string& filePath) {
 }
 
 void Facade::pizzaGenerator(){
-    //pool->acquirePizza();
+    cout << "IN GENERATOR " << endl;
 
+    Pizza pizza = pool->acquirePizza();
+    //std::shared_ptr<Pizza> pizzaPtr = std::make_shared<Pizza>(pizza);
+    //pizza.randomIngr();
+    randomIngr(pizza);
+    pizzas.push_back(pizza);
+
+
+}
+
+void Facade::randomIngr(Pizza pizza){
+
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::vector<int> values = {0, 1, 2};
+    std::uniform_int_distribution<int> distribution(0, 1);
+    int randomIndex = distribution(mt);
+    int numIngredients = values[randomIndex];
+    //numIngredients = 1;
+    cout << "NUMBER OF INGREDIENTS " << numIngredients << endl;
+    if (numIngredients != 0){
+        std::vector<Ingredient> ingrs;
+        for (auto& ingredient: ingredients){
+            ingrs.push_back(ingredient.second.ingredient);
+        }
+        std::random_device rd1;
+        std::mt19937 mt1(rd1());
+
+        std::uniform_int_distribution<int> distribution(0, ingredients.size() - 1);
+        int randomIndex1 = distribution(mt1);
+        Ingredient ingredient = ingrs[randomIndex1];
+
+        cout << "RANDOM: " << ingredient << endl;
+        //this->addIngredient(ingrs[0]);
+        //addIngredient(pizza);
+        addRandomIngredient(pizza, ingredient);
+
+    }
+
+    /*
+    std::vector<Ingredient> ingrs;
+    for (auto& ingredient: ingredients){
+        if (ingredient.second.ingredient.getlabel() == "tomatoe"){
+            ingrs.emplace_back(ingredient.second.ingredient.getlabel());
+            break;
+        }
+
+    }
+    cout << "RANDOM: " << ingrs[0] << endl;
+    //int randomIndex2 = distribution(mt);
+    //Ingredient ingredient = ingrs[randomIndex2];
+    addRandomIngredient(pizza, ingrs[0]);
+    */
 
 }
 

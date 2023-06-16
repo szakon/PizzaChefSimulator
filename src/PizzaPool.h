@@ -21,7 +21,7 @@ private:
     Pizza* firstAvailable;
 public:
     PizzaPool(const std::vector<Ingredient>& ingr);
-    Pizza& acquirePizza();
+    Pizza acquirePizza();
     void releasePizza(Pizza& pizza);
 
 };

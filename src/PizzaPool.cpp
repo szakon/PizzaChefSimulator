@@ -21,15 +21,26 @@ PizzaPool::PizzaPool(const std::vector<Ingredient>& ingr){
         availableIndices.push(i);  // Add the corresponding index to the available indices queue
     }
 }
-
-Pizza& PizzaPool::acquirePizza() {
+/*
+Pizza PizzaPool::acquirePizza() {
     if (availableIndices.empty()) {
         throw std::runtime_error("No available Pizza objects in the pool");
     }
     int index = availableIndices.front();
     availableIndices.pop();
     return pizzas[index];
+}*/
+
+Pizza PizzaPool::acquirePizza() {
+    if (availableIndices.empty()) {
+        throw std::runtime_error("No available Pizza objects in the pool");
+    }
+    int index = availableIndices.front();
+    availableIndices.pop();
+    cout << "RETURNED TYPE" << typeid(pizzas[index]).name() << endl;
+    return pizzas[index];
 }
+
 
 void PizzaPool::releasePizza(Pizza& pizza) {
     int index = &pizza - &pizzas[0];  // Calculate the index of the Pizza object

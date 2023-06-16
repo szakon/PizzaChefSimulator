@@ -106,20 +106,20 @@ void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelo
         pepp.setRadius(30*screenWidth/2500);
         //position the pepperonis
         if(i==1*screenWidth/2500*2/3){
-            cout << "first if" << endl;
+            //cout << "first if" << endl;
             i = (i-0.5)*screenWidth/2500*2/3;
             j= (j+2)*screenWidth/2500*2/3; //2,5 ; 2
             //pepp.setFillColor(sf::Color::Red);
         }else if(j==(2+1*screenWidth/2500*2/3)*screenWidth/2500*2/3){
             i = (i+3.2)*screenWidth/2500*2/3 ;
             j = (j+1.2)*screenWidth/2500*2/3; //2,3
-            cout << "second if" << endl;
-            //pepp.setFillColor(sf::Color::Green);
+            //cout << "second if" << endl;
+            //pepp.setFillCo    ingrs.insert(ingrs.end(), ingredient.first)lor(sf::Color::Green);
 
         }else{
             i = (i+0.4)*screenWidth/2500*2/3;
             j = (j- 1.7)*screenWidth/2500*2/3;  //3.5, 2.5
-            cout << "third if" << endl;
+            //cout << "third if" << endl;
             //pepp.setFillColor(sf::Color::Blue);
         }
 
@@ -161,7 +161,7 @@ void Pizza::addTomato(){
 }
 
 void Pizza::addIngredient(Ingredient ingredient) {
-    cout << 3 << endl;
+    //cout << 3 << endl;
     for (auto& pair: ingredients){
         cout << 4 << endl;
         Ingredient ingr = pair.first;
@@ -195,8 +195,9 @@ sf::Vector2f Pizza::getPosition() {
     return position;
 }
 
-
+/*
 void Pizza::randomIngr(){
+    /*
     std::random_device rd;
     std::mt19937 mt(rd());  // Mersenne Twister engine
     // Define the vector of values
@@ -212,9 +213,25 @@ void Pizza::randomIngr(){
         }
         int randomIndex2 = distribution(mt);
         Ingredient ingredient = ingrs[randomIndex2];
+        this->addIngredient(ingredient);
+
+    }*/
+/*
+    std::vector<Ingredient> ingrs;
+    for (auto& ingredient: ingredients){
+        if (ingredient.first.getlabel() == "tomatoe"){
+            ingrs.insert(ingrs.begin(), ingredient.first);
+            break;
+        }
+
     }
+    cout << "RANDOM: " << ingrs[0] << endl;
+    //int randomIndex2 = distribution(mt);
+    //Ingredient ingredient = ingrs[randomIndex2];
+    this->addIngredient(ingrs[0]);
 
 
 
-}
+
+}*/
 
