@@ -7,6 +7,7 @@
 #include "Storage.h"
 #include <memory>
 #include <optional>
+#include <random>
 #include "Drawing.h"
 #include "colors.h"
 #include "PizzaPool.h"
@@ -38,7 +39,7 @@ private:
     int score;
     sf::Text scoreText;
     sf::RectangleShape score_board;
-    PizzaPool* pool;
+    std::optional<PizzaPool> pool;
     // Declare other member functions and variables
 
 public:
@@ -55,6 +56,8 @@ public:
     void addIngredient(Pizza pizza);
     sf::Texture loadTextureFromFile(const std::string& filePath);
     void pizzaGenerator();
+    void randomIngr(Pizza pizza);
+    void addRandomIngredient(Pizza pizza, Ingredient Ingredient);
 
     static const sf::Time TimePerFrame;
     static const float xVelocity;

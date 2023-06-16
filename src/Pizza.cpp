@@ -85,18 +85,18 @@ void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelo
         pepp.setRadius(30*screenWidth/2500);
         //position the pepperonis
         if(i==1*screenWidth/2500*2/3){
+
             i = (i-0.5)*screenWidth/2500*2/3;
             j= (j+2)*screenWidth/2500*2/3; //2,5 ; 2
             //pepp.setFillColor(sf::Color::Red);
         }else if(j==(2+1*screenWidth/2500*2/3)*screenWidth/2500*2/3){
             i = (i+3.2)*screenWidth/2500*2/3 ;
             j = (j+1.2)*screenWidth/2500*2/3; //2,3
-            //pepp.setFillColor(sf::Color::Green);
+
 
         }else{
             i = (i+0.4)*screenWidth/2500*2/3;
             j = (j- 1.7)*screenWidth/2500*2/3;  //3.5, 2.5
-            //pepp.setFillColor(sf::Color::Blue);
         }
 
         //make visible/invisible the pepperonis
@@ -177,8 +177,9 @@ sf::Vector2f Pizza::getPosition() {
     return position;
 }
 
-
+/*
 void Pizza::randomIngr(){
+    /*
     std::random_device rd;
     std::mt19937 mt(rd());  // Mersenne Twister engine
     // Define the vector of values
@@ -194,9 +195,25 @@ void Pizza::randomIngr(){
         }
         int randomIndex2 = distribution(mt);
         Ingredient ingredient = ingrs[randomIndex2];
+        this->addIngredient(ingredient);
+
+    }*/
+/*
+    std::vector<Ingredient> ingrs;
+    for (auto& ingredient: ingredients){
+        if (ingredient.first.getlabel() == "tomatoe"){
+            ingrs.insert(ingrs.begin(), ingredient.first);
+            break;
+        }
+
     }
+    cout << "RANDOM: " << ingrs[0] << endl;
+    //int randomIndex2 = distribution(mt);
+    //Ingredient ingredient = ingrs[randomIndex2];
+    this->addIngredient(ingrs[0]);
 
 
 
-}
+
+}*/
 

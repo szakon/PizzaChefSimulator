@@ -29,6 +29,7 @@ void onClick(sf::Event::MouseButtonEvent event, std::vector<sf::CircleShape*> ob
 
 int myMain() {
     Facade f;
+
     return 0;
 }
 
