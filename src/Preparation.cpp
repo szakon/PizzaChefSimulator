@@ -74,12 +74,15 @@ void Preparation::reset() {
 void Preparation::setSprite(sf::Texture& texture, float scaleFactor, float position, int screenWidth, sf::Sprite jar, float scaleJar, float y_position){
     sprite.setTexture(texture);
     sprite.setScale(scaleFactor,scaleFactor);
+
     int center = jar.getTextureRect().width * scaleJar/2 - sprite.getTextureRect().width*scaleFactor/2;
     int distance = 0.4*sprite.getTextureRect().width* scaleFactor;
+
     if (id == 1){
         cout << "FIRST SPRITE" << endl;
         sf::Vector2f pot1Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center - distance, y_position);
         sprite.setPosition(pot1Position);
+
     }else{
         cout << "SECOND SPRITE" << endl;
         sf::Vector2f pot2Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center + distance, y_position);
@@ -93,6 +96,18 @@ bool Preparation::isStorage(){
 
 void Preparation::draw(sf::RenderWindow& window){
     window.draw(sprite);
+    cout << "AVANT";
+    if(*status == inprep) {
+        cout << "OK C4EST BON";
+        window.draw(sprite_prep);
+    }
+}
+
+void Preparation::addTimer(sf::Texture &texture) {
+    sf::Vector2f position = sf::Vector2f(200,200);
+    sprite_prep.setTexture(texture);
+    sprite_prep.setScale(sf::Vector2f (300,300));
+    sprite_prep.setPosition(position);
 }
 
 

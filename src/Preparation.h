@@ -14,6 +14,7 @@ private:
     shared_ptr<Status> status;
     int time_prep;
     shared_ptr<int> time_left;
+    sf::Sprite sprite_prep;
 public:
     explicit Preparation(Ingredient ingredient, int id);
     bool preparing_if_needed();
@@ -26,6 +27,7 @@ public:
     int getTimeLeft();
     void freeprep();
     void setSprite(sf::Texture& texture, float scaleFactor, float position, int screenWidth, sf::Sprite jar, float scaleJar, float y_position);
+    void addTimer(sf::Texture& texture);
     void draw(sf::RenderWindow& window);
     bool isStorage();
 
