@@ -67,9 +67,10 @@ void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelo
         melted_cheese.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
         melted_cheese.setOutlineThickness(0.f);
     }else{ //visible cheese
-        for(auto& ingredient: ingredients){
+        /*for(auto& ingredient: ingredients){
             cout<< "true or false of ingredient: " << ingredient.first.getlabel() << "status " << ingredient.second << endl;
         }
+         */
         melted_cheese.setFillColor(sf::Color::Yellow);// Set fill color to transparent
         melted_cheese.setOutlineColor(sf::Color::Yellow);
         melted_cheese.setTexture(&cooked_cheese);

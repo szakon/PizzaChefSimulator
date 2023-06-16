@@ -7,13 +7,13 @@
 #include <iostream>
 #include <unistd.h>
 
-
+static int TIMEPREP = 200;
 
 Preparation::Preparation(Ingredient ingredient, int id) : Kitchen(ingredient) {
     this->id = id;
-    status = notused;
-    time_prep = 3;
-    time_left = 3;
+    status = make_shared<Status>(notused);
+    time_prep = ::TIMEPREP;
+    time_left = make_shared<int>(::TIMEPREP);
 }
 
 std::ostream& operator<<(std::ostream& os, const Preparation& preparation)
@@ -26,35 +26,35 @@ std::ostream& operator<<(std::ostream& os, const Preparation& preparation)
 }
 
 bool Preparation::preparing_if_needed() {
-    if(inprep) {
-        time_left -= 1;
+    if(*status == inprep) {
+        *time_left -= 1;
     }
-    if(time_left == 0) {
-        status = ready;
-    };
+    if(*time_left == 0) {
+        *status = ready;
+    }
 }
 
 std::string Preparation::getStatus() const {
-    if(status == inprep) {
+    if(*status == inprep) {
         return "inprep";
     }
-    else if (status == notused) {
+    else if (*status == notused) {
         return "notused";
     }
-    else if (status == ready) {
+    else if (*status == ready) {
         return "ready";
     }
 }
 
-void Preparation::setStatus( const std::string& stat) {
+void Preparation::setStatus( const std::string stat) {
     if(stat == "inprep") {
-        status = inprep;
+        *status = inprep;
     }
     else if (stat == "notused") {
-        status = notused;
+        *status = notused;
     }
     else if (stat == "ready") {
-        status = ready;
+        *status = ready;
     }
 }
 
@@ -63,12 +63,12 @@ int Preparation::getTimePrep() {
 }
 
 int Preparation::getTimeLeft() {
-    return time_left;
+    return *time_left;
 }
 
 void Preparation::reset() {
-    status = notused;
-    time_left = time_prep;
+    *status = notused;
+    *time_left = time_prep;
 }
 
 void Preparation::setSprite(sf::Texture& texture, float scaleFactor, float position, int screenWidth, sf::Sprite jar, float scaleJar, float y_position){
