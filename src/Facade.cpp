@@ -3,7 +3,7 @@
 #include <iostream>
 
 const sf::Time Facade::TimePerFrame = sf::seconds(1.f/60.f); // On considère que le jeu tourne à 60 FPS
-const float Facade::xVelocity = 6; //movement
+const float Facade::xVelocity = 10; //movement
 
 Facade::Facade(){
     score = 0;
@@ -79,10 +79,25 @@ void Facade::run() {
     cout << "size of the pizza vector: " << pizzas.size() << endl;
     while(window.isOpen()){
         update(window.getSize().x, window.getSize().y);
-        cPosition.x += xVelocity;
-        sf::Texture cooked_cheese = loadTextureFromFile("resources/cooked-cheese.png");
-        pizzas[0].setDough(window.getSize().x, cPosition, xVelocity, cooked_cheese, ingredients.at("tomatoe").added, ingredients.at("cheese").added, ingredients.at("pepperoni").added) ;
 
+        sf::Texture cooked_cheese = loadTextureFromFile("resources/cooked-cheese.png");
+        if(cPosition.x > window.getSize().x*0.65) {
+            //we are at the end of the line
+            //circlePosition = sf::Vector2f(0,5*screenHeight/10);
+            //saucePosition = sf::Vector2f(200*screenWidth/2500-170*screenWidth/2500,5*screenHeight/10+200*screenWidth/2500-170*screenWidth/2500);
+            //pizzas.front().invisible();
+            cout << "HIT" << endl;
+            releasePizza(pizzas.front());
+            if (pizzas.empty()){
+                window.close();
+            }
+
+
+        }
+        else {
+            cPosition.x += xVelocity;
+            pizzas.front().setDough(window.getSize().x, cPosition, xVelocity, cooked_cheese, ingredients.at("tomatoe").added, ingredients.at("cheese").added, ingredients.at("pepperoni").added) ;
+        }
         render();
     }
 
@@ -432,6 +447,20 @@ void Facade::pizzaGenerator(){
     pizzas.push_back(pizza);
 
 
+}
+
+
+void Facade::releasePizza(Pizza pizza){
+    pizza.resetPizza();
+    int pizzasIndex = 0;
+    for (Pizza &piz: pizzas){
+        if(piz == pizza){
+            pizzas.erase(pizzas.begin() + pizzasIndex);
+            break;
+        }
+        pizzasIndex++;
+    }
+    pool->releasePizza(pizza);
 }
 
 void Facade::randomIngr(Pizza pizza){

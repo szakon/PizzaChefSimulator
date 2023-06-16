@@ -10,6 +10,7 @@ using namespace std;
 class Pizza {
 private :
     int id;
+    int nextId;
     std::map< Ingredient, shared_ptr<bool>> ingredients;
     bool completed;
     sf::CircleShape dough;
@@ -27,13 +28,15 @@ public:
     sf::Vector2f getPosition();
     //void setDough(float screenWidth,float xVelocity, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni);
     void setDough(float screenWidth, sf::Vector2f circlePosition, float xVelocity, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni);
-    sf::CircleShape getDough();
+    sf::CircleShape getDough() const;
     sf::CircleShape getSauce();
     sf::CircleShape getCheese();
     vector<sf::CircleShape> getPepperoni();
     void addTomato();
     void randomIngr();
-
+    void resetPizza();
+    bool operator==(const Pizza& other) const;
+    int getId();
     static int id_count;
 };
 

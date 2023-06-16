@@ -16,7 +16,7 @@ int Pizza::id_count = 0;
 
 Pizza::Pizza(const std::vector<Ingredient>& ingr)
 {
-
+    id = nextId++;
     completed = false;
     for (const auto &ingredient: ingr) {
         ingredients.insert(std::make_pair(ingredient, std::make_shared<bool>(false)));
@@ -27,6 +27,11 @@ Pizza::Pizza(const std::vector<Ingredient>& ingr)
     sf::CircleShape pepperoni3;
     sf::CircleShape pepperoni4;
     pepperonis = {pepperoni1, pepperoni2,pepperoni3, pepperoni4};
+
+}
+
+int Pizza::getId(){
+    return id;
 }
 
 std::ostream& operator<<(std::ostream& os, const Pizza& pizza)
@@ -38,6 +43,9 @@ std::ostream& operator<<(std::ostream& os, const Pizza& pizza)
     return os;
 }
 
+bool Pizza::operator==(const Pizza& other) const {
+    return this->id == other.id;
+}
 
 void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelocity, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni){
     sf::Vector2f saucePosition(200*screenWidth/2500-170*screenWidth/2500+circlePosition.x,circlePosition.y+200*screenWidth/2500-170*screenWidth/2500);
@@ -117,7 +125,7 @@ void Pizza::setDough(float screenWidth, sf::Vector2f circlePosition, float xVelo
 
 }
 
-sf::CircleShape Pizza::getDough(){
+sf::CircleShape Pizza::getDough() const{
     return dough;
 }
 
@@ -138,6 +146,8 @@ void Pizza::addTomato(){
     cout << 8 << endl;
     sauce.setFillColor(sf::Color::Red);
 }
+
+
 
 int Pizza::addIngredient(Ingredient ingredient) {
     int res = -2;
@@ -178,6 +188,28 @@ void Pizza::setPosition(sf::Vector2f circleposition) {
 
 sf::Vector2f Pizza::getPosition() {
     return position;
+}
+
+void Pizza::resetPizza(){
+    dough.setFillColor(sf::Color::Transparent); // Set fill color to transparent
+    dough.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
+    dough.setOutlineThickness(0.f);
+
+    sauce.setFillColor(sf::Color::Transparent); // Set fill color to transparent
+    sauce.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
+    sauce.setOutlineThickness(0.f);
+
+    melted_cheese.setFillColor(sf::Color::Transparent); // Set fill color to transparent
+    melted_cheese.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
+    melted_cheese.setOutlineThickness(0.f);
+
+    for(sf::CircleShape &pepp: pepperonis) {
+        pepp.setFillColor(sf::Color::Transparent); // Set fill color to transparent
+        pepp.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
+        pepp.setOutlineThickness(0.f);
+    }
+
+
 }
 
 /*

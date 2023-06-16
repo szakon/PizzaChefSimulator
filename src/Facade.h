@@ -40,6 +40,7 @@ private:
     sf::Text scoreText;
     sf::RectangleShape score_board;
     std::optional<PizzaPool> pool;
+    void releasePizza(Pizza pizza);
     // Declare other member functions and variables
 
 public:
