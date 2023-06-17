@@ -20,8 +20,6 @@ public:
     bool getSelected() const;
     void setSelected(bool select);
     virtual void draw(sf::RenderWindow& window);
-    void selection();
-    void unselection();
     friend std::ostream& operator<<(std::ostream& os, const Kitchen& kitchen);
 
     virtual ~Kitchen() {} // Virtual destructor

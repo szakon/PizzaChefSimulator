@@ -1,6 +1,3 @@
-//
-// Created by Sarah Zakon on 14/06/2023.
-//
 #pragma once
 #include "Ingredient.h"
 #include <vector>
@@ -8,11 +5,6 @@
 #include "Pizza.h"
 #include "Preparation.h"
 #include <queue>
-
-
-#ifndef GLOUTON_PIZZAPOOL_H
-#define GLOUTON_PIZZAPOOL_H
-
 
 class PizzaPool {
 private:
@@ -25,7 +17,3 @@ public:
     void releasePizza(Pizza& pizza);
 
 };
-
-
-
-#endif //GLOUTON_PIZZAPOOL_H

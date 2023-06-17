@@ -22,14 +22,6 @@ void Kitchen::setSelected(bool select) {
     selected = select;
 }
 
-void Kitchen::selection() {
-    selected = true;
-}
-
-void Kitchen::unselection() {
-    selected = false;
-}
-
 std::ostream& operator<<(std::ostream& os, const Kitchen& kitchen)
 {
     os << "This is the Kitchen :" << endl;
@@ -45,11 +37,9 @@ void Kitchen::setSprite(sf::Texture& texture, float scaleFactor, float position,
     sprite.setPosition(position_sprite);
 }
 
-
 sf::Sprite Kitchen::getSprite() const {
     return sprite;
 }
-
 
 
 void Kitchen::draw(sf::RenderWindow& window) {

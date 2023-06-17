@@ -1,11 +1,8 @@
 #include "Preparation.h"
 #include "Kitchen.h"
-#include "Pizza.h"
-#include "Storage.h"
 #include <chrono>
-#include <thread>
 #include <iostream>
-#include <unistd.h>
+
 
 static int TIMEPREP = 200;
 
@@ -88,14 +85,12 @@ void Preparation::setSprite(sf::Texture& texture, float scaleFactor, float posit
 
 
     if (id == 1){
-        cout << "FIRST SPRITE" << endl;
         sf::Vector2f pot1Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center - distance, y_position);
         sprite.setPosition(pot1Position);
         timer.setPosition(pot1Position);
         checkMark.setPosition(pot1Position);
 
     }else{
-        cout << "SECOND SPRITE" << endl;
         sf::Vector2f pot2Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center + distance, y_position);
         sprite.setPosition(pot2Position);
         timer.setPosition(pot2Position);
@@ -109,23 +104,10 @@ bool Preparation::isStorage(){
 
 void Preparation::draw(sf::RenderWindow& window){
     window.draw(sprite);
-    cout << "AVANT";
     if(*status == inprep) {
-        cout << "OK C4EST TIMER";
         window.draw(timer);
     }else if (*status == ready){
-
-        cout << "OK C4EST BON";
         window.draw(checkMark);
     }
 }
-/*
-void Preparation::addTimer(sf::Texture &texture) {
-    sf::Vector2f position = sf::Vector2f(200,200);
-    sprite_prep.setTexture(texture);
-    sprite_prep.setScale(sf::Vector2f (300,300));
-    sprite_prep.setPosition(position);
-}*/
-
-
 

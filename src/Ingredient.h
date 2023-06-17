@@ -11,7 +11,6 @@ class Ingredient {
 private :
     std::string label;
 public:
-    static int idCount;
     explicit Ingredient(const std::string name);
     std::string getlabel() const;
     friend std::ostream& operator<<(std::ostream& os, const Ingredient& ingredient);

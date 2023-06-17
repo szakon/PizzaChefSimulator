@@ -23,25 +23,20 @@ public:
     int id;
 
     explicit Pizza(const std::vector< Ingredient>& ingr);
-    std::map< Ingredient , shared_ptr<bool>> getIngredients();
-    std::vector<Preparation> getPreparations();
     friend std::ostream& operator<<(std::ostream& os, const Pizza& pizza);
     int addIngredient(Ingredient ingredient);
     void setPosition(sf::Vector2f circleposition);
     sf::Vector2f getPosition();
-    //void setDough(float screenWidth,float xVelocity, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni);
     void setDough(unsigned int screenWidth, unsigned int screenHeight, float circlePosition, float xVelocity, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni);
     sf::CircleShape getDough() const;
     sf::CircleShape getSauce() ;
     sf::CircleShape getCheese() ;
     vector<sf::CircleShape> getPepperoni();
-    void addTomato();
-    void randomIngr();
     void resetPizza();
     bool operator==(const Pizza& other) const;
     int getId();
-    static int id_count;
     sf::Vector2f getCirclePosition();
+    bool getComplete();
 
     bool getIngredientStatus(std::string string) const;
 };

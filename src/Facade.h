@@ -8,8 +8,6 @@
 #include <memory>
 #include <optional>
 #include <random>
-#include "Drawing.h"
-#include "colors.h"
 #include "PizzaPool.h"
 #include "SFML/Audio/Music.hpp"
 #include <SFML/Graphics.hpp>
@@ -32,6 +30,7 @@ private:
     sf::Sprite madame;
     sf::Sprite monsieur;
     sf::Sprite monsieur_arm;
+    sf::Sprite lifeline;
     sf::Music music;
     sf::Sprite sound;
     bool sound_on_off;
@@ -41,26 +40,24 @@ private:
     std::map<std::string, Ingr> ingredients;
     std::optional<Kitchen> selected;
     std::string selected_type;
-    //sf::Texture texture;
-    //sf::Texture texture1;
     std::map<std::string, sf::Texture> textures;
     int score;
+    int lives;
     sf::Text scoreText;
     sf::RectangleShape score_board;
     std::optional<PizzaPool> pool;
-    void releasePizza(Pizza pizza);
-    // Declare other member functions and variables
+
 
 public:
     sf::RenderWindow window;
+
+    void releasePizza(Pizza pizza);
     Facade();
-    void run();  // Constructor
+    void run();
     void init();
     void render();
     void update(unsigned int screenWidth, unsigned int screenHeight);
-    void cout_test();
     void draw_init(unsigned int screenWidth, unsigned int screenHeight);
-    void processEvents();
     void startCooking(Preparation& preparation);
     void selectReady(Preparation& preparation);
     void addIngredient(Pizza pizza);
