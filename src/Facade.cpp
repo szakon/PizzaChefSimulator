@@ -7,7 +7,7 @@
 #include <thread>
 
 const sf::Time Facade::TimePerFrame = sf::seconds(1.f/60.f); // On considère que le jeu tourne à 60 FPS
-const float Facade::xVelocity = 4; //movement
+const float Facade::xVelocity = 10; //movement
 
 Facade::Facade(){
     score = 0;
@@ -516,7 +516,6 @@ sf::Texture Facade::loadTextureFromFile(const std::string& filePath) {
 
 void Facade::pizzaGenerator(){
     cout << "IN GENERATOR " << endl;
-
     Pizza pizza = pool->acquirePizza();
     //std::shared_ptr<Pizza> pizzaPtr = std::make_shared<Pizza>(pizza);
     //pizza.randomIngr();
