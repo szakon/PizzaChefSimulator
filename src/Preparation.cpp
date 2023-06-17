@@ -69,6 +69,7 @@ int Preparation::getTimeLeft() {
 void Preparation::reset() {
     *status = notused;
     *time_left = time_prep;
+    selected = false;
 }
 
 void Preparation::setSprite(sf::Texture& texture, float scaleFactor, float position, int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& clock, sf::Texture& check){

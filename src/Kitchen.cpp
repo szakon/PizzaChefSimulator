@@ -18,6 +18,10 @@ bool Kitchen::getSelected() const {
     return selected;
 }
 
+void Kitchen::setSelected(bool select) {
+    selected = select;
+}
+
 void Kitchen::selection() {
     selected = true;
 }

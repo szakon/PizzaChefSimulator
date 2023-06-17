@@ -18,6 +18,7 @@ public:
     virtual void setSprite(sf::Texture& texture, float scaleFactor, float position,int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& timer);
     virtual sf::Sprite getSprite() const;
     bool getSelected() const;
+    void setSelected(bool select);
     virtual void draw(sf::RenderWindow& window);
     void selection();
     void unselection();

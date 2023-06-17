@@ -6,7 +6,7 @@
 #include <thread>
 
 const sf::Time Facade::TimePerFrame = sf::seconds(1.f/60.f); // On considère que le jeu tourne à 60 FPS
-const float Facade::xVelocity = 10; //movement
+const float Facade::xVelocity = 4; //movement
 
 Facade::Facade(){
     score = 0;
@@ -316,15 +316,22 @@ void Facade::startCooking(Preparation &preparation){
 void Facade::selectReady(Preparation &preparation) {
     selected.emplace(preparation);
     selected_type = "preparation";
+    preparation.setSelected(true);
 }
 
 
 void Facade::addIngredient(Pizza pizza){
     cout << "ADD INGREDIENTS" << endl;
     if (selected_type == "preparation") {
-        cout << 2 << endl;
         score += pizza.addIngredient(selected->getIngredient());
         ingredients.at(selected->getIngredient().getlabel()).added = true;
+        cout << "avant : " << selected->getIngredient().getlabel() << endl;
+        for(Preparation prep : preparations) {
+            if(selected->getIngredient() == prep.getIngredient() && prep.getSelected() == true ) {
+                prep.reset();
+                cout << "YEP";
+            }
+        }
         cout << "PLEASE WORK!!!!!"<< selected->getIngredient() << "and we have" << ingredients.at(selected->getIngredient().getlabel()).added <<endl;
     }
 }
