@@ -221,6 +221,7 @@ void Pizza::resetPizza(){
     dough.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
     dough.setOutlineThickness(0.f);
 
+
     sauce.setFillColor(sf::Color::Transparent); // Set fill color to transparent
     sauce.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
     sauce.setOutlineThickness(0.f);
@@ -233,6 +234,10 @@ void Pizza::resetPizza(){
         pepp.setFillColor(sf::Color::Transparent); // Set fill color to transparent
         pepp.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
         pepp.setOutlineThickness(0.f);
+    }
+
+    for (auto& pair: ingredients){
+        *pair.second = false;
     }
 
 
