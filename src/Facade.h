@@ -11,10 +11,8 @@
 #include "Drawing.h"
 #include "colors.h"
 #include "PizzaPool.h"
+#include "SFML/Audio/Music.hpp"
 #include <SFML/Graphics.hpp>
-
-#ifndef VALUES_H
-#define VALUES_H
 
 struct Ingr {
     Ingredient ingredient;
@@ -25,12 +23,18 @@ struct Piz {
     Pizza pizza;
     bool newPizzaGenerated;
 };
-#endif // VALUES_H
+
 
 class Facade {
 private:
     sf::Sprite sprite_background;
     sf::RectangleShape belt;
+    sf::Sprite madame;
+    sf::Sprite monsieur;
+    sf::Sprite monsieur_arm;
+    sf::Music music;
+    sf::Sprite sound;
+    bool sound_on_off;
     std::map<int, Piz> pizzas;
     std::vector<Storage> storages;
     std::vector<Preparation> preparations;

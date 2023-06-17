@@ -1,4 +1,5 @@
 #include "Facade.h"
+#include "SFML/Audio/Music.hpp"
 #include <unordered_map>
 #include <iostream>
 #include <map>
@@ -18,6 +19,7 @@ Facade::Facade(){
     // Create the SFML window with the screen size
     window.create(sf::VideoMode(screenWidth, screenHeight), "My Program");
 
+    //Background
     sf::Texture bois = loadTextureFromFile("resources/bois1.jpg");
     sprite_background.setTexture(bois);
     // Calculate the scale factors to fill the window
@@ -26,6 +28,19 @@ Facade::Facade(){
     // Set the scale of the sprite to fill the window
     sprite_background.setScale(scaleX, scaleY);
 
+    //Characters
+    sf::Texture madame_texture = loadTextureFromFile("resources/madame_tete_en_lair.png");
+    madame.setTexture(madame_texture);
+    madame.setScale(0.9,0.9);
+    madame.setPosition(sf::Vector2f(-200,window.getSize().y/6));
+    sf::Texture monsieur_texture = loadTextureFromFile("resources/monsieur_glouton.png");
+    monsieur.setTexture(monsieur_texture);
+    monsieur.setScale(0.7, 0.7);
+    monsieur.setPosition(sf::Vector2f(window.getSize().x/3,window.getSize().y/3));
+    sf::Texture texture_arm = loadTextureFromFile("resources/arm_monsieur.png");
+    monsieur_arm.setTexture(texture_arm);
+    monsieur_arm.setScale(0.7, 0.7);
+    monsieur_arm.setPosition(sf::Vector2f(window.getSize().x/3,window.getSize().y/3));
 
     //setting textures
     sf::Texture cheese_jar = loadTextureFromFile("resources/storage_cheese.png");
@@ -37,6 +52,8 @@ Facade::Facade(){
     sf::Texture cooked_cheese = loadTextureFromFile("resources/cooked-cheese.png");
     sf::Texture check = loadTextureFromFile("resources/check_mark.png");
     sf::Texture timer = loadTextureFromFile("resources/stopwatch.png");
+    sf::Texture sound_on = loadTextureFromFile("resources/sound_on.png");
+    sf::Texture sound_off = loadTextureFromFile("resources/sound_off.png");
     textures.insert(std::make_pair("cheese_jar", cheese_jar));
     textures.insert(std::make_pair("tomatoe_jar", tomatoe_jar));
     textures.insert(std::make_pair("pepperoni_jar", pepperoni_jar));
@@ -46,6 +63,8 @@ Facade::Facade(){
     textures.insert(std::make_pair("cooked_cheese", cooked_cheese));\
     textures.insert(std::make_pair("check", check));
     textures.insert(std::make_pair("timer", timer));
+    textures.insert(std::make_pair("sound_on", sound_on));
+    textures.insert(std::make_pair("sound_off", sound_off));
 
 
     Ingredient tomatoe("tomatoe");
@@ -67,6 +86,14 @@ Facade::Facade(){
         cout << "ERROR FONT DIDN'T LOAD";
     }
     scoreText.setFont(font);
+
+    //Set up the music
+    if (!music.openFromFile("resources/music.ogg")) {
+        cout << "ERROR MUSIC DIDN'T LOAD";
+    }
+    music.setVolume(20.0);
+    music.play();
+    sound_on_off = true;
 
     run();
 }
@@ -201,9 +228,14 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     scoreText.setPosition(40, 30);
     scoreText.setString("Your Score: " + std::to_string(score));
 
+    //Set up the sound
+    sound.setTexture(textures.at("sound_on"));
+    sound.setScale(0.09,0.09);
+    sound.setPosition(screenWidth*14/15, 0);
+
     //Set up the conveyor belt
     belt.setSize(sf::Vector2f(screenWidth,screenHeight/3));
-    belt.setPosition(0, screenHeight/2 -20);
+    belt.setPosition(0, 6*screenHeight/10-20);
     sf::Color greyColor(105, 105, 105);
     belt.setFillColor(greyColor);
 
@@ -345,18 +377,6 @@ void Facade::addRandomIngredient(Pizza pizza, Ingredient ingredient) {
 
 void Facade::render() {
 
-    //render
-    sf::Sprite test;
-    test.setTexture(textures.at("timer"));
-    test.setPosition(sf::Vector2f (500,500));
-    test.setScale(sf::Vector2f(0.05,0.05));
-
-
-    sf::Sprite test2;
-    test2.setTexture(textures.at("check"));
-    test2.setPosition(sf::Vector2f (500,500));
-    test2.setScale(sf::Vector2f(0.05,0.05));
-
     window.clear();
     window.draw(sprite_background);
     for(Storage& storage : storages) {
@@ -367,11 +387,12 @@ void Facade::render() {
     }
 
     window.draw(score_board);
-
     scoreText.setString("Your Score: " + std::to_string(score));
     window.draw(scoreText);
 
+    window.draw(madame);
     window.draw(belt);
+    window.draw(monsieur);
 
 
     for (auto &pair: pizzas) {
@@ -382,6 +403,10 @@ void Facade::render() {
             window.draw(pair.second.pizza.getPepperoni()[i]);
         }
     }
+
+    window.draw(monsieur_arm);
+
+    window.draw(sound);
 
     window.display();
 
@@ -452,6 +477,21 @@ void Facade::update(unsigned int screenWidth, unsigned int screenHeight) {
                         addIngredient(pair.second.pizza);
                     }
                     //if (pizza.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y))
+                }
+
+                if(sound.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                    if(sound_on_off) {
+                        sound_on_off = false;
+                        sound.setTexture(textures.at("sound_off"));
+                        music.pause();
+
+                    }
+                    else{
+                        sound_on_off = true;
+                        sound.setTexture(textures.at("sound_on"));
+                        music.play();
+                    }
+
                 }
 
                 if (!isTouched){

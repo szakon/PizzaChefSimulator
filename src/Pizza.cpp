@@ -55,7 +55,7 @@ bool Pizza::operator==(const Pizza& other) const {
 
 void Pizza::setDough(unsigned int screenWidth, unsigned int screenHeight, float circlePositionX, float xVelocity, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni){
     circlePosition.x=circlePositionX;
-    circlePosition.y = 5*screenHeight/10;
+    circlePosition.y = 6*screenHeight/10;
     sf::Vector2f saucePosition(200*screenWidth/2500-170*screenWidth/2500+circlePosition.x,circlePosition.y+200*screenWidth/2500-170*screenWidth/2500);
     dough.setPosition(circlePosition);
     dough.setRadius(200*screenWidth/2500);
