@@ -19,6 +19,7 @@ public:
     virtual void setSprite(sf::Texture& texture, float scaleFactor, float position,int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& timer);
     virtual sf::Sprite getSprite() const;
     bool getSelected() const;
+    int getPrepId();
     void setSelected(bool select);
     virtual void draw(sf::RenderWindow& window);
     friend std::ostream& operator<<(std::ostream& os, const Kitchen& kitchen);
