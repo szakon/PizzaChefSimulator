@@ -115,55 +115,63 @@ void Facade::run() {
     pizzaGenerator();
     draw_init( window.getSize().x, window.getSize().y);
 
-    //Main part of the game
-    while(window.isOpen()){
+        //Main part of the game
+    while (window.isOpen()) {
+
+        if(lives<0) window.close();
 
         sf::Time elapsedTime = clock.restart();
         timeSinceLastUpdate += elapsedTime;
-        while (timeSinceLastUpdate > TimePerFrame)
-        {
+        while (timeSinceLastUpdate > TimePerFrame) {
             timeSinceLastUpdate -= TimePerFrame;
             update(window.getSize().x, window.getSize().y); //Update the infos of the game
         }
 
-        for(auto &pair: pizzas){
-            if(pair.second.pizza.getCirclePosition().x > window.getSize().x*0.65) { //we are at the end of the line
+        for (auto &pair: pizzas) {
+            if (pair.second.pizza.getCirclePosition().x >
+                window.getSize().x * 0.65) { //we are at the end of the line
                 //circlePosition = sf::Vector2f(0,5*screenHeight/10);
                 //saucePosition = sf::Vector2f(200*screenWidth/2500-170*screenWidth/2500,5*screenHeight/10+200*screenWidth/2500-170*screenWidth/2500);
                 //pizzas.front().invisible();
-                if(!pair.second.pizza.getComplete()) { // If the pizza is not completed with all ingredients
+                if (!pair.second.pizza.getComplete()) { // If the pizza is not completed with all ingredients
                     score -= 10;
-                    lives-=1;
-                }
-                else {
-                    score +=10;
+                    lives -= 1;
+                } else {
+                    score += 10;
                 }
                 releasePizza(pair.second.pizza);
-                if(lives == 2) {
+                if (lives == 2) {
                     lifeline.setTexture(textures.at("lives2"));
-                }
-                else if (lives ==1) {
+                } else if (lives == 1) {
                     lifeline.setTexture(textures.at("lives1"));
                 }
-                if (lives == 0){
+                if (lives == 0) {
                     cout << "Perdu";
                     window.close();
                 }
                 break;
 
 
-            }else if(pair.second.pizza.getCirclePosition().x > window.getSize().x*0.2){ //we need to display a new pizza
-                if (pair.second.newPizzaGenerated == false){
+            } else if (pair.second.pizza.getCirclePosition().x >
+                       window.getSize().x * 0.2) { //we need to display a new pizza
+                if (pair.second.newPizzaGenerated == false) {
                     pizzaGenerator();
                     pair.second.newPizzaGenerated = true;
                 }
                 unsigned int cPosition = pair.second.pizza.getCirclePosition().x + xVelocity;
-                pair.second.pizza.setDough(window.getSize().x, window.getSize().y, cPosition, xVelocity, textures.at("cooked_cheese"), pair.second.pizza.getIngredientStatus("tomatoe"), pair.second.pizza.getIngredientStatus("cheese"), pair.second.pizza.getIngredientStatus("pepperoni")) ;
+                pair.second.pizza.setDough(window.getSize().x, window.getSize().y, cPosition, xVelocity,
+                                           textures.at("cooked_cheese"),
+                                           pair.second.pizza.getIngredientStatus("tomatoe"),
+                                           pair.second.pizza.getIngredientStatus("cheese"),
+                                           pair.second.pizza.getIngredientStatus("pepperoni"));
 
-            }
-            else {
+            } else {
                 unsigned int cPosition = pair.second.pizza.getCirclePosition().x + xVelocity;
-                pair.second.pizza.setDough(window.getSize().x, window.getSize().y, cPosition, xVelocity, textures.at("cooked_cheese"), pair.second.pizza.getIngredientStatus("tomatoe"), pair.second.pizza.getIngredientStatus("cheese"), pair.second.pizza.getIngredientStatus("pepperoni")) ;
+                pair.second.pizza.setDough(window.getSize().x, window.getSize().y, cPosition, xVelocity,
+                                           textures.at("cooked_cheese"),
+                                           pair.second.pizza.getIngredientStatus("tomatoe"),
+                                           pair.second.pizza.getIngredientStatus("cheese"),
+                                           pair.second.pizza.getIngredientStatus("pepperoni"));
             }
 
         }
@@ -171,6 +179,38 @@ void Facade::run() {
         render();
 
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+
+    }
+    if(lives<=0){
+
+        sf::VideoMode desktopMode2 = sf::VideoMode::getDesktopMode();
+        unsigned int screenWidth2 = desktopMode2.width;
+        unsigned int screenHeight2 = desktopMode2.height;
+        sf::RenderWindow window2(sf::VideoMode(800, 600), "Window 2");
+
+        window2.setFramerateLimit(60);
+        window2.create(sf::VideoMode(screenWidth2, screenHeight2), "Lose window");
+        while (window2.isOpen()) {
+            sf::Texture dead = loadTextureFromFile("resources/you_lost.png");
+            sf::Sprite death;
+            death.setTexture(dead);
+            //death.setScale(1, 1);
+            float scaleX2 = static_cast<float>(window2.getSize().x) / dead.getSize().x;
+            float scaleY2 = static_cast<float>(window2.getSize().y) / dead.getSize().y;
+            death.setScale(scaleX2, scaleY2); // Set the scale of the sprite to fill the window
+            //death.setPosition(window2.getSize().x/2.f - death.getScale().x, window2.getSize().y/2.f - death.getScale().y);
+            //death.setPosition(500, 500);
+            sf::Event event2;
+            while(window2.pollEvent(event2)) {
+                if (event2.type == sf::Event::Closed) window2.close();
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) window2.close();
+            }
+            window2.clear();
+            window2.draw(death);
+            window2.display();
+
+        }
     }
 
 }
