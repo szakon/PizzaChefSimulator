@@ -327,7 +327,7 @@ void Facade::addIngredient(Pizza pizza){
         score += pizza.addIngredient(selected->getIngredient());
         ingredients.at(selected->getIngredient().getlabel()).added = true;
         for(Preparation prep : preparations) {
-            if(selected->getIngredient() == prep.getIngredient() && prep.getSelected() == true ) {
+            if(selected->getIngredient() == prep.getIngredient() && prep.getSelected() == true && selected->getPrepId() == prep.getPrepId()) {
                 prep.reset();
             }
         }

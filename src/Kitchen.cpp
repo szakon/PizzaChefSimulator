@@ -42,6 +42,9 @@ sf::Sprite Kitchen::getSprite() const {
     return sprite;
 }
 
+int Kitchen::getPrepId() {
+    return prepId;
+}
 
 void Kitchen::draw(sf::RenderWindow& window) {
     window.draw(sprite);
