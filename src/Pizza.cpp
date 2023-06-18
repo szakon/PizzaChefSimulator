@@ -190,6 +190,8 @@ bool Pizza::getIngredientStatus(std::string string) const{
             return rtrn;
         }
     }
+
+    return false;
 }
 
 bool Pizza::getComplete() {
