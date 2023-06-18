@@ -25,7 +25,53 @@ TEST(PizzaTest, AddIngredient) {
     ingr_vector.push_back(ingr);
 
     Pizza pizza(ingr_vector);
+    EXPECT_EQ(pizza.getIngredientStatus("Onion"),false);
 
-    Ingredient ingr2("tomaoe");
+    int res = pizza.addIngredient(ingr);
 
+    EXPECT_EQ(res, 3);
+    EXPECT_EQ(pizza.getIngredientStatus("Onion"),true);
+
+    res = pizza.addIngredient(ingr);
+
+    EXPECT_EQ(res, -2);
+}
+
+TEST(PizzaTest, GetComplete) {
+    std::vector<Ingredient> ingr_vector;
+    Ingredient ingr("Onion");
+    ingr_vector.push_back(ingr);
+
+    Pizza pizza(ingr_vector);
+
+    int res = pizza.addIngredient(ingr);
+
+    EXPECT_TRUE(res);
+}
+
+TEST(PizzaTest, GetIngredientStatus) {
+    std::vector<Ingredient> ingr_vector;
+    Ingredient ingr("Onion");
+    ingr_vector.push_back(ingr);
+
+    Pizza pizza(ingr_vector);
+
+    EXPECT_FALSE(pizza.getIngredientStatus("Onion"));
+
+    pizza.addIngredient(ingr);
+
+    EXPECT_TRUE(pizza.getIngredientStatus("Onion"));
+}
+
+TEST(PizzaTest, Reset) {
+    std::vector<Ingredient> ingr_vector;
+    Ingredient ingr("Onion");
+    ingr_vector.push_back(ingr);
+
+    Pizza pizza(ingr_vector);
+    pizza.addIngredient(ingr);
+    pizza.resetPizza();
+
+    EXPECT_FALSE(pizza.getIngredientStatus("Onion"));
+    EXPECT_FALSE(pizza.getComplete());
 }
