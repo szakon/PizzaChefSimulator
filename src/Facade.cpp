@@ -18,7 +18,7 @@ Facade::Facade(){
     unsigned int screenHeight = desktopMode.height;
 
     // Create the SFML window with the screen size
-    window.create(sf::VideoMode(screenWidth, screenHeight), "My little kitchen");
+    window.create(sf::VideoMode(screenWidth, screenHeight), "Pizza Glouton");
 
     //Background
     sf::Texture bois = loadTextureFromFile("resources/bois1.jpg");
@@ -28,19 +28,6 @@ Facade::Facade(){
     float scaleY = static_cast<float>(window.getSize().y) / bois.getSize().y;
     sprite_background.setScale(scaleX, scaleY); // Set the scale of the sprite to fill the window
 
-    //Characters
-    sf::Texture madame_texture = loadTextureFromFile("resources/madame_tete_en_lair.png");
-    madame.setTexture(madame_texture);
-    madame.setScale(0.9,0.9);
-    madame.setPosition(sf::Vector2f(-200,window.getSize().y/6));
-    sf::Texture monsieur_texture = loadTextureFromFile("resources/monsieur_glouton.png");
-    monsieur.setTexture(monsieur_texture);
-    monsieur.setScale(0.7, 0.7);
-    monsieur.setPosition(sf::Vector2f(window.getSize().x/3,window.getSize().y/3));
-    sf::Texture texture_arm = loadTextureFromFile("resources/arm_monsieur.png");
-    monsieur_arm.setTexture(texture_arm);
-    monsieur_arm.setScale(0.7, 0.7);
-    monsieur_arm.setPosition(sf::Vector2f(window.getSize().x/3,window.getSize().y/3));
 
     //setting textures
     sf::Texture cheese_jar = loadTextureFromFile("resources/storage_cheese.png");
@@ -57,6 +44,9 @@ Facade::Facade(){
     sf::Texture lives3 = loadTextureFromFile("resources/3.png");
     sf::Texture lives2 = loadTextureFromFile("resources/2.png");
     sf::Texture lives1 = loadTextureFromFile("resources/1.png");
+    sf::Texture madame = loadTextureFromFile("resources/madame.png");
+    sf::Texture monsieur = loadTextureFromFile("resources/monsieur.png");
+    sf::Texture arm = loadTextureFromFile("resources/arm.png");
     textures.insert(std::make_pair("cheese_jar", cheese_jar));
     textures.insert(std::make_pair("tomatoe_jar", tomatoe_jar));
     textures.insert(std::make_pair("pepperoni_jar", pepperoni_jar));
@@ -71,6 +61,9 @@ Facade::Facade(){
     textures.insert(std::make_pair("lives3", lives3));
     textures.insert(std::make_pair("lives2", lives2));
     textures.insert(std::make_pair("lives1", lives1));
+    textures.insert(std::make_pair("madame", madame));
+    textures.insert(std::make_pair("monsieur", monsieur));
+    textures.insert(std::make_pair("arm", arm));
 
     //Create ingredients and filling the pizza pool
     Ingredient tomatoe("tomatoe");
@@ -128,90 +121,13 @@ void Facade::run() {
             update(window.getSize().x, window.getSize().y); //Update the infos of the game
         }
 
-        for (auto &pair: pizzas) {
-            if (pair.second.pizza.getCirclePosition().x >
-                window.getSize().x * 0.65) { //we are at the end of the line
-                //circlePosition = sf::Vector2f(0,5*screenHeight/10);
-                //saucePosition = sf::Vector2f(200*screenWidth/2500-170*screenWidth/2500,5*screenHeight/10+200*screenWidth/2500-170*screenWidth/2500);
-                //pizzas.front().invisible();
-                if (!pair.second.pizza.getComplete()) { // If the pizza is not completed with all ingredients
-                    score -= 10;
-                    lives -= 1;
-                } else {
-                    score += 10;
-                }
-                releasePizza(pair.second.pizza);
-                if (lives == 2) {
-                    lifeline.setTexture(textures.at("lives2"));
-                } else if (lives == 1) {
-                    lifeline.setTexture(textures.at("lives1"));
-                }
-                if (lives == 0) {
-                    cout << "Perdu";
-                    window.close();
-                }
-                break;
-
-
-            } else if (pair.second.pizza.getCirclePosition().x >
-                       window.getSize().x * 0.2) { //we need to display a new pizza
-                if (pair.second.newPizzaGenerated == false) {
-                    pizzaGenerator();
-                    pair.second.newPizzaGenerated = true;
-                }
-                unsigned int cPosition = pair.second.pizza.getCirclePosition().x + xVelocity;
-                pair.second.pizza.setDough(window.getSize().x, window.getSize().y, cPosition, xVelocity,
-                                           textures.at("cooked_cheese"),
-                                           pair.second.pizza.getIngredientStatus("tomatoe"),
-                                           pair.second.pizza.getIngredientStatus("cheese"),
-                                           pair.second.pizza.getIngredientStatus("pepperoni"));
-
-            } else {
-                unsigned int cPosition = pair.second.pizza.getCirclePosition().x + xVelocity;
-                pair.second.pizza.setDough(window.getSize().x, window.getSize().y, cPosition, xVelocity,
-                                           textures.at("cooked_cheese"),
-                                           pair.second.pizza.getIngredientStatus("tomatoe"),
-                                           pair.second.pizza.getIngredientStatus("cheese"),
-                                           pair.second.pizza.getIngredientStatus("pepperoni"));
-            }
-
-        }
-
+        move();
         render();
 
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
-
-
     }
-    if(lives<=0){ //Display the window to notify the player that he lost
-
-        sf::VideoMode desktopMode2 = sf::VideoMode::getDesktopMode();
-        unsigned int screenWidth2 = desktopMode2.width;
-        unsigned int screenHeight2 = desktopMode2.height;
-        sf::RenderWindow window2(sf::VideoMode(800, 600), "Window 2");
-
-        window2.setFramerateLimit(60);
-        window2.create(sf::VideoMode(screenWidth2, screenHeight2), "Lose window");
-        while (window2.isOpen()) {
-            sf::Texture dead = loadTextureFromFile("resources/you_lost.png");
-            sf::Sprite death;
-            death.setTexture(dead);
-            //death.setScale(1, 1);
-            float scaleX2 = static_cast<float>(window2.getSize().x) / dead.getSize().x;
-            float scaleY2 = static_cast<float>(window2.getSize().y) / dead.getSize().y;
-            death.setScale(scaleX2, scaleY2); // Set the scale of the sprite to fill the window
-            //death.setPosition(window2.getSize().x/2.f - death.getScale().x, window2.getSize().y/2.f - death.getScale().y);
-            //death.setPosition(500, 500);
-            sf::Event event2;
-            while(window2.pollEvent(event2)) {
-                if (event2.type == sf::Event::Closed) window2.close();
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) window2.close();
-            }
-            window2.clear();
-            window2.draw(death);
-            window2.display();
-
-        }
+    if(lives<=0){
+        renderLost();
     }
 
 }
@@ -267,6 +183,23 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     lifeline.setTexture(textures.at("lives3"));
     lifeline.setScale(0.15,0.15);
     lifeline.setPosition(0,score_board.getPosition().y + score_board.getSize().y - 20);
+
+
+    //Characters
+    cout << 1 << endl;
+    madame.setTexture(textures.at("madame"));
+    madame.setScale(0.7*screenWidth/2500,0.7*screenWidth/2500);
+    madame.setPosition(sf::Vector2f(0,belt.getPosition().y-madame.getTextureRect().height*0.7*screenWidth/2500));
+
+    monsieur.setTexture(textures.at("monsieur"));
+    float scaleFactorMonsieur = 1.1*screenWidth/2500;
+    sf::Vector2f monsieurPosition(window.getSize().x * 0.65-monsieur.getTextureRect().height*scaleFactorMonsieur/3,belt.getPosition().y-monsieur.getTextureRect().height*scaleFactorMonsieur/4);
+    monsieur.setScale(scaleFactorMonsieur, scaleFactorMonsieur);
+    monsieur.setPosition(monsieurPosition);
+
+    monsieur_arm.setTexture(textures.at("arm"));
+    monsieur_arm.setScale(scaleFactorMonsieur, scaleFactorMonsieur);
+    monsieur_arm.setPosition(monsieurPosition);
 
     float scaleFactorJar = 0.9f*screenWidth/2500;
 
@@ -332,6 +265,56 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
         pair.second.pizza.setDough(screenWidth, screenHeight, circlePositionX, xVelocity, textures.at("cooked_cheese"), pair.second.pizza.getIngredientStatus("tomatoe"), pair.second.pizza.getIngredientStatus("cheese"), pair.second.pizza.getIngredientStatus("pepperoni"));
     }
 
+}
+
+void Facade::move(){
+    for (auto &pair: pizzas) {
+        if (pair.second.pizza.getCirclePosition().x >window.getSize().x * 0.65) { //we are at the end of the line
+            //circlePosition = sf::Vector2f(0,5*screenHeight/10);
+            //saucePosition = sf::Vector2f(200*screenWidth/2500-170*screenWidth/2500,5*screenHeight/10+200*screenWidth/2500-170*screenWidth/2500);
+            //pizzas.front().invisible();
+            if (!pair.second.pizza.getComplete()) { // If the pizza is not completed with all ingredients
+                score -= 10;
+                lives -= 1;
+            } else {
+                score += 10;
+            }
+            releasePizza(pair.second.pizza);
+            if (lives == 2) {
+                lifeline.setTexture(textures.at("lives2"));
+            } else if (lives == 1) {
+                lifeline.setTexture(textures.at("lives1"));
+            }
+            if (lives == 0) {
+                cout << "Perdu";
+                window.close();
+            }
+            break;
+
+
+        } else if (pair.second.pizza.getCirclePosition().x >
+                   window.getSize().x * 0.2) { //we need to display a new pizza
+            if (pair.second.newPizzaGenerated == false) {
+                pizzaGenerator();
+                pair.second.newPizzaGenerated = true;
+            }
+            unsigned int cPosition = pair.second.pizza.getCirclePosition().x + xVelocity;
+            pair.second.pizza.setDough(window.getSize().x, window.getSize().y, cPosition, xVelocity,
+                                       textures.at("cooked_cheese"),
+                                       pair.second.pizza.getIngredientStatus("tomatoe"),
+                                       pair.second.pizza.getIngredientStatus("cheese"),
+                                       pair.second.pizza.getIngredientStatus("pepperoni"));
+
+        } else {
+            unsigned int cPosition = pair.second.pizza.getCirclePosition().x + xVelocity;
+            pair.second.pizza.setDough(window.getSize().x, window.getSize().y, cPosition, xVelocity,
+                                       textures.at("cooked_cheese"),
+                                       pair.second.pizza.getIngredientStatus("tomatoe"),
+                                       pair.second.pizza.getIngredientStatus("cheese"),
+                                       pair.second.pizza.getIngredientStatus("pepperoni"));
+        }
+
+    }
 }
 
 void Facade::startCooking(Preparation &preparation){
@@ -417,6 +400,36 @@ void Facade::render() {
 
     window.display();
 
+}
+
+void Facade::renderLost(){
+    sf::VideoMode desktopMode2 = sf::VideoMode::getDesktopMode();
+    unsigned int screenWidth2 = desktopMode2.width;
+    unsigned int screenHeight2 = desktopMode2.height;
+    sf::RenderWindow window2(sf::VideoMode(800, 600), "Window 2");
+
+    window2.setFramerateLimit(60);
+    window2.create(sf::VideoMode(screenWidth2, screenHeight2), "Lose window");
+    while (window2.isOpen()) {
+        sf::Texture dead = loadTextureFromFile("resources/you_lost.png");
+        sf::Sprite death;
+        death.setTexture(dead);
+        //death.setScale(1, 1);
+        float scaleX2 = static_cast<float>(window2.getSize().x) / dead.getSize().x;
+        float scaleY2 = static_cast<float>(window2.getSize().y) / dead.getSize().y;
+        death.setScale(scaleX2, scaleY2); // Set the scale of the sprite to fill the window
+        //death.setPosition(window2.getSize().x/2.f - death.getScale().x, window2.getSize().y/2.f - death.getScale().y);
+        //death.setPosition(500, 500);
+        sf::Event event2;
+        while(window2.pollEvent(event2)) {
+            if (event2.type == sf::Event::Closed) window2.close();
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) window2.close();
+        }
+        window2.clear();
+        window2.draw(death);
+        window2.display();
+
+    }
 }
 
 void Facade::update(unsigned int screenWidth, unsigned int screenHeight) {
