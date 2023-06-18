@@ -195,9 +195,12 @@ void Facade::run() {
             sf::Texture dead = loadTextureFromFile("resources/you_lost.png");
             sf::Sprite death;
             death.setTexture(dead);
-            death.setScale(0.8, 0.8);
+            //death.setScale(1, 1);
+            float scaleX2 = static_cast<float>(window2.getSize().x) / dead.getSize().x;
+            float scaleY2 = static_cast<float>(window2.getSize().y) / dead.getSize().y;
+            death.setScale(scaleX2, scaleY2); // Set the scale of the sprite to fill the window
             //death.setPosition(window2.getSize().x/2.f - death.getScale().x, window2.getSize().y/2.f - death.getScale().y);
-            death.setPosition(500, 500);
+            //death.setPosition(500, 500);
             sf::Event event2;
             while(window2.pollEvent(event2)) {
                 if (event2.type == sf::Event::Closed) window2.close();
