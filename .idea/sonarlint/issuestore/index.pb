@@ -9,7 +9,3 @@ A
 src/Storage.cpp,6/4/64ba9e33416e19723ca72c0262fa82ac37f9d41f
 =
 src/Storage.h,9/4/945cfd0acf224eec201aca36a5918c7fd544db7a
-<
-src/Facade.h,e/6/e65eef8e2292ca97118bb755649e76a3737b4878
-?
-src/Kitchen.cpp,6/b/6b584c18316e3dbe93d5310718b22db91fb9e763

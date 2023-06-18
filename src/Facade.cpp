@@ -115,9 +115,10 @@ void Facade::run() {
     pizzaGenerator();
     draw_init( window.getSize().x, window.getSize().y);
 
-        //Main part of the game
+    //Main part of the game
     while (window.isOpen()) {
 
+        //In case of game over
         if(lives<0) window.close();
 
         sf::Time elapsedTime = clock.restart();
@@ -182,7 +183,7 @@ void Facade::run() {
 
 
     }
-    if(lives<=0){
+    if(lives<=0){ //Display the window to notify the player that he lost
 
         sf::VideoMode desktopMode2 = sf::VideoMode::getDesktopMode();
         unsigned int screenWidth2 = desktopMode2.width;
@@ -377,7 +378,6 @@ void Facade::addIngredient(Pizza pizza){
 void Facade::addRandomIngredient(Pizza pizza, Ingredient ingredient) {
     pizza.addIngredient(ingredient);
     ingredients.at(ingredient.getlabel()).added = true;
-
 }
 
 void Facade::render() {
