@@ -48,6 +48,7 @@ private:
     std::optional<PizzaPool> pool;
 
 
+
 public:
     sf::RenderWindow window;
 
@@ -65,7 +66,8 @@ public:
     void pizzaGenerator();
     void randomIngr(Pizza pizza);
     void addRandomIngredient(Pizza pizza, Ingredient Ingredient);
-
+    void move();
     static const sf::Time TimePerFrame;
     static const float xVelocity;
+    void renderLost();
 };
