@@ -17,16 +17,6 @@ std::string Ingredient::getlabel() const {
     return label;
 }
 
-std::vector<Ingredient> getValue(std::map<int, std::unique_ptr<Ingredient>> map) {
-    std::vector<Ingredient> values;
-    for (const auto& pair : map) {
-        Ingredient* ingredientPtr = pair.second.get();  // Get the raw pointer from unique_ptr
-        Ingredient ingredient(*ingredientPtr);  // Instantiate an Ingredient object
-        values.push_back(ingredient);
-    }
-    return values;
-}
-
 std::ostream& operator<<(std::ostream& os, const Ingredient& ingredient)
 {
     os << "Ingredient : {";

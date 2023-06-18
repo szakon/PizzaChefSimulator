@@ -36,7 +36,7 @@ endif()
 
 # Now simply link against gtest or gtest_main as needed. Eg
 #   enable_testing()  already done in top CMakeLists.txt
-add_executable(unitTests unitTests.cpp testIngredient.cpp testKitchen.cpp testPreparation.cpp testStorage.cpp)
+add_executable(unitTests unitTests.cpp testIngredient.cpp testKitchen.cpp testPreparation.cpp testStorage.cpp testPizza.cpp)
 target_link_libraries(unitTests gtest_main)
 target_link_libraries(unitTests src pugixml sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
 add_test(NAME that-test-I-made COMMAND unitTests)

@@ -6,7 +6,7 @@
 TEST(KitchenTest, Constructor) {
     Ingredient ingr("Onion"); // Example ingredient for testing
 
-    Kitchen kitchen(ingr);
+    Kitchen kitchen(ingr, 1);
 
     // Verify that the ingredient is set correctly
     EXPECT_EQ(ingr, kitchen.getIngredient());
@@ -16,19 +16,9 @@ TEST(KitchenTest, Constructor) {
 
 TEST(KitchenTest, Selection) {
     Ingredient ingr("Onion");
-    Kitchen kitchen(ingr);
+    Kitchen kitchen(ingr, 1);
 
     EXPECT_FALSE(kitchen.getSelected());
-    kitchen.selection();
+    kitchen.setSelected(true);
     EXPECT_TRUE(kitchen.getSelected());
-}
-
-TEST(KitchenTest, Unselection) {
-    Ingredient ingr("Onion");
-    Kitchen kitchen(ingr);
-
-    kitchen.selection();
-    EXPECT_TRUE(kitchen.getSelected());
-    kitchen.unselection();
-    EXPECT_FALSE(kitchen.getSelected());
 }
