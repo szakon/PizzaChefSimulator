@@ -10,7 +10,6 @@ class PizzaPool {
 private:
     std::vector<Pizza> pizzas;  // Store all Pizza objects
     std::queue<int> availableIndices;  // Queue of indices representing available Pizza objects
-    Pizza* firstAvailable;
 public:
     PizzaPool(const std::vector<Ingredient>& ingr);
     Pizza acquirePizza();
