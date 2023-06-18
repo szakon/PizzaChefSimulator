@@ -4,21 +4,14 @@
 -- Generating done
 -- Build files have been written to: /Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/unitTests/googletest-download
 [1/7] Performing update step for 'googletest'
-FAILED: googletest-prefix/src/googletest-stamp/googletest-update /Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/unitTests/googletest-download/googletest-prefix/src/googletest-stamp/googletest-update 
-cd /Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/unitTests/googletest-src && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -P /Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/unitTests/googletest-download/googletest-prefix/tmp/googletest-gitupdate.cmake
-fatal: unable to access 'https://github.com/google/googletest.git/': Could not resolve host: github.com
-CMake Error at /Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/unitTests/googletest-download/googletest-prefix/tmp/googletest-gitupdate.cmake:97 (execute_process):
-  execute_process failed command indexes:
-
-    1: "Child return code: 128"
-
-
-
-ninja: build stopped: subcommand failed.
-CMake Error at unitTests/CMakeLists.txt:17 (message):
-  Build step for googletest failed: 1
-
-
--- Configuring incomplete, errors occurred!
-See also "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/CMakeFiles/CMakeOutput.log".
-See also "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release/CMakeFiles/CMakeError.log".
+From https://github.com/google/googletest
+   4c7aee82..9b12f749  main       -> origin/main
+[2/7] No patch step for 'googletest'
+[3/7] No configure step for 'googletest'
+[4/7] No build step for 'googletest'
+[5/7] No install step for 'googletest'
+[6/7] No test step for 'googletest'
+[7/7] Completed 'googletest'
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/cmake-build-release

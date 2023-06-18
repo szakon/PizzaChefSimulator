@@ -9,7 +9,6 @@ using namespace std;
 
 class Pizza {
 private :
-    int nextId;
     std::map< Ingredient, shared_ptr<bool>> ingredients;
     bool completed;
     sf::CircleShape dough;

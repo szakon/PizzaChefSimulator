@@ -12,7 +12,6 @@
 
 using namespace std;
 
-//int Pizza::nextId = 0;
 int nextId = 0;
 
 Pizza::Pizza(const std::vector<Ingredient>& ingr)
@@ -155,17 +154,7 @@ int Pizza::addIngredient(Ingredient ingredient) {
         Ingredient ingr = pair.first;
         if (ingr == ingredient){
             if (pair.second && !(*pair.second)){
-                if (ingr.getlabel() == "tomatoe"){
-                    *pair.second = true;
-                }
-                else if(ingr.getlabel() == "cheese"){
-                    *pair.second = true;
-                }
-
-                else if(ingr.getlabel() == "pepperoni"){
-                    *pair.second = true;
-                }
-
+                *pair.second = true;
                 res = 3;
 
             }
@@ -190,6 +179,8 @@ bool Pizza::getIngredientStatus(std::string string) const{
             return rtrn;
         }
     }
+
+    return false;
 }
 
 bool Pizza::getComplete() {

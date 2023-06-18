@@ -22,7 +22,7 @@ std::ostream& operator<<(std::ostream& os, const Preparation& preparation)
     return os;
 }
 
-bool Preparation::preparing_if_needed() {
+void Preparation::preparing_if_needed() {
     if(*status == inprep) {
         *time_left -= 1;
     }
@@ -41,6 +41,8 @@ std::string Preparation::getStatus() const {
     else if (*status == ready) {
         return "ready";
     }
+
+    return "";
 }
 
 void Preparation::setStatus( const std::string stat) {

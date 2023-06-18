@@ -6,7 +6,7 @@
 #include <thread>
 
 const sf::Time Facade::TimePerFrame = sf::seconds(1.f/60.f); // The game is running at 60 FPS
-const float Facade::xVelocity = 25; //movement of the pizzas
+const float Facade::xVelocity = 10; //movement of the pizzas
 
 Facade::Facade(){
 
@@ -108,9 +108,10 @@ void Facade::run() {
     pizzaGenerator();
     draw_init( window.getSize().x, window.getSize().y);
 
-        //Main part of the game
+    //Main part of the game
     while (window.isOpen()) {
 
+        //In case of game over
         if(lives<0) window.close();
 
         sf::Time elapsedTime = clock.restart();
@@ -360,7 +361,6 @@ void Facade::addIngredient(Pizza pizza){
 void Facade::addRandomIngredient(Pizza pizza, Ingredient ingredient) {
     pizza.addIngredient(ingredient);
     ingredients.at(ingredient.getlabel()).added = true;
-
 }
 
 void Facade::render() {

@@ -17,7 +17,7 @@ private:
     sf::Sprite checkMark;
 public:
     explicit Preparation(Ingredient ingredient, int prepId);
-    bool preparing_if_needed();
+    void preparing_if_needed();
     std::string getStatus() const;
     void setStatus( const std::string stat);
     void reset();
