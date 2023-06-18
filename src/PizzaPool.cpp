@@ -14,6 +14,17 @@ PizzaPool::PizzaPool(const std::vector<Ingredient>& ingr){
     }
 }
 
+const vector<Pizza> PizzaPool::getPizzas() const {
+    return pizzas;
+}
+
+const queue<int> PizzaPool::getAvailableIndices() const {
+    return availableIndices;
+}
+
+
+
+
 Pizza PizzaPool::acquirePizza() {
     if (availableIndices.empty()) {
         throw std::runtime_error("No available Pizza objects in the pool");

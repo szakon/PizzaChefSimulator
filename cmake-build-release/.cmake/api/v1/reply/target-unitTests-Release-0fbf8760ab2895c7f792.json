@@ -107,7 +107,8 @@
 				2,
 				3,
 				4,
-				5
+				5,
+				6
 			]
 		}
 	],
@@ -213,7 +214,15 @@
 				2,
 				3,
 				4,
-				5
+				5,
+				6
+			]
+		},
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				7
 			]
 		}
 	],
@@ -254,6 +263,17 @@
 			"compileGroupIndex" : 0,
 			"path" : "unitTests/testPizza.cpp",
 			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "unitTests/pizzaPoolTest.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "unitTests/pizzaPoolTest.h",
+			"sourceGroupIndex" : 1
 		}
 	],
 	"type" : "EXECUTABLE"

@@ -14,5 +14,7 @@ public:
     PizzaPool(const std::vector<Ingredient>& ingr);
     Pizza acquirePizza();
     void releasePizza(Pizza& pizza);
+    const vector<Pizza> getPizzas() const;
+    const queue<int> getAvailableIndices() const;
 
 };
