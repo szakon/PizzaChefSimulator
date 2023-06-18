@@ -4,7 +4,7 @@
 
 class Storage : public Kitchen {
 public:
-    explicit Storage(Ingredient ingredient);
+    explicit Storage(Ingredient ingredient, int prepId);
     bool isStorage();
 
 };

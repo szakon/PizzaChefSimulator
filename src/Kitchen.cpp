@@ -5,9 +5,10 @@
 using namespace std;
 
 
-Kitchen::Kitchen(Ingredient ingr)
+Kitchen::Kitchen(Ingredient ingr, int prepId)
         : ingredient(ingr), selected(false)
 {
+    this->prepId = prepId;
 }
 
 Ingredient Kitchen::getIngredient() {

@@ -6,8 +6,8 @@
 
 static int TIMEPREP = 200;
 
-Preparation::Preparation(Ingredient ingredient, int id) : Kitchen(ingredient) {
-    this->id = id;
+Preparation::Preparation(Ingredient ingredient, int prepId) : Kitchen(ingredient, prepId) {
+    //this->prepId = prepId;
     status = make_shared<Status>(notused);
     time_prep = ::TIMEPREP;
     time_left = make_shared<int>(::TIMEPREP);
@@ -84,7 +84,7 @@ void Preparation::setSprite(sf::Texture& texture, float scaleFactor, float posit
     checkMark.setScale(sf::Vector2f(0.2,0.2));
 
 
-    if (id == 1){
+    if (prepId == 1){
         sf::Vector2f pot1Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center - distance, y_position);
         sprite.setPosition(pot1Position);
         timer.setPosition(pot1Position);

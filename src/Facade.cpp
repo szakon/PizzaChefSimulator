@@ -180,7 +180,7 @@ void Facade::init(){
     //Set up the storages and preparations
     int i = 0;
     for (const auto &ingredient: ingredients){
-        Storage storage(ingredient.second.ingredient);
+        Storage storage(ingredient.second.ingredient, 0);
         Preparation preparation1(ingredient.second.ingredient, 1);
         Preparation preparation2(ingredient.second.ingredient, 2);
         storages.push_back(storage);

@@ -10,14 +10,13 @@ enum Status {
 
 class Preparation : public Kitchen {
 private:
-    int id;
     shared_ptr<Status> status;
     int time_prep;
     shared_ptr<int> time_left;
     sf::Sprite timer;
     sf::Sprite checkMark;
 public:
-    explicit Preparation(Ingredient ingredient, int id);
+    explicit Preparation(Ingredient ingredient, int prepId);
     bool preparing_if_needed();
     std::string getStatus() const;
     void setStatus( const std::string stat);
