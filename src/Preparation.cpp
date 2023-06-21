@@ -1,102 +1,103 @@
 #include "Preparation.h"
 #include "Kitchen.h"
-#include "Pizza.h"
-#include "Storage.h"
 #include <chrono>
-#include <thread>
 #include <iostream>
-#include <unistd.h>
 
 
+static int TIMEPREP = 200;
 
-Preparation::Preparation(Ingredient ingredient, int id) : Kitchen(ingredient) {
-    this->id = id;
-    free = true;
-    ready = false;
-    time_prep = 3;
-    time_left = 3;
+Preparation::Preparation(Ingredient ingredient, int prepId) : Kitchen(ingredient, prepId) {
+    //this->prepId = prepId;
+    status = make_shared<Status>(notused);
+    time_prep = ::TIMEPREP;
+    time_left = make_shared<int>(::TIMEPREP);
 }
 
 std::ostream& operator<<(std::ostream& os, const Preparation& preparation)
 {
-    os << "This is the Preparation :" << endl;
-    os << "free : " << preparation.free << endl;
-    os << "ready : " << preparation.ready << endl;
+    os << "Preparation :" << endl;
+    os << "status" << preparation.status;
     os << "time_prep : " << preparation.time_prep << endl;
     os << "time_left : " << preparation.time_left << endl;
     return os;
 }
 
-int Preparation::prepare(Storage stock) {
-    if(ingredient == stock.getIngredient()) {
-        if(free) {
-            free = false;
-            while(time_left > 0) {
-                time_left -=1;
-                sleep(1);
-            }
-
-            ready = true;
-
-        }
-        else{
-            return 1;
-        }
+void Preparation::preparing_if_needed() {
+    if(*status == inprep) {
+        *time_left -= 1;
     }
-    else{
-        return 1;
+    if(*time_left == 0) {
+        *status = ready;
     }
-    return 0; //preparation time is done : preparation is ready to be used
 }
 
+std::string Preparation::getStatus() const {
+    if(*status == inprep) {
+        return "inprep";
+    }
+    else if (*status == notused) {
+        return "notused";
+    }
+    else if (*status == ready) {
+        return "ready";
+    }
 
-void Preparation::freeprep() {
-    ready = false;
-    free = true;
+    return "";
 }
 
-bool Preparation::getready() const {
-    return ready;
+void Preparation::setStatus( const std::string stat) {
+    if(stat == "inprep") {
+        *status = inprep;
+    }
+    else if (stat == "notused") {
+        *status = notused;
+    }
+    else if (stat == "ready") {
+        *status = ready;
+    }
 }
 
-bool Preparation::getfree() {
-    return free;
-}
-
-int Preparation::gettime_prep() {
+int Preparation::getTimePrep() {
     return time_prep;
 }
 
-int Preparation::gettime_left() {
-    return time_left;
+int Preparation::getTimeLeft() {
+    return *time_left;
 }
 
 void Preparation::reset() {
+    *status = notused;
+    *time_left = time_prep;
     selected = false;
-    free = true;
-    ready = false;
-    time_left = time_prep;
 }
 
-void Preparation::setSprite(sf::Texture& texture, float scaleFactor, float position, int screenWidth, sf::Sprite jar, float scaleJar, float y_position){
+void Preparation::setSprite(sf::Texture& texture, float scaleFactor, float position, int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& clock, sf::Texture& check){
     sprite.setTexture(texture);
     sprite.setScale(scaleFactor,scaleFactor);
-    //sf::Vector2f spriteJar(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor, 20);
+
     int center = jar.getTextureRect().width * scaleJar/2 - sprite.getTextureRect().width*scaleFactor/2;
     int distance = 0.4*sprite.getTextureRect().width* scaleFactor;
-    if (id == 1){
-        cout << "FIRST SPRITE" << endl;
+
+    timer.setTexture(clock);
+    timer.setScale(sf::Vector2f(0.05,0.05));
+
+
+    checkMark.setTexture(check);
+    checkMark.setScale(sf::Vector2f(0.2,0.2));
+
+
+    if (prepId == 1){
         sf::Vector2f pot1Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center - distance, y_position);
         sprite.setPosition(pot1Position);
+        timer.setPosition(pot1Position);
+        checkMark.setPosition(pot1Position);
+
     }else{
-        cout << "SECOND SPRITE" << endl;
         sf::Vector2f pot2Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center + distance, y_position);
         sprite.setPosition(pot2Position);
+        timer.setPosition(pot2Position);
+        checkMark.setPosition(pot2Position);
     }
-    //sf::Vector2f pot1Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center + distance, y_position);
-    //sf::Vector2f pot2Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center - distance, y_position);
-    //sf::Vector2f pot1Position(20 + 1.2f * jar.getTextureRect().height*scaleJar);
-    //sf::Vector2f position_sprite(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor, 20);
 }
 
 bool Preparation::isStorage(){
@@ -105,9 +106,10 @@ bool Preparation::isStorage(){
 
 void Preparation::draw(sf::RenderWindow& window){
     window.draw(sprite);
-}
-
-int Preparation::getId() {
-    return id;
+    if(*status == inprep) {
+        window.draw(timer);
+    }else if (*status == ready){
+        window.draw(checkMark);
+    }
 }
 

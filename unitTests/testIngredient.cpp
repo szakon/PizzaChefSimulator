@@ -7,5 +7,5 @@ TEST(IngredientTest, Constructor) {
 
     // Verify that the ingredient is set correctly
     EXPECT_EQ(ingr.getlabel(), "Onion");
-
 }
+
