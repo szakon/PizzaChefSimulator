@@ -81,7 +81,6 @@ void Preparation::setSprite(sf::Texture& texture, float scaleFactor, float posit
     timer.setTexture(clock);
     timer.setScale(sf::Vector2f(0.05,0.05));
 
-
     checkMark.setTexture(check);
     checkMark.setScale(sf::Vector2f(0.2,0.2));
 
@@ -91,12 +90,14 @@ void Preparation::setSprite(sf::Texture& texture, float scaleFactor, float posit
         sprite.setPosition(pot1Position);
         timer.setPosition(pot1Position);
         checkMark.setPosition(pot1Position);
+        cout << "1";
 
     }else{
         sf::Vector2f pot2Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center + distance, y_position);
         sprite.setPosition(pot2Position);
         timer.setPosition(pot2Position);
         checkMark.setPosition(pot2Position);
+        cout << "2";
     }
 }
 

@@ -8,14 +8,20 @@
 
 using namespace std;
 
-Ingredient::Ingredient(const std::string name)
+Ingredient::Ingredient(const std::string name, const float place)
 {
     label = name;
+    position = place;
 }
 
 std::string Ingredient::getlabel() const {
     return label;
 }
+
+float Ingredient::getPosition() const {
+    return position;
+}
+
 
 std::ostream& operator<<(std::ostream& os, const Ingredient& ingredient)
 {

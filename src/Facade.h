@@ -35,8 +35,8 @@ private:
     sf::Sprite sound;
     bool sound_on_off;
     std::map<int, Piz> pizzas;
-    std::vector<Storage> storages;
-    std::vector<Preparation> preparations;
+    std::map<std::string, Storage> storages;
+    std::map<std::string, Preparation> preparations;
     std::map<std::string, Ingr> ingredients;
     std::optional<Kitchen> selected;
     std::string selected_type;

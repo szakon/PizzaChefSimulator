@@ -22,7 +22,7 @@ Facade::Facade(){
     window.setVerticalSyncEnabled(true);
 
     //setting textures
-    std::vector<std::string> vect = {"bois","storage_cheese", "you_lost","storage_tomatoe", "storage_pepperoni", "grater", "pot", "cutting_board", "cooked_cheese", "check_mark", "sound_on", "sound_off", "timer", "3", "2", "1", "madame", "monsieur", "arm"};
+    std::vector<std::string> vect = {"bois","storage_cheese", "you_lost","storage_tomatoe", "storage_pepperoni", "preparation_tomatoe", "preparation_pepperoni", "preparation_cheese", "cooked_cheese", "check_mark", "sound_on", "sound_off", "timer", "3", "2", "1", "madame", "monsieur", "arm"};
 
     for (auto& element : vect) {
         textures.insert(addTextureFromFile(element));
@@ -37,9 +37,9 @@ Facade::Facade(){
 
 
     //Create ingredients and filling the pizza pool
-    Ingredient tomatoe("tomatoe");
-    Ingredient cheese("cheese");
-    Ingredient pepperoni("pepperoni");
+    Ingredient tomatoe("tomatoe", 1.5);
+    Ingredient cheese("cheese", 3);
+    Ingredient pepperoni("pepperoni", 0);
     Ingr tom = {tomatoe, false};
     Ingr che = {cheese, false};
     Ingr pep = {pepperoni, false};
@@ -111,10 +111,9 @@ void Facade::init(){
         Storage storage(ingredient.second.ingredient, 0);
         Preparation preparation1(ingredient.second.ingredient, 1);
         Preparation preparation2(ingredient.second.ingredient, 2);
-        storages.push_back(storage);
-        preparations.push_back(preparation1);
-        preparations.push_back(preparation2);
-
+        storages.insert(std::make_pair(ingredient.second.ingredient.getlabel(), storage));
+        preparations.insert(std::make_pair(ingredient.second.ingredient.getlabel()+"1",preparation1));
+        preparations.insert(std::make_pair(ingredient.second.ingredient.getlabel()+"2",preparation2));
     }
 
 }
@@ -163,51 +162,23 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     float scaleFactorJar = 0.9f*screenWidth/2500;
 
     //create the cheese jar
-    float positionCheese = 3.0f;
     sf::Sprite spriteCheese;
 
     //create the tomatoe jar
-    float positionTomatoe = 1.5f;
     sf::Sprite spriteTomatoe;
 
-    //create the pepperoni jar
-    float positionPepperoni = 0;
-    sf::Sprite spritePepperoni;
 
-    for(Storage& storage : storages) {
-        if(storage.getIngredient().getlabel() == "tomatoe") {
-            storage.setSprite(textures.at("storage_tomatoe"), scaleFactorJar, positionTomatoe, screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
-            spriteTomatoe = storage.getSprite();
-            cout << spriteTomatoe.getTextureRect().height << std::endl;
-        }
-        else if (storage.getIngredient().getlabel() == "cheese") {
-            storage.setSprite(textures.at("storage_cheese"), scaleFactorJar, positionCheese, screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
-            spriteCheese = storage.getSprite();
-        }
-        else if (storage.getIngredient().getlabel() == "pepperoni") {
-            storage.setSprite(textures.at("storage_pepperoni"), scaleFactorJar, positionPepperoni, screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
-            spritePepperoni = storage.getSprite();
-        }
+    for(auto& storage : storages) {
+        storage.second.setSprite(textures.at("storage_"+storage.second.getIngredient().getlabel()), scaleFactorJar, ingredients.at(storage.second.getIngredient().getlabel()).ingredient.getPosition(), screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
     }
 
     //create a pot
     float scaleFactorPot = 0.2f*screenWidth/2500;
-    float potLine = 20 + 1.2f * spriteTomatoe.getTextureRect().height*scaleFactorJar;
-
-    //create a grater
-    float scaleFactorGrater = 0.1f*screenWidth/2500;
+    float potLine = 20 + 1.2f * storages.at("tomatoe").getSprite().getTextureRect().height*scaleFactorJar;
 
     //random sprite used for preparations
-    for(Preparation& preparation : preparations) {
-        if(preparation.getIngredient().getlabel() == "tomatoe") {
-            preparation.setSprite(textures.at("pot"), scaleFactorPot, positionTomatoe, screenWidth, spriteTomatoe, scaleFactorJar, potLine, textures.at("timer"), textures.at("check_mark"));
-        }
-        else if (preparation.getIngredient().getlabel() == "cheese") {
-            preparation.setSprite(textures.at("grater"), scaleFactorGrater, positionCheese+1.5, screenWidth, spriteCheese, scaleFactorJar, potLine, textures.at("timer"), textures.at("check_mark"));
-        }
-        else if (preparation.getIngredient().getlabel() == "pepperoni") {
-            preparation.setSprite(textures.at("cutting_board"), scaleFactorPot, positionPepperoni, screenWidth, spritePepperoni, scaleFactorJar, potLine, textures.at("timer"), textures.at("check_mark"));
-        }
+    for(auto& preparation : preparations) {
+        preparation.second.setSprite(textures.at("preparation_"+preparation.second.getIngredient().getlabel()), scaleFactorPot, ingredients.at(preparation.second.getIngredient().getlabel()).ingredient.getPosition(), screenWidth, spriteTomatoe, scaleFactorJar, potLine, textures.at("timer"), textures.at("check_mark"));
     }
 
     float circlePositionX = 0;
@@ -301,9 +272,9 @@ void Facade::addIngredient(Pizza pizza){
     if (selected_type == "preparation") {
         score += pizza.addIngredient(selected->getIngredient());
         ingredients.at(selected->getIngredient().getlabel()).added = true;
-        for(Preparation prep : preparations) {
-            if(selected->getIngredient() == prep.getIngredient() && prep.getSelected() == true && selected->getPrepId() == prep.getPrepId()) {
-                prep.reset();
+        for(auto& prep : preparations) {
+            if(selected->getIngredient() == prep.second.getIngredient() && prep.second.getSelected() == true && selected->getPrepId() == prep.second.getPrepId()) {
+                prep.second.reset();
             }
         }
     }
@@ -318,11 +289,11 @@ void Facade::render() {
 
     window.clear();
     window.draw(sprite_background);
-    for(Storage& storage : storages) {
-        storage.draw(window);
+    for(auto& storage : storages) {
+        storage.second.draw(window);
     }
-    for(Preparation& preparation : preparations) {
-        preparation.draw(window);
+    for(auto& preparation : preparations) {
+        preparation.second.draw(window);
     }
 
     window.draw(score_board);
@@ -388,8 +359,8 @@ void Facade::update(unsigned int screenWidth, unsigned int screenHeight) {
     bool isTouched = false; //to test if an object was touched
 
     //Update the preparations preparing
-    for (Preparation prep : preparations) {
-        prep.preparing_if_needed();
+    for (auto& prep : preparations) {
+        prep.second.preparing_if_needed();
     }
 
     sf::Event event;
@@ -402,26 +373,26 @@ void Facade::update(unsigned int screenWidth, unsigned int screenHeight) {
             if (event.mouseButton.button == sf::Mouse::Left) {
                 sf::Vector2i mousePos = sf::Mouse::getPosition(window);
                 // Check for storage click
-                for (Storage &storage: storages) {
-                    if (storage.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                        cout << storage.getIngredient() << endl;
-                        selected.emplace(storage);
+                for (auto &storage: storages) {
+                    if (storage.second.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                        cout << storage.second.getIngredient() << endl;
+                        selected.emplace(storage.second);
                         selected_type = "storage";
                         isTouched = true;
                         break; // Exit the loop if a storage is clicked
                     }
                 }
                 //Check for preparation click
-                for (Preparation &preparation: preparations) {
-                    if (preparation.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                        if(preparation.getStatus() == "ready") { //If the preparation is ready to be put on the pizza
-                            selectReady(preparation);
+                for (auto&preparation: preparations) {
+                    if (preparation.second.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                        if(preparation.second.getStatus() == "ready") { //If the preparation is ready to be put on the pizza
+                            selectReady(preparation.second);
                             isTouched = true;
                             //change sprite
                         }
-                        else if (preparation.getStatus() == "notused"){ //If we need to cook the ingredient
-                            cout << preparation.getIngredient() << endl;
-                            startCooking(preparation);
+                        else if (preparation.second.getStatus() == "notused"){ //If we need to cook the ingredient
+                            cout << preparation.second.getIngredient() << endl;
+                            startCooking(preparation.second);
                             isTouched = false;
                             selected = nullopt;
                         }
