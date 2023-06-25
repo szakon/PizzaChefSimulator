@@ -66,6 +66,8 @@ public:
     void pizzaGenerator();
     void randomIngr(Pizza pizza);
     void addRandomIngredient(Pizza pizza, Ingredient Ingredient);
+    std::pair<std::string,sf::Texture> addTextureFromFile(const std::string& name);
+    void setTextureScalePosition(sf::Sprite& sprite, sf::Texture& texture, double scale, double position_x, double position_y);
     void move();
     static const sf::Time TimePerFrame;
     static const float xVelocity;

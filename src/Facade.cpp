@@ -19,51 +19,22 @@ Facade::Facade(){
 
     // Create the SFML window with the screen size
     window.create(sf::VideoMode(screenWidth, screenHeight), "Pizza Glouton");
-
-    //Background
-    sf::Texture bois = loadTextureFromFile("resources/bois1.jpg");
-    sprite_background.setTexture(bois);
-    // Calculate the scale factors to fill the window
-    float scaleX = static_cast<float>(window.getSize().x) / bois.getSize().x;
-    float scaleY = static_cast<float>(window.getSize().y) / bois.getSize().y;
-    sprite_background.setScale(scaleX, scaleY); // Set the scale of the sprite to fill the window
-
+    window.setVerticalSyncEnabled(true);
 
     //setting textures
-    sf::Texture cheese_jar = loadTextureFromFile("resources/storage_cheese.png");
-    sf::Texture tomatoe_jar = loadTextureFromFile("resources/storage_tomatoe.png");
-    sf::Texture pepperoni_jar = loadTextureFromFile("resources/storage_pepperoni.png");
-    sf::Texture grater = loadTextureFromFile("resources/grater.png");
-    sf::Texture pot = loadTextureFromFile("resources/pot.png");
-    sf::Texture cut = loadTextureFromFile("resources/cutting_board.png");
-    sf::Texture cooked_cheese = loadTextureFromFile("resources/cooked-cheese.png");
-    sf::Texture check = loadTextureFromFile("resources/check_mark.png");
-    sf::Texture timer = loadTextureFromFile("resources/stopwatch.png");
-    sf::Texture sound_on = loadTextureFromFile("resources/sound_on.png");
-    sf::Texture sound_off = loadTextureFromFile("resources/sound_off.png");
-    sf::Texture lives3 = loadTextureFromFile("resources/3.png");
-    sf::Texture lives2 = loadTextureFromFile("resources/2.png");
-    sf::Texture lives1 = loadTextureFromFile("resources/1.png");
-    sf::Texture madame = loadTextureFromFile("resources/madame.png");
-    sf::Texture monsieur = loadTextureFromFile("resources/monsieur.png");
-    sf::Texture arm = loadTextureFromFile("resources/arm.png");
-    textures.insert(std::make_pair("cheese_jar", cheese_jar));
-    textures.insert(std::make_pair("tomatoe_jar", tomatoe_jar));
-    textures.insert(std::make_pair("pepperoni_jar", pepperoni_jar));
-    textures.insert(std::make_pair("grater", grater));
-    textures.insert(std::make_pair("pot", pot));
-    textures.insert(std::make_pair("cut", cut));
-    textures.insert(std::make_pair("cooked_cheese", cooked_cheese));\
-    textures.insert(std::make_pair("check", check));
-    textures.insert(std::make_pair("timer", timer));
-    textures.insert(std::make_pair("sound_on", sound_on));
-    textures.insert(std::make_pair("sound_off", sound_off));
-    textures.insert(std::make_pair("lives3", lives3));
-    textures.insert(std::make_pair("lives2", lives2));
-    textures.insert(std::make_pair("lives1", lives1));
-    textures.insert(std::make_pair("madame", madame));
-    textures.insert(std::make_pair("monsieur", monsieur));
-    textures.insert(std::make_pair("arm", arm));
+    std::vector<std::string> vect = {"bois","storage_cheese", "you_lost","storage_tomatoe", "storage_pepperoni", "grater", "pot", "cutting_board", "cooked_cheese", "check_mark", "sound_on", "sound_off", "timer", "3", "2", "1", "madame", "monsieur", "arm"};
+
+    for (auto& element : vect) {
+        textures.insert(addTextureFromFile(element));
+    }
+
+    //Background
+    sprite_background.setTexture(textures.at("bois"));
+    // Calculate the scale factors to fill the window
+    float scaleX = static_cast<float>(window.getSize().x) / textures.at("bois").getSize().x;
+    float scaleY = static_cast<float>(window.getSize().y) / textures.at("bois").getSize().y;
+    sprite_background.setScale(scaleX, scaleY); // Set the scale of the sprite to fill the window
+
 
     //Create ingredients and filling the pizza pool
     Ingredient tomatoe("tomatoe");
@@ -150,8 +121,6 @@ void Facade::init(){
 
 void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
 
-    cout << "WIDTH" << screenWidth << endl;
-    cout << "HEIGHT" << screenHeight << endl;
 
     window.setFramerateLimit(60);
     sf::Vector2u windowSize = window.getSize();
@@ -169,9 +138,7 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     scoreText.setString("Your Score: " + std::to_string(score));
 
     //Set up the sound
-    sound.setTexture(textures.at("sound_on"));
-    sound.setScale(0.09,0.09);
-    sound.setPosition(screenWidth*14/15, 0);
+    setTextureScalePosition(sound, textures.at("sound_on"), 0.09, screenWidth*14/15,0);
 
     //Set up the conveyor belt
     belt.setSize(sf::Vector2f(screenWidth,screenHeight/3));
@@ -180,16 +147,10 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     belt.setFillColor(greyColor);
 
     //Set up the lives
-    lifeline.setTexture(textures.at("lives3"));
-    lifeline.setScale(0.15,0.15);
-    lifeline.setPosition(0,score_board.getPosition().y + score_board.getSize().y - 20);
-
+    setTextureScalePosition(lifeline, textures.at("3"), 0.15, 0,score_board.getPosition().y + score_board.getSize().y - 20 );
 
     //Characters
-    cout << 1 << endl;
-    madame.setTexture(textures.at("madame"));
-    madame.setScale(0.7*screenWidth/2500,0.7*screenWidth/2500);
-    madame.setPosition(sf::Vector2f(0,belt.getPosition().y-madame.getTextureRect().height*0.7*screenWidth/2500));
+    setTextureScalePosition(madame, textures.at("madame"), 0.7*screenWidth/2500, 0, belt.getPosition().y-textures.at("madame").getSize().y*0.7*screenWidth/2500);
 
     monsieur.setTexture(textures.at("monsieur"));
     float scaleFactorMonsieur = 1.1*screenWidth/2500;
@@ -197,65 +158,55 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     monsieur.setScale(scaleFactorMonsieur, scaleFactorMonsieur);
     monsieur.setPosition(monsieurPosition);
 
-    monsieur_arm.setTexture(textures.at("arm"));
-    monsieur_arm.setScale(scaleFactorMonsieur, scaleFactorMonsieur);
-    monsieur_arm.setPosition(monsieurPosition);
+    setTextureScalePosition(monsieur_arm, textures.at("arm"), scaleFactorMonsieur, monsieurPosition.x, monsieurPosition.y);
 
     float scaleFactorJar = 0.9f*screenWidth/2500;
 
     //create the cheese jar
-    //sf::Texture cheese_jar = loadTextureFromFile("resources/storage_cheese.png");
     float positionCheese = 3.0f;
     sf::Sprite spriteCheese;
 
     //create the tomatoe jar
-    //sf::Texture tomatoe_jar = loadTextureFromFile("resources/storage_tomatoe.png");
     float positionTomatoe = 1.5f;
     sf::Sprite spriteTomatoe;
 
     //create the pepperoni jar
-    //sf::Texture pepperoni_jar = loadTextureFromFile("resources/storage_peperoni.png");
     float positionPepperoni = 0;
     sf::Sprite spritePepperoni;
 
     for(Storage& storage : storages) {
         if(storage.getIngredient().getlabel() == "tomatoe") {
-            storage.setSprite(textures.at("tomatoe_jar"), scaleFactorJar, positionTomatoe, screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
+            storage.setSprite(textures.at("storage_tomatoe"), scaleFactorJar, positionTomatoe, screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
             spriteTomatoe = storage.getSprite();
             cout << spriteTomatoe.getTextureRect().height << std::endl;
         }
         else if (storage.getIngredient().getlabel() == "cheese") {
-            storage.setSprite(textures.at("cheese_jar"), scaleFactorJar, positionCheese, screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
+            storage.setSprite(textures.at("storage_cheese"), scaleFactorJar, positionCheese, screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
             spriteCheese = storage.getSprite();
         }
         else if (storage.getIngredient().getlabel() == "pepperoni") {
-            storage.setSprite(textures.at("pepperoni_jar"), scaleFactorJar, positionPepperoni, screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
+            storage.setSprite(textures.at("storage_pepperoni"), scaleFactorJar, positionPepperoni, screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
             spritePepperoni = storage.getSprite();
         }
     }
 
     //create a pot
-    //sf::Texture pot = loadTextureFromFile("resources/pot.png");
     float scaleFactorPot = 0.2f*screenWidth/2500;
     float potLine = 20 + 1.2f * spriteTomatoe.getTextureRect().height*scaleFactorJar;
 
-    //create a cutting board
-    //sf::Texture cut = loadTextureFromFile("resources/cutting_board.png");
-
     //create a grater
-    //sf::Texture grater = loadTextureFromFile("resources/grater.png");
     float scaleFactorGrater = 0.1f*screenWidth/2500;
 
     //random sprite used for preparations
     for(Preparation& preparation : preparations) {
         if(preparation.getIngredient().getlabel() == "tomatoe") {
-            preparation.setSprite(textures.at("pot"), scaleFactorPot, positionTomatoe, screenWidth, spriteTomatoe, scaleFactorJar, potLine, textures.at("timer"), textures.at("check"));
+            preparation.setSprite(textures.at("pot"), scaleFactorPot, positionTomatoe, screenWidth, spriteTomatoe, scaleFactorJar, potLine, textures.at("timer"), textures.at("check_mark"));
         }
         else if (preparation.getIngredient().getlabel() == "cheese") {
-            preparation.setSprite(textures.at("grater"), scaleFactorGrater, positionCheese+1.5, screenWidth, spriteCheese, scaleFactorJar, potLine, textures.at("timer"), textures.at("check"));
+            preparation.setSprite(textures.at("grater"), scaleFactorGrater, positionCheese+1.5, screenWidth, spriteCheese, scaleFactorJar, potLine, textures.at("timer"), textures.at("check_mark"));
         }
         else if (preparation.getIngredient().getlabel() == "pepperoni") {
-            preparation.setSprite(textures.at("cut"), scaleFactorPot, positionPepperoni, screenWidth, spritePepperoni, scaleFactorJar, potLine, textures.at("timer"), textures.at("check"));
+            preparation.setSprite(textures.at("cutting_board"), scaleFactorPot, positionPepperoni, screenWidth, spritePepperoni, scaleFactorJar, potLine, textures.at("timer"), textures.at("check_mark"));
         }
     }
 
@@ -281,9 +232,9 @@ void Facade::move(){
             }
             releasePizza(pair.second.pizza);
             if (lives == 2) {
-                lifeline.setTexture(textures.at("lives2"));
+                lifeline.setTexture(textures.at("2"));
             } else if (lives == 1) {
-                lifeline.setTexture(textures.at("lives1"));
+                lifeline.setTexture(textures.at("1"));
             }
             if (lives == 0) {
                 cout << "Perdu";
@@ -568,10 +519,23 @@ void Facade::randomIngr(Pizza pizza){
         addRandomIngredient(pizza, ingredient);
     }
 
-
 }
 
 
+std::pair<std::string,sf::Texture> Facade::addTextureFromFile(const std::string& name) {
+    sf::Texture texture;
+    if (!texture.loadFromFile("resources/"+name+".png")) {
+        cout << "ERROR loading texture from file: " << "resources/"+name+".png" << std::endl;
+    }
+
+    return std::make_pair(name, texture);
+}
+
+void Facade::setTextureScalePosition(sf::Sprite& sprite, sf::Texture& texture, double scale, double position_x, double position_y) {
+    sprite.setTexture(texture);
+    sprite.setScale(scale,scale);
+    sprite.setPosition(position_x, position_y);
+}
 
 
 
