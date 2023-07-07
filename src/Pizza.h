@@ -42,7 +42,7 @@ public:
     bool operator==(const Pizza& other) const;
     int getId();
     sf::Vector2f getCirclePosition();
-    bool getComplete();
+    bool isComplete();
     std::vector<sf::CircleShape> getIngredientsSprite();
     bool getIngredientStatus(std::string string) const;
     void printPizza(sf::RenderWindow& window);

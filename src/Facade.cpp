@@ -194,10 +194,7 @@ void Facade::move(){
     for (auto &pair: pizzas) {
 
         if (pair.second.pizza.getCirclePosition().x >window.getSize().x * 0.65) { //we are at the end of the line
-            //circlePosition = sf::Vector2f(0,5*screenHeight/10);
-            //saucePosition = sf::Vector2f(200*screenWidth/2500-170*screenWidth/2500,5*screenHeight/10+200*screenWidth/2500-170*screenWidth/2500);
-            //pizzas.front().invisible();
-            if (!pair.second.pizza.getComplete()) { // If the pizza is not completed with all ingredients
+            if (!pair.second.pizza.isComplete()) { // If the pizza is not completed with all ingredients
                 score -= 10;
                 lives -= 1;
             } else {
@@ -222,24 +219,9 @@ void Facade::move(){
                 pizzaGenerator();
                 pair.second.newPizzaGenerated = true;
             }
-            unsigned int cPosition = pair.second.pizza.getCirclePosition().x + xVelocity;
-            /*
-            pair.second.pizza.setDough(window.getSize().x, window.getSize().y, cPosition, xVelocity,
-                                       textures.at("cooked_cheese"),
-                                       pair.second.pizza.getIngredientStatus("tomatoe"),
-                                       pair.second.pizza.getIngredientStatus("cheese"),
-                                       pair.second.pizza.getIngredientStatus("pepperoni"));*/
-            //cout << "should move facade" << endl;
             pair.second.pizza.movePizza(xVelocity);
 
         } else {
-            unsigned int cPosition = pair.second.pizza.getCirclePosition().x + xVelocity;
-            /*
-            pair.second.pizza.setDough(window.getSize().x, window.getSize().y, cPosition, xVelocity,
-                                       textures.at("cooked_cheese"),
-                                       pair.second.pizza.getIngredientStatus("tomatoe"),
-                                       pair.second.pizza.getIngredientStatus("cheese"),
-                                       pair.second.pizza.getIngredientStatus("pepperoni"));*/
             pair.second.pizza.movePizza(xVelocity);
         }
 
@@ -319,23 +301,6 @@ void Facade::render() {
     for (auto &pair: pizzas) {
         pair.second.pizza.printPizza(window);
     }
-
-    /*
-    for (auto &pair: pizzas) {
-        std::vector<sf::CircleShape> ingredients = pair.second.pizza.getIngredientsSprite();
-
-        cout << "size circles in facade : " << ingredients.size() << endl;
-        for (auto ingredient: ingredients){
-            //cout << "circles length: " << pair.second.pizza.getCircles().size() << endl;
-
-            cout << "radius of ingredient in facade: " << ingredient.getRadius() << endl;
-            cout << "texture of ingredient in facade: " << ingredient.getTexture() << endl;
-            cout << "Failed 1 " << endl;
-
-            window.draw(ingredient);
-        }
-
-    }*/
 
     window.draw(monsieur_arm);
 

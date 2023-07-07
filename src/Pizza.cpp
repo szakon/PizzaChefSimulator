@@ -71,7 +71,6 @@ sf::CircleShape Pizza::getDough(){
 
 
 void Pizza::movePizza(float velocity) {
-
     //cout << "should move Pizza number " << id <<  " from position: " << circlePosition.x << endl;
     circlePosition.x += velocity;
     ingredientPosition.x += velocity;
@@ -94,33 +93,6 @@ void Pizza::printPizza(sf::RenderWindow& window){
     }
 }
 
-/*
-std::vector<sf::CircleShape> Pizza::getIngredientsSprite(){
-    std::vector<sf::CircleShape> circles;
-    dough.setPosition(circlePosition.x,circlePosition.y);
-    circles.push_back(dough);
-    for (auto ingredient: ingredients){
-        if (*ingredient.second){
-            //cout << "HERE" << endl;
-            Ingredient ingr = ingredient.first;
-            ingr.setPosition(ingredientPosition.x, ingredientPosition.y);
-            circles.push_back(ingr.getCircle());
-        }
-    }
-    cout << "size circles in pizza : " << circles.size() << endl;
-    return circles;
-}*/
-
-
-sf::CircleShape Pizza::getSauce(){
-    return sauce;
-}
-
-
-vector<sf::CircleShape> Pizza::getPepperoni(){
-    return pepperonis;
-}
-
 // Define the less-than operator implementation
 bool operator<(const Pizza& lhs, const Pizza& rhs) {
     // Compare the labels of the ingredients for ordering
@@ -140,32 +112,11 @@ int Pizza::addIngredient(Ingredient ingredient) {
             }
         }
     }
-    //addIngredientSprite(ingredient);
-
-    //cout << "circles length at the end of addIngredient: " << circles.size() << endl;
     return res;
 }
 
-void Pizza::setPosition(sf::Vector2f circleposition) {
-    position = circleposition;
-}
 
-sf::Vector2f Pizza::getPosition() {
-    return position;
-}
-
-bool Pizza::getIngredientStatus(std::string string) const{
-    for (auto& pair: ingredients) {
-        if (pair.first.getLabel() == string){
-            bool rtrn = *pair.second;
-            return rtrn;
-        }
-    }
-
-    return false;
-}
-
-bool Pizza::getComplete() {
+bool Pizza::isComplete() {
     bool res = true;
     for(auto& pair : ingredients) {
         if(*pair.second == false) {
