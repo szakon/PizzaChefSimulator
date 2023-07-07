@@ -3,7 +3,7 @@
 using namespace std;
 
 
-PizzaPool::PizzaPool(const std::vector<Ingredient>& ingr){
+PizzaPool::PizzaPool(std::vector<Ingredient>& ingr){
 
     pizzas.reserve(7);
     for (int i = 0; i < 7; i++) {

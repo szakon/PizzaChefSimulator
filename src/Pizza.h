@@ -13,18 +13,25 @@ private :
     bool completed;
     sf::CircleShape dough;
     sf::CircleShape sauce;
-    sf::CircleShape melted_cheese;
+    //sf::CircleShape melted_cheese;
     vector<sf::CircleShape> pepperonis;
     sf::Vector2f position;
     sf::Vector2f circlePosition;
+    sf::Vector2f ingredientPosition;
+    //std::vector<sf::CircleShape> circles;
+    std::vector<const sf::Texture*>  textures;
 
 public:
     int id;
 
-    explicit Pizza(const std::vector< Ingredient>& ingr);
+    explicit Pizza(std::vector< Ingredient>& ingr);
+    sf::CircleShape getDough();
+    std::vector<sf::CircleShape> getCircles();
+    void movePizza(float velocity);
+    std::vector<sf::CircleShape>  addIngredientSprite(float positionX);
     friend std::ostream& operator<<(std::ostream& os, const Pizza& pizza);
     int addIngredient(Ingredient ingredient);
-    void setPosition(sf::Vector2f circleposition);
+    void setPosition(sf::Vector2f position);
     sf::Vector2f getPosition();
     void setDough(unsigned int screenWidth, unsigned int screenHeight, float circlePosition, float xVelocity, const sf::Texture& cooked_cheese, bool tomato, bool cheese, bool pepperoni);
     sf::CircleShape getDough() const;
@@ -36,7 +43,8 @@ public:
     int getId();
     sf::Vector2f getCirclePosition();
     bool getComplete();
-
+    std::vector<sf::CircleShape> getIngredientsSprite();
     bool getIngredientStatus(std::string string) const;
+    void printPizza(sf::RenderWindow& window);
 };
 

@@ -6,7 +6,7 @@
 #include <thread>
 
 const sf::Time Facade::TimePerFrame = sf::seconds(1.f/60.f); // The game is running at 60 FPS
-const float Facade::xVelocity = 10; //movement of the pizzas
+const float Facade::xVelocity = 3; //movement of the pizzas
 
 Facade::Facade(){
 
@@ -22,7 +22,7 @@ Facade::Facade(){
     window.setVerticalSyncEnabled(true);
 
     //setting textures
-    std::vector<std::string> vect = {"bois","storage_cheese", "you_lost","storage_tomatoe", "storage_pepperoni", "preparation_tomatoe", "preparation_pepperoni", "preparation_cheese", "cooked_cheese", "check_mark", "sound_on", "sound_off", "timer", "3", "2", "1", "madame", "monsieur", "arm"};
+    std::vector<std::string> vect = {"bois","storage_cheese", "you_lost","storage_tomatoe", "storage_pepperoni", "preparation_tomatoe", "preparation_pepperoni", "preparation_cheese", "cooked_cheese", "check_mark", "sound_on", "sound_off", "timer", "3", "2", "1", "madame", "monsieur", "arm", "tomato_sauce", "pepperonis"};
 
     for (auto& element : vect) {
         textures.insert(addTextureFromFile(element));
@@ -37,9 +37,9 @@ Facade::Facade(){
 
 
     //Create ingredients and filling the pizza pool
-    Ingredient tomatoe("tomatoe", 1.5);
-    Ingredient cheese("cheese", 3);
-    Ingredient pepperoni("pepperoni", 0);
+    Ingredient tomatoe("tomatoe",1, (170*screenWidth-20)/2500, textures.at("tomato_sauce"),1.5);
+    Ingredient cheese("cheese", 2, (170*screenWidth-20)/2500, textures.at("cooked_cheese"), 3);
+    Ingredient pepperoni("pepperoni", 3, (170*screenWidth-20)/2500, textures.at("pepperonis"), 0);
     Ingr tom = {tomatoe, false};
     Ingr che = {cheese, false};
     Ingr pep = {pepperoni, false};
@@ -111,9 +111,9 @@ void Facade::init(){
         Storage storage(ingredient.second.ingredient, 0);
         Preparation preparation1(ingredient.second.ingredient, 1);
         Preparation preparation2(ingredient.second.ingredient, 2);
-        storages.insert(std::make_pair(ingredient.second.ingredient.getlabel(), storage));
-        preparations.insert(std::make_pair(ingredient.second.ingredient.getlabel()+"1",preparation1));
-        preparations.insert(std::make_pair(ingredient.second.ingredient.getlabel()+"2",preparation2));
+        storages.insert(std::make_pair(ingredient.second.ingredient.getLabel(), storage));
+        preparations.insert(std::make_pair(ingredient.second.ingredient.getLabel()+"1",preparation1));
+        preparations.insert(std::make_pair(ingredient.second.ingredient.getLabel()+"2",preparation2));
     }
 
 }
@@ -169,7 +169,7 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
 
 
     for(auto& storage : storages) {
-        storage.second.setSprite(textures.at("storage_"+storage.second.getIngredient().getlabel()), scaleFactorJar, ingredients.at(storage.second.getIngredient().getlabel()).ingredient.getPosition(), screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
+        storage.second.setSprite(textures.at("storage_"+storage.second.getIngredient().getLabel()), scaleFactorJar, ingredients.at(storage.second.getIngredient().getLabel()).ingredient.getPosition(), screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
     }
 
     //create a pot
@@ -178,19 +178,21 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
 
     //random sprite used for preparations
     for(auto& preparation : preparations) {
-        preparation.second.setSprite(textures.at("preparation_"+preparation.second.getIngredient().getlabel()), scaleFactorPot, ingredients.at(preparation.second.getIngredient().getlabel()).ingredient.getPosition(), screenWidth, spriteTomatoe, scaleFactorJar, potLine, textures.at("timer"), textures.at("check_mark"));
+        preparation.second.setSprite(textures.at("preparation_"+preparation.second.getIngredient().getLabel()), scaleFactorPot, ingredients.at(preparation.second.getIngredient().getLabel()).ingredient.getPosition(), screenWidth, spriteTomatoe, scaleFactorJar, potLine, textures.at("timer"), textures.at("check_mark"));
     }
 
     float circlePositionX = 0;
 
+    /*
     for (auto pair: pizzas){
         pair.second.pizza.setDough(screenWidth, screenHeight, circlePositionX, xVelocity, textures.at("cooked_cheese"), pair.second.pizza.getIngredientStatus("tomatoe"), pair.second.pizza.getIngredientStatus("cheese"), pair.second.pizza.getIngredientStatus("pepperoni"));
-    }
+    }*/
 
 }
 
 void Facade::move(){
     for (auto &pair: pizzas) {
+
         if (pair.second.pizza.getCirclePosition().x >window.getSize().x * 0.65) { //we are at the end of the line
             //circlePosition = sf::Vector2f(0,5*screenHeight/10);
             //saucePosition = sf::Vector2f(200*screenWidth/2500-170*screenWidth/2500,5*screenHeight/10+200*screenWidth/2500-170*screenWidth/2500);
@@ -221,19 +223,24 @@ void Facade::move(){
                 pair.second.newPizzaGenerated = true;
             }
             unsigned int cPosition = pair.second.pizza.getCirclePosition().x + xVelocity;
+            /*
             pair.second.pizza.setDough(window.getSize().x, window.getSize().y, cPosition, xVelocity,
                                        textures.at("cooked_cheese"),
                                        pair.second.pizza.getIngredientStatus("tomatoe"),
                                        pair.second.pizza.getIngredientStatus("cheese"),
-                                       pair.second.pizza.getIngredientStatus("pepperoni"));
+                                       pair.second.pizza.getIngredientStatus("pepperoni"));*/
+            //cout << "should move facade" << endl;
+            pair.second.pizza.movePizza(xVelocity);
 
         } else {
             unsigned int cPosition = pair.second.pizza.getCirclePosition().x + xVelocity;
+            /*
             pair.second.pizza.setDough(window.getSize().x, window.getSize().y, cPosition, xVelocity,
                                        textures.at("cooked_cheese"),
                                        pair.second.pizza.getIngredientStatus("tomatoe"),
                                        pair.second.pizza.getIngredientStatus("cheese"),
-                                       pair.second.pizza.getIngredientStatus("pepperoni"));
+                                       pair.second.pizza.getIngredientStatus("pepperoni"));*/
+            pair.second.pizza.movePizza(xVelocity);
         }
 
     }
@@ -268,10 +275,11 @@ void Facade::selectReady(Preparation &preparation) {
 }
 
 
-void Facade::addIngredient(Pizza pizza){
+void Facade::addIngredient(Pizza& pizza){
     if (selected_type == "preparation") {
         score += pizza.addIngredient(selected->getIngredient());
-        ingredients.at(selected->getIngredient().getlabel()).added = true;
+        //cout << "circles length at the end of addIngredient pizza in facade: " << pizza.getCircles().size() << endl;
+        ingredients.at(selected->getIngredient().getLabel()).added = true;
         for(auto& prep : preparations) {
             if(selected->getIngredient() == prep.second.getIngredient() && prep.second.getSelected() == true && selected->getPrepId() == prep.second.getPrepId()) {
                 prep.second.reset();
@@ -282,7 +290,7 @@ void Facade::addIngredient(Pizza pizza){
 
 void Facade::addRandomIngredient(Pizza pizza, Ingredient ingredient) {
     pizza.addIngredient(ingredient);
-    ingredients.at(ingredient.getlabel()).added = true;
+    ingredients.at(ingredient.getLabel()).added = true;
 }
 
 void Facade::render() {
@@ -307,14 +315,27 @@ void Facade::render() {
     window.draw(monsieur);
 
 
+
     for (auto &pair: pizzas) {
-        window.draw(pair.second.pizza.getDough());
-        window.draw(pair.second.pizza.getSauce());
-        window.draw(pair.second.pizza.getCheese());
-        for (size_t i = 0; i < pair.second.pizza.getPepperoni().size(); i++) {
-            window.draw(pair.second.pizza.getPepperoni()[i]);
-        }
+        pair.second.pizza.printPizza(window);
     }
+
+    /*
+    for (auto &pair: pizzas) {
+        std::vector<sf::CircleShape> ingredients = pair.second.pizza.getIngredientsSprite();
+
+        cout << "size circles in facade : " << ingredients.size() << endl;
+        for (auto ingredient: ingredients){
+            //cout << "circles length: " << pair.second.pizza.getCircles().size() << endl;
+
+            cout << "radius of ingredient in facade: " << ingredient.getRadius() << endl;
+            cout << "texture of ingredient in facade: " << ingredient.getTexture() << endl;
+            cout << "Failed 1 " << endl;
+
+            window.draw(ingredient);
+        }
+
+    }*/
 
     window.draw(monsieur_arm);
 
@@ -406,9 +427,13 @@ void Facade::update(unsigned int screenWidth, unsigned int screenHeight) {
 
                 for (auto pair: pizzas){
                     if (pair.second.pizza.getDough().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                        cout << "PIZZA TOUCHED: pizza id: " << pair.second.pizza.getId() << endl;
                         addIngredient(pair.second.pizza);
+                        //cout << "circles length at the end of addIngredient in facade: " << pair.second.pizza.getCircles().size() << endl;
                     }
                     //if (pizza.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y))
+                    //cout << "circles length at the end of addIngredient in facade 2: " << pair.second.pizza.getCircles().size() << endl;
+
                 }
 
                 if(sound.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
@@ -450,7 +475,7 @@ void Facade::pizzaGenerator(){
     Piz piz = {pizza, false};
 
     pizzas.insert(std::make_pair(pizza.getId(), piz));
-    pizza.setDough(window.getSize().x, window.getSize().y, 0, xVelocity, textures.at("cooked_cheese"), pizza.getIngredientStatus("tomatoe"), pizza.getIngredientStatus("cheese"), pizza.getIngredientStatus("pepperoni"));
+    //pizza.setDough(window.getSize().x, window.getSize().y, 0, xVelocity, textures.at("cooked_cheese"), pizza.getIngredientStatus("tomatoe"), pizza.getIngredientStatus("cheese"), pizza.getIngredientStatus("pepperoni"));
 
 }
 

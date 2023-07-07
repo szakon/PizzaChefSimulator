@@ -61,7 +61,7 @@ public:
     void draw_init(unsigned int screenWidth, unsigned int screenHeight);
     void startCooking(Preparation& preparation);
     void selectReady(Preparation& preparation);
-    void addIngredient(Pizza pizza);
+    void addIngredient(Pizza& pizza);
     sf::Texture loadTextureFromFile(const std::string& filePath);
     void pizzaGenerator();
     void randomIngr(Pizza pizza);
