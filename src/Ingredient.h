@@ -12,7 +12,6 @@ class Ingredient {
 private :
     std::string label;
     float radius;
-    //sf::Texture& texture;
     sf::CircleShape circle;
     float position;
     int order;

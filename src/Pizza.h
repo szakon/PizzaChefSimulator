@@ -12,14 +12,9 @@ private :
     std::map< Ingredient, shared_ptr<bool>> ingredients;
     bool completed;
     sf::CircleShape dough;
-    sf::CircleShape sauce;
-    //sf::CircleShape melted_cheese;
-    vector<sf::CircleShape> pepperonis;
-    sf::Vector2f position;
     sf::Vector2f circlePosition;
     sf::Vector2f ingredientPosition;
-    //std::vector<sf::CircleShape> circles;
-    std::vector<const sf::Texture*>  textures;
+    bool criticalStatePassed;
 
 public:
     int id;
@@ -46,5 +41,8 @@ public:
     std::vector<sf::CircleShape> getIngredientsSprite();
     bool getIngredientStatus(std::string string) const;
     void printPizza(sf::RenderWindow& window);
+    bool getCriticalStatePassed();
+    //void setNewPizzaGenerated(bool& generated);
+    void setCriticalStatePassed();
 };
 

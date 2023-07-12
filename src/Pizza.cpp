@@ -18,6 +18,7 @@ Pizza::Pizza(std::vector<Ingredient>& ingr)
 {
     id = nextId++;
     completed = false;
+    criticalStatePassed = false;
     for (auto &ingredient: ingr) {
         ingredients.insert(std::make_pair(ingredient, std::make_shared<bool>(false)));
     }
@@ -35,13 +36,6 @@ Pizza::Pizza(std::vector<Ingredient>& ingr)
     sf::Color customColor(255, 228, 181);
     dough.setFillColor(customColor);
 
-    sf::CircleShape pepperoni1;
-    sf::CircleShape pepperoni2;
-    sf::CircleShape pepperoni3;
-    sf::CircleShape pepperoni4;
-    pepperonis = {pepperoni1, pepperoni2,pepperoni3, pepperoni4};
-    circlePosition.x = 0;
-
 }
 
 sf::Vector2f Pizza::getCirclePosition(){
@@ -50,6 +44,15 @@ sf::Vector2f Pizza::getCirclePosition(){
 
 int Pizza::getId(){
     return id;
+}
+
+bool Pizza::getCriticalStatePassed(){
+    return criticalStatePassed;
+}
+
+void Pizza::setCriticalStatePassed(){
+    //cout << "Pizza set New generated called" << endl;
+    criticalStatePassed = true;
 }
 
 std::ostream& operator<<(std::ostream& os, const Pizza& pizza)
@@ -71,14 +74,19 @@ sf::CircleShape Pizza::getDough(){
 
 
 void Pizza::movePizza(float velocity) {
+    //cout << "in movePizza in Pizza" << endl;
     //cout << "should move Pizza number " << id <<  " from position: " << circlePosition.x << endl;
     circlePosition.x += velocity;
     ingredientPosition.x += velocity;
+
+    //cout << "pizza moved to position: " << circlePosition.x << endl;
 }
 
 void Pizza::printPizza(sf::RenderWindow& window){
 
     dough.setPosition(circlePosition.x,circlePosition.y);
+
+    //cout << "print pizza at position: " << circlePosition.x << " , " << circlePosition.y << endl;
     window.draw(dough);
 
 
@@ -128,19 +136,6 @@ bool Pizza::isComplete() {
 }
 
 void Pizza::resetPizza(){
-
-
-    sauce.setFillColor(sf::Color::Transparent); // Set fill color to transparent
-    sauce.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
-    sauce.setOutlineThickness(0.f);
-
-
-    for(sf::CircleShape &pepp: pepperonis) {
-        pepp.setFillColor(sf::Color::Transparent); // Set fill color to transparent
-        pepp.setOutlineColor(sf::Color::Transparent); // Set outline color to transparent
-        pepp.setOutlineThickness(0.f);
-    }
-
     for (auto& pair: ingredients){
         *pair.second = false;
     }

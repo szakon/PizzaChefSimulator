@@ -26,6 +26,7 @@ const queue<int> PizzaPool::getAvailableIndices() const {
 
 
 Pizza PizzaPool::acquirePizza() {
+    cout << "acquire pizza called and available indices is length: " << availableIndices.size() << endl;
     if (availableIndices.empty()) {
         throw std::runtime_error("No available Pizza objects in the pool");
     }
@@ -33,7 +34,10 @@ Pizza PizzaPool::acquirePizza() {
     availableIndices.pop();
 
     //Pizza returnPizza = pizzas[index]
+
+    cout << "acquire pizza finished and available indices is length: " << availableIndices.size() << endl;
     return pizzas[index];
+
 
 }
 

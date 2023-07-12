@@ -34,7 +34,8 @@ private:
     sf::Music music;
     sf::Sprite sound;
     bool sound_on_off;
-    std::map<int, Piz> pizzas;
+    std::vector<Pizza> pizzas2;
+    //std::map<int, Piz> pizzas;
     std::map<std::string, Storage> storages;
     std::map<std::string, Preparation> preparations;
     std::map<std::string, Ingr> ingredients;

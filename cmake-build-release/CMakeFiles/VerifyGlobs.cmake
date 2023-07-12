@@ -21,6 +21,7 @@ set(OLD_GLOB
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/monsieur.png"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/monsieur_glouton.png"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/music.ogg"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/pepperonis.png"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/preparation_cheese.png"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/preparation_pepperoni.png"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/preparation_tomatoe.png"
@@ -30,6 +31,7 @@ set(OLD_GLOB
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/storage_peperoni.png"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/storage_tomatoe.png"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/timer.png"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/tomato_sauce.png"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/you_lost.png"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
@@ -44,6 +46,7 @@ set(OLD_GLOB
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Ingredient.cpp"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Kitchen.cpp"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Pizza.cpp"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/PizzaManager.cpp"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/PizzaPool.cpp"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Preparation.cpp"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Storage.cpp"
@@ -61,6 +64,7 @@ set(OLD_GLOB
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Ingredient.h"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Kitchen.h"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Pizza.h"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/PizzaManager.h"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/PizzaPool.h"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Preparation.h"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/src/Storage.h"
