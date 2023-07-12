@@ -86,14 +86,15 @@ void Preparation::setSprite(sf::Texture& texture, float scaleFactor, float posit
 
 
     if (prepId == 1){
-        sf::Vector2f pot1Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center - distance, y_position);
+        sf::Vector2f pot1Position(8.5*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center - distance, y_position);
         sprite.setPosition(pot1Position);
         timer.setPosition(pot1Position);
         checkMark.setPosition(pot1Position);
-        cout << "1";
+        cout << "preparation " << ingredient.getLabel() << " has this position " << sprite.getPosition().x << " , " << sprite.getPosition().y << " and this scale: " << sprite.getScale().x << endl;
+
 
     }else{
-        sf::Vector2f pot2Position(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center + distance, y_position);
+        sf::Vector2f pot2Position(8.5*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center + distance, y_position);
         sprite.setPosition(pot2Position);
         timer.setPosition(pot2Position);
         checkMark.setPosition(pot2Position);

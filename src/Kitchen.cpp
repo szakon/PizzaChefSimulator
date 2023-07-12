@@ -35,6 +35,7 @@ void Kitchen::setSprite(sf::Texture& texture, float scaleFactor, float position,
     sprite.setTexture(texture);
     sprite.setScale(scaleFactor,scaleFactor);
     sf::Vector2f position_sprite(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor, 20);
+    //cout << "set sprite for " << ingredient.getLabel() << " at position: " << 8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor << " and with the scale factor: " << endl;
     sprite.setPosition(position_sprite);
 }
 

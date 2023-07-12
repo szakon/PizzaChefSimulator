@@ -170,6 +170,7 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
 
     for(auto& storage : storages) {
         storage.second.setSprite(textures.at("storage_"+storage.second.getIngredient().getLabel()), scaleFactorJar, ingredients.at(storage.second.getIngredient().getLabel()).ingredient.getPosition(), screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
+
     }
 
     //create a pot
@@ -187,7 +188,7 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
 
 void Facade::move(){
     bool pizzaNeedGeneration=false;
-    for (Pizza& pizza: pizzas2) {
+    for (Pizza& pizza: pizzas) {
         if (pizza.getCirclePosition().x >window.getSize().x * 0.65) { //we are at the end of the line
             if (!pizza.isComplete()) { // If the pizza is not completed with all ingredients
                 score -= 10;
@@ -297,7 +298,7 @@ void Facade::render() {
 
 
 
-    for (auto& pizza: pizzas2) {
+    for (auto& pizza: pizzas) {
         pizza.printPizza(window);
     }
 
@@ -389,7 +390,7 @@ void Facade::update(unsigned int screenWidth, unsigned int screenHeight) {
                     }
                 }
 
-                for (auto& pizza: pizzas2){
+                for (auto& pizza: pizzas){
                     if (pizza.getDough().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
                         cout << "PIZZA TOUCHED: pizza id: " << pizza.getId() << endl;
                         addIngredient(pizza);
@@ -438,7 +439,7 @@ void Facade::pizzaGenerator(){
     randomIngr(pizza);
     //Piz piz = {pizza, false};
 
-    pizzas2.push_back(pizza);
+    pizzas.push_back(pizza);
 
 }
 
@@ -446,11 +447,11 @@ void Facade::pizzaGenerator(){
 void Facade::releasePizza(Pizza pizza){
     pizza.resetPizza();
     int pizzasIndex = 0;
-    for (auto piz: pizzas2){
+    for (auto piz: pizzas){
         if(pizza == piz){
 
-            //pizzas2.erase(pizzas2.begin());
-            pizzas2.erase(std::remove(pizzas2.begin(), pizzas2.end(), pizza), pizzas2.end());
+            //pizzas.erase(pizzas.begin());
+            pizzas.erase(std::remove(pizzas.begin(), pizzas.end(), pizza), pizzas.end());
             break;
         }
         pizzasIndex++;
