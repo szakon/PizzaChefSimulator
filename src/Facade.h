@@ -38,7 +38,7 @@ private:
     //std::map<int, Piz> pizzas;
     std::map<std::string, Storage> storages;
     std::map<std::string, Preparation> preparations;
-    std::map<std::string, Ingr> ingredients;
+    std::vector<Ingredient> ingredients;
     std::optional<Kitchen> selected;
     std::string selected_type;
     std::map<std::string, sf::Texture> textures;

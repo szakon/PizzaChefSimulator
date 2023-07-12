@@ -6,7 +6,7 @@
 #include <thread>
 
 const sf::Time Facade::TimePerFrame = sf::seconds(1.f/60.f); // The game is running at 60 FPS
-const float Facade::xVelocity = 20; //movement of the pizzas
+const float Facade::xVelocity = 10; //movement of the pizzas
 
 Facade::Facade(){
 
@@ -43,9 +43,9 @@ Facade::Facade(){
     Ingr tom = {tomatoe, false};
     Ingr che = {cheese, false};
     Ingr pep = {pepperoni, false};
-    ingredients.insert(std::make_pair("tomatoe", tom));
-    ingredients.insert(std::make_pair("cheese", che));
-    ingredients.insert(std::make_pair("pepperoni", pep));
+    ingredients.push_back(tomatoe);
+    ingredients.push_back(cheese);
+    ingredients.push_back(pepperoni);
     std::vector<Ingredient> pizzaIngredients = {tomatoe, cheese, pepperoni};
     pool.emplace(PizzaPool(pizzaIngredients));
 
@@ -108,12 +108,12 @@ void Facade::init(){
     //Set up the storages and preparations
     int i = 0;
     for (const auto &ingredient: ingredients){
-        Storage storage(ingredient.second.ingredient, 0);
-        Preparation preparation1(ingredient.second.ingredient, 1);
-        Preparation preparation2(ingredient.second.ingredient, 2);
-        storages.insert(std::make_pair(ingredient.second.ingredient.getLabel(), storage));
-        preparations.insert(std::make_pair(ingredient.second.ingredient.getLabel()+"1",preparation1));
-        preparations.insert(std::make_pair(ingredient.second.ingredient.getLabel()+"2",preparation2));
+        Storage storage(ingredient, 0);
+        Preparation preparation1(ingredient, 1);
+        Preparation preparation2(ingredient, 2);
+        storages.insert(std::make_pair(ingredient.getLabel(), storage));
+        preparations.insert(std::make_pair(ingredient.getLabel()+"1",preparation1));
+        preparations.insert(std::make_pair(ingredient.getLabel()+"2",preparation2));
     }
 
 }
@@ -261,7 +261,6 @@ void Facade::addIngredient(Pizza& pizza){
     if (selected_type == "preparation") {
         score += pizza.addIngredient(selected->getIngredient());
         //cout << "circles length at the end of addIngredient pizza in facade: " << pizza.getCircles().size() << endl;
-        ingredients.at(selected->getIngredient().getLabel()).added = true;
         for(auto& prep : preparations) {
             if(selected->getIngredient() == prep.second.getIngredient() && prep.second.getSelected() == true && selected->getPrepId() == prep.second.getPrepId()) {
                 prep.second.reset();
@@ -272,7 +271,6 @@ void Facade::addIngredient(Pizza& pizza){
 
 void Facade::addRandomIngredient(Pizza pizza, Ingredient ingredient) {
     pizza.addIngredient(ingredient);
-    ingredients.at(ingredient.getLabel()).added = true;
 }
 
 void Facade::render() {
@@ -469,7 +467,7 @@ void Facade::randomIngr(Pizza pizza){
     if (numIngredients == 1){
         std::vector<Ingredient> ingrs;
         for (auto& ingredient: ingredients){
-            ingrs.push_back(ingredient.second.ingredient);
+            ingrs.push_back(ingredient);
         }
         std::random_device rd1;
         std::mt19937 mt1(rd1());
