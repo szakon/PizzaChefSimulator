@@ -9,12 +9,11 @@
 
 using namespace std;
 
-Ingredient::Ingredient(const std::string name, const int order, const float radius, sf::Texture& texture, const float place)
+Ingredient::Ingredient(const std::string name, const int order, const float radius, sf::Texture& texture)
 {
     label = name;
     this->order = order;
     this->radius = radius;
-    position = place;
 
     circle.setRadius(radius);
     circle.setTexture(&texture);
@@ -25,8 +24,8 @@ std::string Ingredient::getLabel() const {
     return label;
 }
 
-float Ingredient::getPosition() const {
-    return position;
+int Ingredient::getOrder() {
+    return order;
 }
 
 

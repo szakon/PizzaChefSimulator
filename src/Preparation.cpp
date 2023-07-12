@@ -71,7 +71,7 @@ void Preparation::reset() {
     selected = false;
 }
 
-void Preparation::setSprite(sf::Texture& texture, float scaleFactor, float position, int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& clock, sf::Texture& check){
+void Preparation::setSprite(sf::Texture& texture, float scaleFactor, int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& clock, sf::Texture& check){
     sprite.setTexture(texture);
     sprite.setScale(scaleFactor,scaleFactor);
 
@@ -84,7 +84,7 @@ void Preparation::setSprite(sf::Texture& texture, float scaleFactor, float posit
     checkMark.setTexture(check);
     checkMark.setScale(sf::Vector2f(0.2,0.2));
 
-
+    float position = ingredient.getOrder()*1.5;
     if (prepId == 1){
         sf::Vector2f pot1Position(8.5*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center - distance, y_position);
         sprite.setPosition(pot1Position);

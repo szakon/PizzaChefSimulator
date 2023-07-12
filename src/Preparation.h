@@ -26,7 +26,7 @@ public:
     int getTimePrep();
     int getTimeLeft();
     void freeprep();
-    void setSprite(sf::Texture& texture, float scaleFactor, float position, int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& clock, sf::Texture& check);
+    void setSprite(sf::Texture& texture, float scaleFactor, int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& clock, sf::Texture& check);
     void addTimer(sf::Texture& texture);
     void draw(sf::RenderWindow& window);
     bool isStorage();
