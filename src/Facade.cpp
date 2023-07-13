@@ -6,9 +6,11 @@
 #include <thread>
 
 const sf::Time Facade::TimePerFrame = sf::seconds(1.f/60.f); // The game is running at 60 FPS
-const float Facade::xVelocity = 10; //movement of the pizzas
+const float Facade::xVelocity = 10; //movement of the pizzas //PM
 
-Facade::Facade(){
+Facade::Facade()
+    :pizzaManager()
+{
 
     score = 0;
     lives = 3;
@@ -23,7 +25,6 @@ Facade::Facade(){
 
     //setting textures
     std::vector<std::string> vect = {"bois","storage_cheese", "you_lost","storage_tomatoe", "storage_pepperoni", "preparation_tomatoe", "preparation_pepperoni", "preparation_cheese", "cooked_cheese", "check_mark", "sound_on", "sound_off", "timer", "3", "2", "1", "madame", "monsieur", "arm", "tomato_sauce", "pepperonis"};
-
     for (auto& element : vect) {
         textures.insert(addTextureFromFile(element));
     }
@@ -40,14 +41,13 @@ Facade::Facade(){
     Ingredient tomatoe("tomatoe",0, (170*screenWidth-20)/2500, textures.at("tomato_sauce"));
     Ingredient cheese("cheese", 1, (170*screenWidth-20)/2500, textures.at("cooked_cheese"));
     Ingredient pepperoni("pepperoni", 2, (170*screenWidth-20)/2500, textures.at("pepperonis"));
-    Ingr tom = {tomatoe, false};
-    Ingr che = {cheese, false};
-    Ingr pep = {pepperoni, false};
     ingredients.push_back(tomatoe);
     ingredients.push_back(cheese);
     ingredients.push_back(pepperoni);
     std::vector<Ingredient> pizzaIngredients = {tomatoe, cheese, pepperoni};
     pool.emplace(PizzaPool(pizzaIngredients));
+    pizzaManager.setPool(*pool);
+    pizzaManager.setIngredients(ingredients);
 
 
     //Set up the score
@@ -76,7 +76,7 @@ void Facade::run() {
 
     //Initialize the game
     init();
-    pizzaGenerator();
+    pizzaManager.pizzaGenerator();
     draw_init( window.getSize().x, window.getSize().y);
 
     //Main part of the game
@@ -91,8 +91,10 @@ void Facade::run() {
             timeSinceLastUpdate -= TimePerFrame;
             update(window.getSize().x, window.getSize().y); //Update the infos of the game
         }
-
-        move();
+        //cout << "here 1" << endl;
+        pizzaManager.movePizzas(window, lifeline, textures);
+        //cout << "here 3" << endl;
+        //move();
         render();
 
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -112,8 +114,8 @@ void Facade::init(){
         Preparation preparation1(ingredient, 1);
         Preparation preparation2(ingredient, 2);
         storages.insert(std::make_pair(ingredient.getLabel(), storage));
-        preparations.insert(std::make_pair(ingredient.getLabel()+"1",preparation1));
-        preparations.insert(std::make_pair(ingredient.getLabel()+"2",preparation2));
+        preparations.push_back(preparation1);
+        preparations.push_back(preparation2);
     }
 
 }
@@ -179,14 +181,14 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
 
     //random sprite used for preparations
     for(auto& preparation : preparations) {
-        preparation.second.setSprite(textures.at("preparation_"+preparation.second.getIngredient().getLabel()), scaleFactorPot, screenWidth, spriteTomatoe, scaleFactorJar, potLine, textures.at("timer"), textures.at("check_mark"));
+        preparation.setSprite(textures.at("preparation_"+preparation.getIngredient().getLabel()), scaleFactorPot, screenWidth, spriteTomatoe, scaleFactorJar, potLine, textures.at("timer"), textures.at("check_mark"));
     }
 
     float circlePositionX = 0;
 
 }
-
-void Facade::move(){
+/*
+void Facade::move(){ //PM
     bool pizzaNeedGeneration=false;
     for (Pizza& pizza: pizzas) {
         if (pizza.getCirclePosition().x >window.getSize().x * 0.65) { //we are at the end of the line
@@ -227,7 +229,7 @@ void Facade::move(){
     if (pizzaNeedGeneration)
         pizzaGenerator();
 }
-
+*/
 void Facade::startCooking(Preparation &preparation){
     if (selected.has_value()){ //is something selected
         cout << "Selected: " << selected.value().getIngredient() << endl;
@@ -256,8 +258,8 @@ void Facade::selectReady(Preparation &preparation) {
     preparation.setSelected(true);
 }
 
-
-void Facade::addIngredient(Pizza& pizza){
+/*
+void Facade::addIngredient(Pizza& pizza){ //PM
     if (selected_type == "preparation") {
         score += pizza.addIngredient(selected->getIngredient());
         //cout << "circles length at the end of addIngredient pizza in facade: " << pizza.getCircles().size() << endl;
@@ -267,9 +269,9 @@ void Facade::addIngredient(Pizza& pizza){
             }
         }
     }
-}
+}*/
 
-void Facade::addRandomIngredient(Pizza pizza, Ingredient ingredient) {
+void Facade::addRandomIngredient(Pizza pizza, Ingredient ingredient) {  //PM
     pizza.addIngredient(ingredient);
 }
 
@@ -281,7 +283,7 @@ void Facade::render() {
         storage.second.draw(window);
     }
     for(auto& preparation : preparations) {
-        preparation.second.draw(window);
+        preparation.draw(window);
     }
 
     window.draw(score_board);
@@ -296,7 +298,8 @@ void Facade::render() {
 
 
 
-    for (auto& pizza: pizzas) {
+    for (auto& pizza: pizzaManager.getPizzas()) {
+        //cout << "print pizza" << endl;
         pizza.printPizza(window);
     }
 
@@ -344,7 +347,7 @@ void Facade::update(unsigned int screenWidth, unsigned int screenHeight) {
 
     //Update the preparations preparing
     for (auto& prep : preparations) {
-        prep.second.preparing_if_needed();
+        prep.preparing_if_needed();
     }
 
     sf::Event event;
@@ -367,16 +370,17 @@ void Facade::update(unsigned int screenWidth, unsigned int screenHeight) {
                     }
                 }
                 //Check for preparation click
+
                 for (auto&preparation: preparations) {
-                    if (preparation.second.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                        if(preparation.second.getStatus() == "ready") { //If the preparation is ready to be put on the pizza
-                            selectReady(preparation.second);
+                    if (preparation.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                        if(preparation.getStatus() == "ready") { //If the preparation is ready to be put on the pizza
+                            selectReady(preparation);
                             isTouched = true;
                             //change sprite
                         }
-                        else if (preparation.second.getStatus() == "notused"){ //If we need to cook the ingredient
-                            cout << preparation.second.getIngredient() << endl;
-                            startCooking(preparation.second);
+                        else if (preparation.getStatus() == "notused"){ //If we need to cook the ingredient
+                            cout << preparation.getIngredient() << endl;
+                            startCooking(preparation);
                             isTouched = false;
                             selected = nullopt;
                         }
@@ -388,16 +392,40 @@ void Facade::update(unsigned int screenWidth, unsigned int screenHeight) {
                     }
                 }
 
+                if (selected_type != "preparation") {
+                    bool added = pizzaManager.checkPizzaClick(selected, mousePos);
+                    if(added){
+                        for (auto &prep: preparations) {
+                            if (selected->getIngredient() == prep.getIngredient() &&
+                                prep.getSelected() == true &&
+                                selected->getPrepId() == prep.getPrepId()) {
+                                prep.reset();
+                            }
+                        }
+                    }
+                }
+
+                /*
                 for (auto& pizza: pizzas){
                     if (pizza.getDough().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
                         cout << "PIZZA TOUCHED: pizza id: " << pizza.getId() << endl;
-                        addIngredient(pizza);
+
+                        if (selected_type == "preparation") {
+                            score += pizza.addIngredient(selected->getIngredient());
+                            for (auto &prep: preparations) {
+                                if (selected->getIngredient() == prep.getIngredient() &&
+                                    prep.getSelected() == true &&
+                                    selected->getPrepId() == prep.getPrepId()) {
+                                    prep.reset();
+                                }
+                            }
+                        }
                         //cout << "circles length at the end of addIngredient in facade: " << pair.second.pizza.getCircles().size() << endl;
                     }
                     //if (pizza.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y))
                     //cout << "circles length at the end of addIngredient in facade 2: " << pair.second.pizza.getCircles().size() << endl;
 
-                }
+                }*/
 
                 if(sound.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
                     if(sound_on_off) {
@@ -432,7 +460,8 @@ sf::Texture Facade::loadTextureFromFile(const std::string& filePath) {
     return texture;
 }
 
-void Facade::pizzaGenerator(){
+/*
+void Facade::pizzaGenerator(){ //PM
     Pizza pizza = pool->acquirePizza();
     randomIngr(pizza);
     //Piz piz = {pizza, false};
@@ -442,7 +471,7 @@ void Facade::pizzaGenerator(){
 }
 
 
-void Facade::releasePizza(Pizza pizza){
+void Facade::releasePizza(Pizza pizza){ //PM
     pizza.resetPizza();
     int pizzasIndex = 0;
     for (auto piz: pizzas){
@@ -455,9 +484,9 @@ void Facade::releasePizza(Pizza pizza){
         pizzasIndex++;
     }
     pool->releasePizza(pizza);
-}
+}*/
 
-void Facade::randomIngr(Pizza pizza){
+void Facade::randomIngr(Pizza pizza){ //PM
     std::random_device rd;
     std::mt19937 mt(rd());
     std::vector<int> values = {0, 1};

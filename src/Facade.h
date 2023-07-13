@@ -3,6 +3,7 @@
 #include <vector>
 #include <map>
 #include "Pizza.h"
+#include "PizzaManager.h"
 #include "Kitchen.h"
 #include "Storage.h"
 #include <memory>
@@ -11,16 +12,6 @@
 #include "PizzaPool.h"
 #include "SFML/Audio/Music.hpp"
 #include <SFML/Graphics.hpp>
-
-struct Ingr {
-    Ingredient ingredient;
-    bool added;
-};
-
-struct Piz {
-    Pizza pizza;
-    bool newPizzaGenerated;
-};
 
 
 class Facade {
@@ -34,10 +25,9 @@ private:
     sf::Music music;
     sf::Sprite sound;
     bool sound_on_off;
-    std::vector<Pizza> pizzas;
-    //std::map<int, Piz> pizzas;
+    std::vector<Pizza> pizzas; //PM
     std::map<std::string, Storage> storages;
-    std::map<std::string, Preparation> preparations;
+    std::vector<Preparation> preparations;
     std::vector<Ingredient> ingredients;
     std::optional<Kitchen> selected;
     std::string selected_type;
@@ -46,14 +36,15 @@ private:
     int lives;
     sf::Text scoreText;
     sf::RectangleShape score_board;
-    std::optional<PizzaPool> pool;
+    std::optional<PizzaPool> pool; //PM
+    PizzaManager pizzaManager;
 
 
 
 public:
     sf::RenderWindow window;
 
-    void releasePizza(Pizza pizza);
+    void releasePizza(Pizza pizza); //PM
     Facade();
     void run();
     void init();
@@ -64,12 +55,12 @@ public:
     void selectReady(Preparation& preparation);
     void addIngredient(Pizza& pizza);
     sf::Texture loadTextureFromFile(const std::string& filePath);
-    void pizzaGenerator();
+    void pizzaGenerator(); //PM
     void randomIngr(Pizza pizza);
     void addRandomIngredient(Pizza pizza, Ingredient Ingredient);
     std::pair<std::string,sf::Texture> addTextureFromFile(const std::string& name);
     void setTextureScalePosition(sf::Sprite& sprite, sf::Texture& texture, double scale, double position_x, double position_y);
-    void move();
+    void move(); //PM
     static const sf::Time TimePerFrame;
     static const float xVelocity;
     void renderLost();
