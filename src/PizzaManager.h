@@ -30,12 +30,15 @@ public:
     void setPool(PizzaPool pool);
     void setIngredients(std::vector<Ingredient> ingredients);
     std::vector<Pizza> getPizzas();
+    int getScore();
+    int getLives();
     void addRandomIngredient(Pizza pizza, Ingredient ingredient);
     void pizzaGenerator();
     void randomIngr(Pizza pizza);
     void movePizzas(sf::RenderWindow& window, sf::Sprite lifeline, std::map<std::string, sf::Texture> textures);
     void releasePizza(Pizza pizza);
     bool checkPizzaClick(std::optional<Kitchen> selected, sf::Vector2i mousePos);
+    void printPizza(sf::RenderWindow& window);
 
 
     };

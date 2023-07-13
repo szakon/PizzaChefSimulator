@@ -33,6 +33,7 @@ Pizza::Pizza(std::vector<Ingredient>& ingr)
 
 
     dough.setRadius(200*desktop.width/2500);
+    dough.setPosition(0, circlePosition.y);
     sf::Color customColor(255, 228, 181);
     dough.setFillColor(customColor);
 
@@ -83,7 +84,6 @@ void Pizza::movePizza(float velocity) {
 }
 
 void Pizza::printPizza(sf::RenderWindow& window){
-
     dough.setPosition(circlePosition.x,circlePosition.y);
 
     //cout << "print pizza at position: " << circlePosition.x << " , " << circlePosition.y << endl;

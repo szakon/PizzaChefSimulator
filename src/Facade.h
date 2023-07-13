@@ -25,15 +25,15 @@ private:
     sf::Music music;
     sf::Sprite sound;
     bool sound_on_off;
-    std::vector<Pizza> pizzas; //PM
+    //std::vector<Pizza> pizzas; //PM
     std::map<std::string, Storage> storages;
     std::vector<Preparation> preparations;
     std::vector<Ingredient> ingredients;
     std::optional<Kitchen> selected;
     std::string selected_type;
     std::map<std::string, sf::Texture> textures;
-    int score;
-    int lives;
+    //int score; //PM
+    //int lives; //PM
     sf::Text scoreText;
     sf::RectangleShape score_board;
     std::optional<PizzaPool> pool; //PM

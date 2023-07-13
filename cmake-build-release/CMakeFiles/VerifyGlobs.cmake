@@ -28,7 +28,7 @@ set(OLD_GLOB
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/sound_off.png"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/sound_on.png"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/storage_cheese.png"
-  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/storage_peperoni.png"
+  "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/storage_pepperoni.png"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/storage_tomatoe.png"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/timer.png"
   "/Users/sarahzakon/Desktop/TSP/2A/C++/project/jeu_monsieur_madame/resources/tomato_sauce.png"

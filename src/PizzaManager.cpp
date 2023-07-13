@@ -7,10 +7,19 @@
 const float PizzaManager::xVelocity = 10;
 
 PizzaManager::PizzaManager() {
+    score = 0;
+    lives = 3;
 }
 
 std::vector<Pizza> PizzaManager::getPizzas(){
     return pizzas;
+}
+int PizzaManager::getScore(){
+    return score;
+}
+
+int PizzaManager::getLives(){
+    return lives;
 }
 
 void PizzaManager::setPool(PizzaPool pool){
@@ -35,15 +44,6 @@ void PizzaManager::movePizzas(sf::RenderWindow& window, sf::Sprite lifeline, std
                 score += 10;
             }
             releasePizza(pizza);
-            if (lives == 2) {
-                lifeline.setTexture(textures.at("2"));
-            } else if (lives == 1) {
-                lifeline.setTexture(textures.at("1"));
-            }
-            if (lives == 0) {
-                cout << "Perdu";
-                window.close();
-            }
             break;
 
 
@@ -91,17 +91,8 @@ void PizzaManager::randomIngr(Pizza pizza){ //PM
 }
 
 bool PizzaManager::checkPizzaClick(std::optional<Kitchen> selected, sf::Vector2i mousePos) {
-    cout << "check pizza click" << endl;
+    //cout << "check pizza click" << endl;
     for (auto &pizza: pizzas) {
-        cout << "in for loop" << endl;
-        cout << "mous pos: " << mousePos.x << " , " << mousePos.y << endl;
-        cout << "pizza global bounds x: [ " << pizza.getDough().getPosition().x << " , " << pizza.getDough().getPosition().x + pizza.getDough().getGlobalBounds().height << endl;
-        cout << "pizza global bounds y: [ " << pizza.getDough().getPosition().y << " , " << pizza.getDough().getPosition().y + pizza.getDough().getGlobalBounds().width << endl;
-        cout << "pizza global bounds in pizzas x: [ " << pizzas[0].getDough().getPosition().x << " , " << pizzas[0].getDough().getPosition().x + pizzas[0].getDough().getGlobalBounds().height << endl;
-        cout << "pizza global bounds in pizzas y: [ " << pizzas[0].getDough().getPosition().y << " , " << pizzas[0].getDough().getPosition().y + pizzas[0].getDough().getGlobalBounds().width << endl;
-        cout << "Pizza position " << pizza.getCirclePosition().x << " , " << pizza.getCirclePosition().y <<  endl;
-        cout << "Pizza getGLOBALBOUNDS " << pizza.getDough().getGlobalBounds().width << " , " << pizza.getDough().getGlobalBounds().height << " and " << pizza.getDough().getGlobalBounds().top << endl;
-
         if (pizza.getDough().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
             cout << "PIZZA TOUCHED: pizza id: " << pizza.getId() << endl;
             score += pizza.addIngredient(selected->getIngredient());
@@ -142,17 +133,31 @@ void PizzaManager::pizzaGenerator(){ //PM
 
 
 void PizzaManager::releasePizza(Pizza pizza){
+    cout << "error 1" << endl;
     pizza.resetPizza();
+    cout << "error 2" << endl;
     int pizzasIndex = 0;
     for (auto piz: pizzas){
+        cout << "error 3" << endl;
         if(pizza == piz){
 
             //pizzas.erase(pizzas.begin());
             pizzas.erase(std::remove(pizzas.begin(), pizzas.end(), pizza), pizzas.end());
+            cout << "error 4" << endl;
             break;
         }
+        cout << "error 5" << endl;
         pizzasIndex++;
     }
     pool->releasePizza(pizza);
+    cout << "error 6" << endl;
 }
 
+void PizzaManager::printPizza(sf::RenderWindow& window){
+    for (auto& pizza: pizzas) {
+        //cout << "print pizza" << endl;
+        pizza.printPizza(window);
+        //cout << "after print pizza in FACADE " << pizza.getDough().getPosition().x << endl;
+    }
+
+}

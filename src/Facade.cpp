@@ -6,14 +6,14 @@
 #include <thread>
 
 const sf::Time Facade::TimePerFrame = sf::seconds(1.f/60.f); // The game is running at 60 FPS
-const float Facade::xVelocity = 10; //movement of the pizzas //PM
+const float Facade::xVelocity = 30; //movement of the pizzas //PM
 
 Facade::Facade()
     :pizzaManager()
 {
 
-    score = 0;
-    lives = 3;
+    //score = 0; //PM
+    //lives = 3; //PM
 
     sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
     unsigned int screenWidth = desktopMode.width;
@@ -83,7 +83,7 @@ void Facade::run() {
     while (window.isOpen()) {
 
         //In case of game over
-        if(lives<0) window.close();
+        if(pizzaManager.getLives()<0) window.close();
 
         sf::Time elapsedTime = clock.restart();
         timeSinceLastUpdate += elapsedTime;
@@ -99,7 +99,7 @@ void Facade::run() {
 
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
-    if(lives<=0){
+    if(pizzaManager.getLives()<=0){
         renderLost();
     }
 
@@ -136,7 +136,7 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     scoreText.setCharacterSize(50);
     scoreText.setFillColor(sf::Color::White);
     scoreText.setPosition(40, 30);
-    scoreText.setString("Your Score: " + std::to_string(score));
+    scoreText.setString("Your Score: " + std::to_string(pizzaManager.getScore()));
 
     //Set up the sound
     setTextureScalePosition(sound, textures.at("sound_on"), 0.09, screenWidth*14/15,0);
@@ -287,9 +287,18 @@ void Facade::render() {
     }
 
     window.draw(score_board);
-    scoreText.setString("Your Score: " + std::to_string(score));
+    scoreText.setString("Your Score: " + std::to_string(pizzaManager.getScore()));
     window.draw(scoreText);
 
+    if (pizzaManager.getLives() == 2) {
+        lifeline.setTexture(textures.at("2"));
+    } else if (pizzaManager.getLives() == 1) {
+        lifeline.setTexture(textures.at("1"));
+    }
+    if (pizzaManager.getLives() == 0) {
+        cout << "Perdu";
+        window.close();
+    }
     window.draw(lifeline);
 
     window.draw(madame);
@@ -297,11 +306,13 @@ void Facade::render() {
     window.draw(monsieur);
 
 
-
+    pizzaManager.printPizza(window);
+    /*
     for (auto& pizza: pizzaManager.getPizzas()) {
         //cout << "print pizza" << endl;
         pizza.printPizza(window);
-    }
+        cout << "after print pizza in FACADE " << pizza.getDough().getPosition().x << endl;
+    }*/
 
     window.draw(monsieur_arm);
 
@@ -392,7 +403,7 @@ void Facade::update(unsigned int screenWidth, unsigned int screenHeight) {
                     }
                 }
 
-                if (selected_type != "preparation") {
+                if (selected_type == "preparation") {
                     bool added = pizzaManager.checkPizzaClick(selected, mousePos);
                     if(added){
                         for (auto &prep: preparations) {
