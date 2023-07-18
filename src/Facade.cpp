@@ -108,7 +108,7 @@ void Facade::init(){
         Storage storage(ingredient, 0);
         Preparation preparation1(ingredient, 1);
         Preparation preparation2(ingredient, 2);
-        storages.insert(std::make_pair(ingredient.getLabel(), storage));
+        storages.push_back(storage);
         preparations.push_back(preparation1);
         preparations.push_back(preparation2);
     }
@@ -166,13 +166,13 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
 
 
     for(auto& storage : storages) {
-        storage.second.setSprite(textures.at(storage.second.getIngredient().getStorage()), scaleFactorJar, screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
+        storage.setSprite(textures.at(storage.getIngredient().getStorage()), scaleFactorJar, screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
 
     }
 
     //create a pot
     float scaleFactorPot = 0.2f*screenWidth/2500;
-    float potLine = 20 + 1.2f * storages.at("tomatoe").getSprite().getTextureRect().height*scaleFactorJar;
+    float potLine = 20 + 1.2f * storages.front().getSprite().getTextureRect().height*scaleFactorJar;
 
     //random sprite used for preparations
     for(auto& preparation : preparations) {
@@ -217,7 +217,7 @@ void Facade::render() {
     window.clear();
     window.draw(sprite_background);
     for(auto& storage : storages) {
-        storage.second.draw(window);
+        storage.draw(window);
     }
     for(auto& preparation : preparations) {
         preparation.draw(window);
@@ -303,9 +303,9 @@ void Facade::update(unsigned int screenWidth, unsigned int screenHeight) {
                 sf::Vector2i mousePos = sf::Mouse::getPosition(window);
                 // Check for storage click
                 for (auto &storage: storages) {
-                    if (storage.second.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                        cout << storage.second.getIngredient() << endl;
-                        selected.emplace(storage.second);
+                    if (storage.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                        cout << storage.getIngredient() << endl;
+                        selected.emplace(storage);
                         selected_type = "storage";
                         isTouched = true;
                         break; // Exit the loop if a storage is clicked

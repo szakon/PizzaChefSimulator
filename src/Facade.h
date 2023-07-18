@@ -25,7 +25,7 @@ private:
     sf::Music music;
     sf::Sprite sound;
     bool sound_on_off;
-    std::map<std::string, Storage> storages;
+    std::vector<Storage> storages;
     std::vector<Preparation> preparations;
     std::vector<Ingredient> ingredients;
     std::optional<Kitchen> selected;
