@@ -4,7 +4,7 @@
 
 #include "PizzaManager.h"
 
-const float PizzaManager::xVelocity = 20;
+const float PizzaManager::xVelocity = 10;
 
 PizzaManager::PizzaManager() {
     score = 0;

@@ -33,9 +33,9 @@ Facade::Facade()
 
 
     //Create ingredients and filling the pizza pool
-    Ingredient tomatoe("tomatoe",0, (170*screenWidth-20)/2500, textures.at("tomato_sauce"));
-    Ingredient cheese("cheese", 1, (170*screenWidth-20)/2500, textures.at("cooked_cheese"));
-    Ingredient pepperoni("pepperoni", 2, (170*screenWidth-20)/2500, textures.at("pepperonis"));
+    Ingredient tomatoe("tomatoe",0, (170*screenWidth-20)/2500, textures.at("tomato_sauce"), "preparation_tomatoe", "storage_tomatoe");
+    Ingredient cheese("cheese", 1, (170*screenWidth-20)/2500, textures.at("cooked_cheese"), "preparation_cheese", "storage_cheese");
+    Ingredient pepperoni("pepperoni", 2, (170*screenWidth-20)/2500, textures.at("pepperonis"), "preparation_pepperoni", "storage_pepperoni");
     ingredients.push_back(tomatoe);
     ingredients.push_back(cheese);
     ingredients.push_back(pepperoni);
@@ -166,7 +166,7 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
 
 
     for(auto& storage : storages) {
-        storage.second.setSprite(textures.at("storage_"+storage.second.getIngredient().getLabel()), scaleFactorJar, screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
+        storage.second.setSprite(textures.at(storage.second.getIngredient().getStorage()), scaleFactorJar, screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
 
     }
 
@@ -176,7 +176,8 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
 
     //random sprite used for preparations
     for(auto& preparation : preparations) {
-        preparation.setSprite(textures.at("preparation_"+preparation.getIngredient().getLabel()), scaleFactorPot, screenWidth, spriteTomatoe, scaleFactorJar, potLine, textures.at("timer"), textures.at("check_mark"));
+        //cout << "Preparations test string " << preparation.getIngredient().getPreparation() << endl;
+        preparation.setSprite(textures.at(preparation.getIngredient().getPreparation()), scaleFactorPot, screenWidth, spriteTomatoe, scaleFactorJar, potLine, textures.at("timer"), textures.at("check_mark"));
     }
 
     float circlePositionX = 0;

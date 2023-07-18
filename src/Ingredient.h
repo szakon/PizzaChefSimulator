@@ -14,9 +14,13 @@ private :
     float radius;
     sf::CircleShape circle;
     int order;
+    std::string preparation;
+    std::string storage;
 public:
-    explicit Ingredient(const std::string name, const int order, const float radius, sf::Texture& texture);
+    explicit Ingredient(const std::string name, const int order, const float radius, sf::Texture& texture, std::string texture_preparation, std::string storage);
     std::string getLabel() const;
+    std::string getPreparation() const;
+    std::string getStorage() const;
     friend std::ostream& operator<<(std::ostream& os, const Ingredient& ingredient);
     friend bool operator<(const Ingredient& lhs, const Ingredient& rhs);
     friend bool operator==(const Ingredient& lhs, const Ingredient& rhs);
