@@ -19,7 +19,7 @@ Facade::Facade()
     window.setVerticalSyncEnabled(true);
 
     //setting textures
-    std::vector<std::string> vect = {"bois","storage_cheese", "you_lost","storage_tomatoe", "storage_pepperoni", "preparation_tomatoe", "preparation_pepperoni", "preparation_cheese", "cooked_cheese", "check_mark", "sound_on", "sound_off", "timer", "3", "2", "1", "madame", "monsieur", "arm", "tomato_sauce", "pepperonis"};
+    std::vector<std::string> vect = {"bois","storage_cheese", "you_lost","storage_tomatoe", "storage_pepperoni", "storage_mushroom", "preparation_tomatoe", "preparation_pepperoni", "preparation_cheese", "cooked_cheese", "check_mark", "sound_on", "sound_off", "timer", "3", "2", "1", "madame", "monsieur", "arm", "tomato_sauce", "pepperonis", "mushrooms"};
     for (auto& element : vect) {
         textures.insert(addTextureFromFile(element));
     }
@@ -36,12 +36,14 @@ Facade::Facade()
     Ingredient tomatoe("tomatoe",0, (170*screenWidth-20)/2500, textures.at("tomato_sauce"), "preparation_tomatoe", "storage_tomatoe");
     Ingredient cheese("cheese", 1, (170*screenWidth-20)/2500, textures.at("cooked_cheese"), "preparation_cheese", "storage_cheese");
     Ingredient pepperoni("pepperoni", 2, (170*screenWidth-20)/2500, textures.at("pepperonis"), "preparation_pepperoni", "storage_pepperoni");
+    Ingredient mushroom("mushroom", 3, (170*screenWidth-20)/2500, textures.at("mushrooms"), "preparation_pepperoni", "storage_mushroom");
     ingredients.push_back(tomatoe);
     ingredients.push_back(cheese);
     ingredients.push_back(pepperoni);
-    std::vector<Ingredient> pizzaIngredients = {tomatoe, cheese, pepperoni};
-    pool.emplace(PizzaPool(pizzaIngredients));
-    pizzaManager.setPool(*pool);
+    ingredients.push_back(mushroom);
+    std::vector<Ingredient> pizzaIngredients = {tomatoe, cheese, pepperoni, mushroom};
+    //pool.emplace(PizzaPool(pizzaIngredients));
+    //pizzaManager.setPool(*pool);
     pizzaManager.setIngredients(ingredients);
 
 
@@ -146,7 +148,7 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     setTextureScalePosition(lifeline, textures.at("3"), 0.15, 0,score_board.getPosition().y + score_board.getSize().y - 20 );
 
     //Characters
-    setTextureScalePosition(madame, textures.at("madame"), 0.7*screenWidth/2500, 0, belt.getPosition().y-textures.at("madame").getSize().y*0.7*screenWidth/2500);
+    setTextureScalePosition(madame, textures.at("madame"), 0.5*screenWidth/2500, 0, belt.getPosition().y-textures.at("madame").getSize().y*0.5*screenWidth/2500);
 
     monsieur.setTexture(textures.at("monsieur"));
     float scaleFactorMonsieur = 1.1*screenWidth/2500;
@@ -334,7 +336,9 @@ void Facade::update(unsigned int screenWidth, unsigned int screenHeight) {
                     }
                 }
 
+                cout << "BEFORE IF" << endl;
                 if (selected_type == "preparation") {
+                    cout << "BEFORE CHECCK" << endl;
                     bool added = pizzaManager.checkPizzaClick(selected, mousePos);
                     if(added){
                         for (auto &prep: preparations) {

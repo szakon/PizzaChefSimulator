@@ -20,6 +20,7 @@ public:
     int id;
 
     explicit Pizza(std::vector< Ingredient>& ingr);
+    virtual ~Pizza();
     sf::CircleShape getDough();
     std::vector<sf::CircleShape> getCircles();
     void movePizza(float velocity);

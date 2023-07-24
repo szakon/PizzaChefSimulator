@@ -33,7 +33,7 @@ private:
     std::map<std::string, sf::Texture> textures;
     sf::Text scoreText;
     sf::RectangleShape score_board;
-    std::optional<PizzaPool> pool; //PM
+    //std::optional<PizzaPool> pool; //PM
     PizzaManager pizzaManager;
 
 

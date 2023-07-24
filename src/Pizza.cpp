@@ -16,6 +16,7 @@ int nextId = 0;
 
 Pizza::Pizza(std::vector<Ingredient>& ingr)
 {
+    cout << "Create pizza w/ ingr length " << ingr.size() << endl;
     id = nextId++;
     completed = false;
     criticalStatePassed = false;
@@ -36,6 +37,10 @@ Pizza::Pizza(std::vector<Ingredient>& ingr)
     dough.setPosition(0, circlePosition.y);
     sf::Color customColor(255, 228, 181);
     dough.setFillColor(customColor);
+
+}
+
+Pizza::~Pizza(){
 
 }
 
@@ -109,11 +114,16 @@ bool operator<(const Pizza& lhs, const Pizza& rhs) {
 
 
 int Pizza::addIngredient(Ingredient ingredient) {
+    cout << "add ingredient in pizza ingredients length " << ingredients.size() <<  endl;
     int res = -2;
     for (auto& pair: ingredients){
+
+        cout << "add ingredient in pizza 2" << endl;
         Ingredient ingr = pair.first;
         if (ingr == ingredient){
+            cout << "add ingredient in pizza 3" << endl;
             if (pair.second && !(*pair.second)){
+                cout << "add ingredient in pizza 4" << endl;
                 *pair.second = true;
                 res = 3;
 
