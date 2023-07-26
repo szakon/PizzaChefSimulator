@@ -85,7 +85,7 @@ void Preparation::setSprite(sf::Texture& texture, float scaleFactor, int screenW
     checkMark.setTexture(check);
     checkMark.setScale(sf::Vector2f(0.2,0.2));
 
-    float position = ingredient.getOrder()*1.5;
+    float position = ingredient.getOrder()*1.7;
     if (prepId == 1){
         sf::Vector2f pot1Position(8.5*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center - distance, y_position);
         sprite.setPosition(pot1Position);

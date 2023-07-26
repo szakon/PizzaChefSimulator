@@ -19,7 +19,7 @@ Facade::Facade()
     window.setVerticalSyncEnabled(true);
 
     //setting textures
-    std::vector<std::string> vect = {"bois","storage_cheese", "you_lost","storage_tomatoe", "storage_pepperoni", "storage_mushroom", "preparation_tomatoe", "preparation_pepperoni", "preparation_cheese", "cooked_cheese", "check_mark", "sound_on", "sound_off", "timer", "3", "2", "1", "madame", "monsieur", "arm", "tomato_sauce", "pepperonis", "mushrooms", "post-it", "cheese", "pepperoni", "mushroom", "tomato"};
+    std::vector<std::string> vect = {"bois","storage_cheese", "you_lost","storage_tomatoe", "storage_pepperoni", "storage_mushroom", "preparation_tomatoe", "preparation_pepperoni", "preparation_cheese", "cooked_cheese", "check_mark", "sound_on", "sound_off", "timer", "3", "2", "1", "madame", "monsieur", "arm", "tomato_sauce", "pepperonis", "mushrooms", "post-it", "cheese", "pepperoni", "mushroom", "tomato", "pan", "storage_pepper", "pepper", "peppers", "preparation_mushroom"};
     for (auto& element : vect) {
         textures.insert(addTextureFromFile(element));
     }
@@ -36,12 +36,14 @@ Facade::Facade()
     Ingredient tomatoe("tomatoe",0, (170*screenWidth-20)/2500, textures.at("tomato_sauce"), "preparation_tomatoe", "storage_tomatoe", textures.at("tomato"));
     Ingredient cheese("cheese", 1, (170*screenWidth-20)/2500, textures.at("cooked_cheese"), "preparation_cheese", "storage_cheese", textures.at("cheese"));
     Ingredient pepperoni("pepperoni", 2, (170*screenWidth-20)/2500, textures.at("pepperonis"), "preparation_pepperoni", "storage_pepperoni", textures.at("pepperoni"));
-    Ingredient mushroom("mushroom", 3, (170*screenWidth-20)/2500, textures.at("mushrooms"), "preparation_pepperoni", "storage_mushroom", textures.at("mushroom"));
+    Ingredient mushroom("mushroom", 3, (170*screenWidth-20)/2500, textures.at("mushrooms"), "preparation_mushroom", "storage_mushroom", textures.at("mushroom"));
+    Ingredient pepper("pepper", 4, (170*screenWidth-20)/2500, textures.at("pepper"), "pan", "storage_pepper", textures.at("peppers"));
     ingredients.push_back(tomatoe);
     ingredients.push_back(cheese);
     ingredients.push_back(pepperoni);
     ingredients.push_back(mushroom);
-    std::vector<Ingredient> pizzaIngredients = {tomatoe, cheese, pepperoni, mushroom};
+    ingredients.push_back(pepper);
+    //std::vector<Ingredient> pizzaIngredients = {tomatoe, cheese, pepperoni, mushroom};
     //pool.emplace(PizzaPool(pizzaIngredients));
     //pizzaManager.setPool(*pool);
     pizzaManager.setIngredients(ingredients);
@@ -182,7 +184,7 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     }
 
     //create a pot
-    float scaleFactorPot = 0.2f*screenWidth/2500;
+    float scaleFactorPot = 0.15f*screenWidth/2500;
     float potLine = 20 + 1.2f * storages.front().getSprite().getTextureRect().height*scaleFactorJar;
 
     //random sprite used for preparations
