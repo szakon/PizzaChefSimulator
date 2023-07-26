@@ -19,7 +19,7 @@ Facade::Facade()
     window.setVerticalSyncEnabled(true);
 
     //setting textures
-    std::vector<std::string> vect = {"bois","storage_cheese", "you_lost","storage_tomatoe", "storage_pepperoni", "storage_mushroom", "preparation_tomatoe", "preparation_pepperoni", "preparation_cheese", "cooked_cheese", "check_mark", "sound_on", "sound_off", "timer", "3", "2", "1", "madame", "monsieur", "arm", "tomato_sauce", "pepperonis", "mushrooms", "post-it", "cheese", "pepperoni", "mushroom", "tomato", "pan", "storage_pepper", "pepper", "peppers", "preparation_mushroom"};
+    std::vector<std::string> vect = {"bois","storage_cheese", "you_lost","storage_tomatoe", "storage_pepperoni", "storage_mushroom", "preparation_tomatoe", "preparation_pepperoni", "preparation_cheese", "cooked_cheese", "check_mark", "sound_on", "sound_off", "timer", "3", "2", "1", "madame", "monsieur", "arm", "tomato_sauce", "pepperonis", "mushrooms", "post-it", "cheese", "pepperoni", "mushroom", "tomato", "pan", "storage_pepper", "pepper", "peppers_cut", "preparation_mushroom"};
     for (auto& element : vect) {
         textures.insert(addTextureFromFile(element));
     }
@@ -37,7 +37,7 @@ Facade::Facade()
     Ingredient cheese("cheese", 1, (170*screenWidth-20)/2500, textures.at("cooked_cheese"), "preparation_cheese", "storage_cheese", textures.at("cheese"));
     Ingredient pepperoni("pepperoni", 2, (170*screenWidth-20)/2500, textures.at("pepperonis"), "preparation_pepperoni", "storage_pepperoni", textures.at("pepperoni"));
     Ingredient mushroom("mushroom", 3, (170*screenWidth-20)/2500, textures.at("mushrooms"), "preparation_mushroom", "storage_mushroom", textures.at("mushroom"));
-    Ingredient pepper("pepper", 4, (170*screenWidth-20)/2500, textures.at("pepper"), "pan", "storage_pepper", textures.at("peppers"));
+    Ingredient pepper("pepper", 4, (170*screenWidth-20)/2500, textures.at("peppers_cut"), "pan", "storage_pepper", textures.at("pepper"));
     ingredients.push_back(tomatoe);
     ingredients.push_back(cheese);
     ingredients.push_back(pepperoni);
