@@ -13,11 +13,12 @@ private :
     std::string label;
     float radius;
     sf::CircleShape circle;
+    sf::Sprite recipe;
     int order;
     std::string preparation;
     std::string storage;
 public:
-    explicit Ingredient(const std::string name, const int order, const float radius, sf::Texture& texture, std::string texture_preparation, std::string storage);
+    explicit Ingredient(const std::string name, const int order, const float radius, sf::Texture& texture, std::string texture_preparation, std::string storage, sf::Texture& recipeTex);
     std::string getLabel() const;
     std::string getPreparation() const;
     std::string getStorage() const;
@@ -26,6 +27,7 @@ public:
     friend bool operator==(const Ingredient& lhs, const Ingredient& rhs);
     void printIngredient(sf::RenderWindow& window, sf::Vector2<float> ingredientPosition);
     int getOrder();
+    void printRecipe(sf::RenderWindow& window, int pizzaNum, sf::Sprite postit);
 
 };
 

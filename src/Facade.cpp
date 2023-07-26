@@ -8,7 +8,7 @@
 const sf::Time Facade::TimePerFrame = sf::seconds(1.f/60.f); // The game is running at 60 FPS
 
 Facade::Facade()
-    :pizzaManager()
+        :pizzaManager()
 {
     sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
     unsigned int screenWidth = desktopMode.width;
@@ -19,7 +19,7 @@ Facade::Facade()
     window.setVerticalSyncEnabled(true);
 
     //setting textures
-    std::vector<std::string> vect = {"bois","storage_cheese", "you_lost","storage_tomatoe", "storage_pepperoni", "storage_mushroom", "preparation_tomatoe", "preparation_pepperoni", "preparation_cheese", "cooked_cheese", "check_mark", "sound_on", "sound_off", "timer", "3", "2", "1", "madame", "monsieur", "arm", "tomato_sauce", "pepperonis", "mushrooms"};
+    std::vector<std::string> vect = {"bois","storage_cheese", "you_lost","storage_tomatoe", "storage_pepperoni", "storage_mushroom", "preparation_tomatoe", "preparation_pepperoni", "preparation_cheese", "cooked_cheese", "check_mark", "sound_on", "sound_off", "timer", "3", "2", "1", "madame", "monsieur", "arm", "tomato_sauce", "pepperonis", "mushrooms", "post-it", "cheese", "pepperoni", "mushroom", "tomato"};
     for (auto& element : vect) {
         textures.insert(addTextureFromFile(element));
     }
@@ -33,10 +33,10 @@ Facade::Facade()
 
 
     //Create ingredients and filling the pizza pool
-    Ingredient tomatoe("tomatoe",0, (170*screenWidth-20)/2500, textures.at("tomato_sauce"), "preparation_tomatoe", "storage_tomatoe");
-    Ingredient cheese("cheese", 1, (170*screenWidth-20)/2500, textures.at("cooked_cheese"), "preparation_cheese", "storage_cheese");
-    Ingredient pepperoni("pepperoni", 2, (170*screenWidth-20)/2500, textures.at("pepperonis"), "preparation_pepperoni", "storage_pepperoni");
-    Ingredient mushroom("mushroom", 3, (170*screenWidth-20)/2500, textures.at("mushrooms"), "preparation_pepperoni", "storage_mushroom");
+    Ingredient tomatoe("tomatoe",0, (170*screenWidth-20)/2500, textures.at("tomato_sauce"), "preparation_tomatoe", "storage_tomatoe", textures.at("tomato"));
+    Ingredient cheese("cheese", 1, (170*screenWidth-20)/2500, textures.at("cooked_cheese"), "preparation_cheese", "storage_cheese", textures.at("cheese"));
+    Ingredient pepperoni("pepperoni", 2, (170*screenWidth-20)/2500, textures.at("pepperonis"), "preparation_pepperoni", "storage_pepperoni", textures.at("pepperoni"));
+    Ingredient mushroom("mushroom", 3, (170*screenWidth-20)/2500, textures.at("mushrooms"), "preparation_pepperoni", "storage_mushroom", textures.at("mushroom"));
     ingredients.push_back(tomatoe);
     ingredients.push_back(cheese);
     ingredients.push_back(pepperoni);
@@ -53,6 +53,12 @@ Facade::Facade()
         cout << "ERROR FONT DIDN'T LOAD";
     }
     scoreText.setFont(font);
+    for (int j=0; j<4; j++){
+        sf::Text recipe;
+        recipe.setFont(font);
+        recipeNotes.push_back(recipe);
+    }
+
 
     //Set up the music
     if (!music.openFromFile("resources/music.ogg")) {
@@ -73,7 +79,7 @@ void Facade::run() {
 
     //Initialize the game
     init();
-    pizzaManager.pizzaGenerator();
+    pizzaManager.pizzaGenerator(window, postit);
     draw_init( window.getSize().x, window.getSize().y);
 
     //Main part of the game
@@ -89,7 +95,7 @@ void Facade::run() {
             update(window.getSize().x, window.getSize().y); //Update the infos of the game
         }
         //cout << "here 1" << endl;
-        pizzaManager.movePizzas(window, lifeline, textures);
+        pizzaManager.movePizzas(window, lifeline, textures, postit);
         //cout << "here 3" << endl;
         //move();
         render();
@@ -130,11 +136,7 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     score_board.setOutlineColor(sf::Color::White);
     score_board.setOutlineThickness(3);
 
-    scoreText.setCharacterSize(50);
-    scoreText.setFillColor(sf::Color::White);
-    scoreText.setPosition(40, 30);
-    scoreText.setString("Your Score: " + std::to_string(pizzaManager.getScore()));
-
+    setText(scoreText, 50, sf::Color::White, 40, 30, "Your Score: " + std::to_string(pizzaManager.getScore()));
     //Set up the sound
     setTextureScalePosition(sound, textures.at("sound_on"), 0.09, screenWidth*14/15,0);
 
@@ -148,7 +150,14 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     setTextureScalePosition(lifeline, textures.at("3"), 0.15, 0,score_board.getPosition().y + score_board.getSize().y - 20 );
 
     //Characters
-    setTextureScalePosition(madame, textures.at("madame"), 0.5*screenWidth/2500, 0, belt.getPosition().y-textures.at("madame").getSize().y*0.5*screenWidth/2500);
+    //setTextureScalePosition(madame, textures.at("madame"), 0.5*screenWidth/2500, 0, belt.getPosition().y-textures.at("madame").getSize().y*0.5*screenWidth/2500);
+    setTextureScalePosition(postit, textures.at("post-it"), 0.5*screenWidth/2500, 0, belt.getPosition().y-textures.at("post-it").getSize().y*0.5*screenWidth/2500);
+    setText(recipeNotes[0], 30, sf::Color::Black, postit.getPosition().x + postit.getTextureRect().height*postit.getScale().x*0.1,postit.getPosition().y + postit.getTextureRect().width*postit.getScale().y*0.3, "Next Pizza: ");
+    for (int i = 1; i<recipeNotes.size(); i++){
+        setText(recipeNotes[i], 30, sf::Color::Black, postit.getPosition().x + postit.getTextureRect().height*postit.getScale().x*0.1,postit.getPosition().y + postit.getTextureRect().width*postit.getScale().y*(0.3+0.2*i), "Pizza " + std::to_string(i+1) + ": ");
+    }
+    //cout << "recipe note position: ( " << recipeNote.getPosition().x << " , " << recipeNote.getPosition().y << endl;
+    //cout << "expected position: ( " << postit.getPosition().x + postit.getTextureRect().height*postit.getScale().x*0.2 << " , " << postit.getPosition().y + postit.getTextureRect().width*postit.getScale().y*0.2 << endl;
 
     monsieur.setTexture(textures.at("monsieur"));
     float scaleFactorMonsieur = 1.1*screenWidth/2500;
@@ -240,12 +249,17 @@ void Facade::render() {
     }
     window.draw(lifeline);
 
-    window.draw(madame);
+    //window.draw(madame);
+    window.draw(postit);
     window.draw(belt);
     window.draw(monsieur);
+    window.draw(recipeNote);
 
 
-    pizzaManager.printPizza(window);
+    pizzaManager.printPizza(window, postit);
+    for (int i = 0; i<recipeNotes.size(); i++){
+        window.draw(recipeNotes[i]);
+    }
 
     window.draw(monsieur_arm);
 
@@ -350,29 +364,6 @@ void Facade::update(unsigned int screenWidth, unsigned int screenHeight) {
                         }
                     }
                 }
-
-                /*
-                for (auto& pizza: pizzas){
-                    if (pizza.getDough().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                        cout << "PIZZA TOUCHED: pizza id: " << pizza.getId() << endl;
-
-                        if (selected_type == "preparation") {
-                            score += pizza.addIngredient(selected->getIngredient());
-                            for (auto &prep: preparations) {
-                                if (selected->getIngredient() == prep.getIngredient() &&
-                                    prep.getSelected() == true &&
-                                    selected->getPrepId() == prep.getPrepId()) {
-                                    prep.reset();
-                                }
-                            }
-                        }
-                        //cout << "circles length at the end of addIngredient in facade: " << pair.second.pizza.getCircles().size() << endl;
-                    }
-                    //if (pizza.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y))
-                    //cout << "circles length at the end of addIngredient in facade 2: " << pair.second.pizza.getCircles().size() << endl;
-
-                }*/
-
                 if(sound.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
                     if(sound_on_off) {
                         sound_on_off = false;
@@ -416,11 +407,19 @@ std::pair<std::string,sf::Texture> Facade::addTextureFromFile(const std::string&
     return std::make_pair(name, texture);
 }
 
+sf::Vector2f Facade::getPostItPosition(){
+    return postit.getPosition();
+}
+
 void Facade::setTextureScalePosition(sf::Sprite& sprite, sf::Texture& texture, double scale, double position_x, double position_y) {
     sprite.setTexture(texture);
     sprite.setScale(scale,scale);
     sprite.setPosition(position_x, position_y);
 }
 
-
-
+void Facade::setText(sf::Text& text, int characterSize, sf::Color color, float position_x, float position_y, std::string string){
+    text.setCharacterSize(characterSize);
+    text.setFillColor(color);
+    text.setPosition(position_x, position_y);
+    text.setString(string);
+}

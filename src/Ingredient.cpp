@@ -9,7 +9,7 @@
 
 using namespace std;
 
-Ingredient::Ingredient(const std::string name, const int order, const float radius, sf::Texture& texture, std::string preparation, std::string storage)
+Ingredient::Ingredient(const std::string name, const int order, const float radius, sf::Texture& texture, std::string preparation, std::string storage, sf::Texture& recipeTex)
 {
     label = name;
     this->order = order;
@@ -19,6 +19,8 @@ Ingredient::Ingredient(const std::string name, const int order, const float radi
 
     circle.setRadius(radius);
     circle.setTexture(&texture);
+    recipe.setTexture(recipeTex);
+    recipe.setScale(0.15, 0.15);
 }
 
 
@@ -62,6 +64,13 @@ bool operator==(const Ingredient& lhs, const Ingredient& rhs) {
 void Ingredient::printIngredient(sf::RenderWindow& window, sf::Vector2<float> ingredientPosition){
     circle.setPosition(ingredientPosition);
     window.draw(circle);
+}
+
+void Ingredient::printRecipe(sf::RenderWindow& window, int pizzaNum, sf::Sprite postit){
+    cout << "Pizza num " << pizzaNum << "Printing this ingredient " << label << endl;
+    recipe.setPosition(postit.getPosition().x + postit.getTextureRect().height*postit.getScale().x*0.1*(order+1), postit.getPosition().y + postit.getTextureRect().width*postit.getScale().y*(0.4+0.2*(pizzaNum-1)));
+    window.draw(recipe);
+
 }
 
 

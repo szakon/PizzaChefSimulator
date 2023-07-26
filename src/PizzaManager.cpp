@@ -4,7 +4,7 @@
 
 #include "PizzaManager.h"
 
-const float PizzaManager::xVelocity = 20;
+const float PizzaManager::xVelocity = 15;
 
 PizzaManager::PizzaManager() {
     score = 0;
@@ -26,16 +26,18 @@ void PizzaManager::setPool(PizzaPool pool){
     this->pool = pool;
 }*/
 
+
 void PizzaManager::setIngredients(std::vector<Ingredient> ingredients){
     this->ingredients = ingredients;
 }
 
 
 
-void PizzaManager::movePizzas(sf::RenderWindow& window, sf::Sprite lifeline, std::map<std::string, sf::Texture> textures){
+void PizzaManager::movePizzas(sf::RenderWindow& window, sf::Sprite lifeline, std::map<std::string, sf::Texture> textures, sf::Sprite postit){
     //cout << "here 2" << endl;
     bool pizzaNeedGeneration=false;
     for (Pizza *pizza: pizzas) {
+        cout << "PIZZA ID: " << pizza->getId() << "Position: " << pizza->getPizzaNum() << endl;
         if (pizza->getCirclePosition().x >window.getSize().x * 0.65) { //we are at the end of the line
             if (!pizza->isComplete()) { // If the pizza is not completed with all ingredients
                 score -= 10;
@@ -43,7 +45,7 @@ void PizzaManager::movePizzas(sf::RenderWindow& window, sf::Sprite lifeline, std
             } else {
                 score += 10;
             }
-            releasePizza(pizza);
+            releasePizza(pizza, window, postit);
             break;
 
 
@@ -55,6 +57,7 @@ void PizzaManager::movePizzas(sf::RenderWindow& window, sf::Sprite lifeline, std
                 pizzaNeedGeneration=true;
                 //cout << "after set new pizza generator: " << pizza.getCriticalStatePassed() << endl;
                 pizza->movePizza(xVelocity);
+                //pizza->setPizzaNum(i);
             }
             pizza->movePizza(xVelocity);
 
@@ -63,7 +66,7 @@ void PizzaManager::movePizzas(sf::RenderWindow& window, sf::Sprite lifeline, std
         }
     }
     if (pizzaNeedGeneration)
-        pizzaGenerator();
+        pizzaGenerator(window, postit);
 }
 
 void PizzaManager::randomIngr(Pizza* pizza){ //PM
@@ -74,16 +77,12 @@ void PizzaManager::randomIngr(Pizza* pizza){ //PM
     int randomIndex = distribution(mt);
     int numIngredients = values[randomIndex];
     if (numIngredients == 1){
-        std::vector<Ingredient> ingrs;
-        for (auto& ingredient: ingredients){
-            ingrs.push_back(ingredient);
-        }
         std::random_device rd1;
         std::mt19937 mt1(rd1());
 
         std::uniform_int_distribution<int> distribution(0, ingredients.size() - 1);
         int randomIndex1 = distribution(mt1);
-        Ingredient ingredient = ingrs[randomIndex1];
+        Ingredient ingredient = ingredients[randomIndex1];
 
         addRandomIngredient(pizza, ingredient);
     }
@@ -157,7 +156,7 @@ std::vector<Ingredient> PizzaManager::createVect(int numIngredients){
 
 
 
-void PizzaManager::pizzaGenerator(){ //PM
+void PizzaManager::pizzaGenerator(sf::RenderWindow& window, sf::Sprite postit){ //PM
     //Pizza pizza = pool->acquirePizza();
     cout << "GENERATOR CALLED" << endl;
     std::vector<Ingredient> ingrs = randomIngrVect();
@@ -166,11 +165,12 @@ void PizzaManager::pizzaGenerator(){ //PM
     //Piz piz = {pizza, false};
 
     pizzas.push_back(pizza);
+    printRecipe(window, postit);
 
 }
 
 
-void PizzaManager::releasePizza(Pizza* pizza){
+void PizzaManager::releasePizza(Pizza* pizza, sf::RenderWindow& window, sf::Sprite postit){
     cout << "error 1" << endl;
    // pizza.resetPizza();
     cout << "error 2" << endl;
@@ -181,22 +181,34 @@ void PizzaManager::releasePizza(Pizza* pizza){
 
             //pizzas.erase(pizzas.begin());
             pizzas.erase(std::remove(pizzas.begin(), pizzas.end(), pizza), pizzas.end());
-            cout << "error 4" << endl;
+            cout << "error 4 length " <<  pizzas.size() << endl;
             break;
         }
         cout << "error 5" << endl;
         pizzasIndex++;
     }
+    printRecipe(window, postit);
     //pool->releasePizza(pizza);
     delete pizza;
 
     cout << "error 6" << endl;
 }
 
-void PizzaManager::printPizza(sf::RenderWindow& window){
+void PizzaManager::printRecipe(sf::RenderWindow& window, sf::Sprite postit){
+    for (int i = 0; i<pizzas.size(); i++){
+        pizzas[i]->setPizzaNum(i+1);
+        for (auto ingredient : pizzas[i]->getIngredients()){
+            ingredient.printRecipe(window, i, postit);
+        }
+        cout << "ReLEASE PIZZA ID: " << pizzas[i]->getId() << "Position: " << pizzas[i]->getPizzaNum() << endl;
+    }
+}
+
+
+void PizzaManager::printPizza(sf::RenderWindow& window, sf::Sprite postit){
     for (auto& pizza: pizzas) {
         //cout << "print pizza" << endl;
-        pizza->printPizza(window);
+        pizza->printPizza(window, postit);
         //cout << "after print pizza in FACADE " << pizza.getDough().getPosition().x << endl;
     }
 

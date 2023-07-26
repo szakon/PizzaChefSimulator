@@ -24,23 +24,27 @@ private:
     static const float xVelocity;
     //std::optional<PizzaPool> pool;
     std::vector<Ingredient> ingredients;
+    int numberOfPizzas;
+    sf::RenderWindow window;
 public:
     explicit PizzaManager();
 
     //void setPool(PizzaPool pool);
     void setIngredients(std::vector<Ingredient> ingredients);
+    //void setWindow(sf::RenderWindow& window);
     std::vector<Pizza*> getPizzas();
     int getScore();
     int getLives();
     void addRandomIngredient(Pizza* pizza, Ingredient ingredient);
-    void pizzaGenerator();
+    void pizzaGenerator(sf::RenderWindow& window, sf::Sprite postit);
     std::vector<Ingredient> randomIngrVect();
     std::vector<Ingredient> createVect(int i);
     void randomIngr(Pizza* pizza);
-    void movePizzas(sf::RenderWindow& window, sf::Sprite lifeline, std::map<std::string, sf::Texture> textures);
-    void releasePizza(Pizza* pizza);
+    void movePizzas(sf::RenderWindow& window, sf::Sprite lifeline, std::map<std::string, sf::Texture> textures, sf::Sprite postit);
+    void releasePizza(Pizza* pizza, sf::RenderWindow& window, sf::Sprite postit);
     bool checkPizzaClick(std::optional<Kitchen> selected, sf::Vector2i mousePos);
-    void printPizza(sf::RenderWindow& window);
+    void printPizza(sf::RenderWindow& window, sf::Sprite postit);
+    void printRecipe(sf::RenderWindow& window, sf::Sprite postit);
 
 
     };

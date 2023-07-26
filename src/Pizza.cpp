@@ -16,6 +16,7 @@ int nextId = 0;
 
 Pizza::Pizza(std::vector<Ingredient>& ingr)
 {
+    pizzaNum = 1;
     cout << "Create pizza w/ ingr length " << ingr.size() << endl;
     id = nextId++;
     completed = false;
@@ -52,8 +53,23 @@ int Pizza::getId(){
     return id;
 }
 
+std::vector<Ingredient> Pizza::getIngredients(){
+    std::vector<Ingredient> ingrs;
+    for (auto ingredient: ingredients){
+        ingrs.push_back(ingredient.first);
+    }
+    return ingrs;
+}
+
 bool Pizza::getCriticalStatePassed(){
     return criticalStatePassed;
+}
+int Pizza::getPizzaNum(){
+    return pizzaNum;
+}
+
+void Pizza::setPizzaNum(int i){
+    pizzaNum = i;
 }
 
 void Pizza::setCriticalStatePassed(){
@@ -88,7 +104,7 @@ void Pizza::movePizza(float velocity) {
     //cout << "pizza moved to position: " << circlePosition.x << endl;
 }
 
-void Pizza::printPizza(sf::RenderWindow& window){
+void Pizza::printPizza(sf::RenderWindow& window, sf::Sprite postit){
     dough.setPosition(circlePosition.x,circlePosition.y);
 
     //cout << "print pizza at position: " << circlePosition.x << " , " << circlePosition.y << endl;
@@ -96,9 +112,10 @@ void Pizza::printPizza(sf::RenderWindow& window){
 
 
     for (auto ingredient: ingredients){
+        Ingredient ingr = ingredient.first;
+        ingr.printRecipe(window, pizzaNum, postit);
         if (*ingredient.second){
             //cout << "HERE" << endl;
-            Ingredient ingr = ingredient.first;
             ingr.printIngredient(window, ingredientPosition);
             //ingr.setPosition(ingredientPosition.x, ingredientPosition.y);
             //circles.push_back(ingr.getCircle());
@@ -114,16 +131,16 @@ bool operator<(const Pizza& lhs, const Pizza& rhs) {
 
 
 int Pizza::addIngredient(Ingredient ingredient) {
-    cout << "add ingredient in pizza ingredients length " << ingredients.size() <<  endl;
+    //cout << "add ingredient in pizza ingredients length " << ingredients.size() <<  endl;
     int res = -2;
     for (auto& pair: ingredients){
 
-        cout << "add ingredient in pizza 2" << endl;
+        //cout << "add ingredient in pizza 2" << endl;
         Ingredient ingr = pair.first;
         if (ingr == ingredient){
-            cout << "add ingredient in pizza 3" << endl;
+            //cout << "add ingredient in pizza 3" << endl;
             if (pair.second && !(*pair.second)){
-                cout << "add ingredient in pizza 4" << endl;
+                //cout << "add ingredient in pizza 4" << endl;
                 *pair.second = true;
                 res = 3;
 
@@ -151,3 +168,4 @@ void Pizza::resetPizza(){
     }
 
 }
+
