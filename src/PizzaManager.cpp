@@ -67,6 +67,8 @@ void PizzaManager::movePizzas(sf::RenderWindow& window, sf::Sprite lifeline, std
     }
     if (pizzaNeedGeneration)
         pizzaGenerator(window, postit);
+
+    cout << "pizza generator in move pizza" << endl;
 }
 
 void PizzaManager::randomIngr(Pizza* pizza){ //PM
@@ -166,6 +168,7 @@ void PizzaManager::pizzaGenerator(sf::RenderWindow& window, sf::Sprite postit){ 
 
     pizzas.push_back(pizza);
     printRecipe(window, postit);
+    cout << "print recipe in pizza generator" << endl;
 
 }
 

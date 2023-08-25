@@ -72,8 +72,12 @@ void Preparation::reset() {
     selected = false;
 }
 
-void Preparation::setSprite(sf::Texture& texture, float scaleFactor, int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& clock, sf::Texture& check){
-    sprite.setTexture(texture);
+void Preparation::setSprite(sf::Texture& preparation1, float scaleFactor, int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& clock, sf::Texture& check, sf::Texture& preparation2){
+    if (prepId/2<1){
+        sprite.setTexture(preparation1);
+    }else{
+        sprite.setTexture(preparation2);
+    }
     sprite.setScale(scaleFactor,scaleFactor);
 
     int center = jar.getTextureRect().width * scaleJar/2 - sprite.getTextureRect().width*scaleFactor/2;
@@ -86,8 +90,9 @@ void Preparation::setSprite(sf::Texture& texture, float scaleFactor, int screenW
     checkMark.setScale(sf::Vector2f(0.2,0.2));
 
     float position = ingredient.getOrder()*1.7;
-    if (prepId == 1){
-        sf::Vector2f pot1Position(8.5*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center - distance, y_position);
+    int y = y_position + sprite.getTextureRect().height*scaleFactor*1.5 * floor(prepId/2);
+    if (prepId%2 == 0){
+        sf::Vector2f pot1Position(8.5*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center - distance, y);
         sprite.setPosition(pot1Position);
         timer.setPosition(pot1Position);
         checkMark.setPosition(pot1Position);
@@ -95,7 +100,7 @@ void Preparation::setSprite(sf::Texture& texture, float scaleFactor, int screenW
 
 
     }else{
-        sf::Vector2f pot2Position(8.5*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center + distance, y_position);
+        sf::Vector2f pot2Position(8.5*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center + distance, y);
         sprite.setPosition(pot2Position);
         timer.setPosition(pot2Position);
         checkMark.setPosition(pot2Position);

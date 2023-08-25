@@ -9,13 +9,15 @@
 
 using namespace std;
 
-Ingredient::Ingredient(const std::string name, const int order, const float radius, sf::Texture& texture, std::string preparation, std::string storage, sf::Texture& recipeTex)
+Ingredient::Ingredient(const std::string name, const int order, const float radius, sf::Texture& texture, std::string preparation, std::string storage, sf::Texture& recipeTex, int preparations, std::string preparation2)
 {
     label = name;
     this->order = order;
     this->radius = radius;
     this->preparation = preparation;
+    this->numPreparations = preparations;
     this->storage = storage;
+    this->preparation2 = preparation2;
 
     circle.setRadius(radius);
     circle.setTexture(&texture);
@@ -28,8 +30,16 @@ std::string Ingredient::getLabel() const {
     return label;
 }
 
+int Ingredient::getNumPreparations() const {
+    return numPreparations;
+}
+
 std::string Ingredient::getPreparation() const {
     return preparation;
+}
+
+std::string Ingredient::getPreparation2() const {
+    return preparation2;
 }
 
 std::string Ingredient::getStorage() const {

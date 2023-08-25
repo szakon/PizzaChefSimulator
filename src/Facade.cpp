@@ -19,7 +19,7 @@ Facade::Facade()
     window.setVerticalSyncEnabled(true);
 
     //setting textures
-    std::vector<std::string> vect = {"bois","storage_cheese", "you_lost","storage_tomatoe", "storage_pepperoni", "storage_mushroom", "preparation_tomatoe", "preparation_pepperoni", "preparation_cheese", "cooked_cheese", "check_mark", "sound_on", "sound_off", "timer", "3", "2", "1", "madame", "monsieur", "arm", "tomato_sauce", "pepperonis", "mushrooms", "post-it", "cheese", "pepperoni", "mushroom", "tomato", "pan", "storage_pepper", "pepper", "peppers_cut", "preparation_mushroom"};
+    std::vector<std::string> vect = {"bois","storage_cheese", "you_lost","storage_tomatoe", "storage_pepperoni", "storage_mushroom", "preparation_tomatoe", "preparation_pepperoni", "preparation_cheese", "cooked_cheese", "check_mark", "sound_on", "sound_off", "timer", "3", "2", "1", "madame", "monsieur", "arm", "tomato_sauce", "pepperonis", "mushrooms", "post-it", "cheese", "pepperoni", "mushroom", "tomato", "pan", "storage_pepper", "pepper", "peppers_cut", "preparation_mushroom", "preparation_pepper2"};
     for (auto& element : vect) {
         textures.insert(addTextureFromFile(element));
     }
@@ -33,11 +33,11 @@ Facade::Facade()
 
 
     //Create ingredients and filling the pizza pool
-    Ingredient tomatoe("tomatoe",0, (170*screenWidth-20)/2500, textures.at("tomato_sauce"), "preparation_tomatoe", "storage_tomatoe", textures.at("tomato"));
-    Ingredient cheese("cheese", 1, (170*screenWidth-20)/2500, textures.at("cooked_cheese"), "preparation_cheese", "storage_cheese", textures.at("cheese"));
-    Ingredient pepperoni("pepperoni", 2, (170*screenWidth-20)/2500, textures.at("pepperonis"), "preparation_pepperoni", "storage_pepperoni", textures.at("pepperoni"));
-    Ingredient mushroom("mushroom", 3, (170*screenWidth-20)/2500, textures.at("mushrooms"), "preparation_mushroom", "storage_mushroom", textures.at("mushroom"));
-    Ingredient pepper("pepper", 4, (170*screenWidth-20)/2500, textures.at("peppers_cut"), "pan", "storage_pepper", textures.at("pepper"));
+    Ingredient tomatoe("tomatoe",0, (170*screenWidth-20)/2500, textures.at("tomato_sauce"), "preparation_tomatoe", "storage_tomatoe", textures.at("tomato"), 1, "preparation_pepper2");
+    Ingredient cheese("cheese", 1, (170*screenWidth-20)/2500, textures.at("cooked_cheese"), "preparation_cheese", "storage_cheese", textures.at("cheese"),1, "preparation_pepper2");
+    Ingredient pepperoni("pepperoni", 2, (170*screenWidth-20)/2500, textures.at("pepperonis"), "preparation_pepperoni", "storage_pepperoni", textures.at("pepperoni"), 1, "preparation_pepper2");
+    Ingredient mushroom("mushroom", 3, (170*screenWidth-20)/2500, textures.at("mushrooms"), "preparation_mushroom", "storage_mushroom", textures.at("mushroom"), 1, "preparation_pepper2");
+    Ingredient pepper("pepper", 4, (170*screenWidth-20)/2500, textures.at("peppers_cut"), "pan", "storage_pepper", textures.at("pepper"), 2, "preparation_pepper2");
     ingredients.push_back(tomatoe);
     ingredients.push_back(cheese);
     ingredients.push_back(pepperoni);
@@ -116,11 +116,18 @@ void Facade::init(){
     int i = 0;
     for (const auto &ingredient: ingredients){
         Storage storage(ingredient, 0);
+        storages.push_back(storage);
+        for (int i = 0; i<2*ingredient.getNumPreparations(); i++){
+            Preparation preparation(ingredient, i);
+            preparations.push_back(preparation);
+        }
+        /*
         Preparation preparation1(ingredient, 1);
         Preparation preparation2(ingredient, 2);
         storages.push_back(storage);
         preparations.push_back(preparation1);
         preparations.push_back(preparation2);
+         */
     }
 
 }
@@ -185,12 +192,13 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
 
     //create a pot
     float scaleFactorPot = 0.15f*screenWidth/2500;
-    float potLine = 20 + 1.2f * storages.front().getSprite().getTextureRect().height*scaleFactorJar;
-
+    cout<< "Before potline";
+    float potLine = 20 + 1.2f * storages[0].getSprite().getTextureRect().height*scaleFactorJar;
+    cout<< "After potline";
     //random sprite used for preparations
     for(auto& preparation : preparations) {
         //cout << "Preparations test string " << preparation.getIngredient().getPreparation() << endl;
-        preparation.setSprite(textures.at(preparation.getIngredient().getPreparation()), scaleFactorPot, screenWidth, spriteTomatoe, scaleFactorJar, potLine, textures.at("timer"), textures.at("check_mark"));
+        preparation.setSprite(textures.at(preparation.getIngredient().getPreparation()), scaleFactorPot, screenWidth, spriteTomatoe, scaleFactorJar, potLine, textures.at("timer"), textures.at("check_mark"), textures.at(preparation.getIngredient().getPreparation2()));
     }
 
     float circlePositionX = 0;
