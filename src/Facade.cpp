@@ -94,16 +94,13 @@ void Facade::run() {
         timeSinceLastUpdate += elapsedTime;
         while (timeSinceLastUpdate > TimePerFrame) {
             timeSinceLastUpdate -= TimePerFrame;
-            update(window.getSize().x, window.getSize().y); //Update the infos of the game
+            update(window.getSize().x, window.getSize().y);
+            pizzaManager.movePizzas(window, lifeline, textures, postit);
+            render();
         }
-        //cout << "here 1" << endl;
-        pizzaManager.movePizzas(window, lifeline, textures, postit);
-        //cout << "here 3" << endl;
-        //move();
-        render();
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
+
     if(pizzaManager.getLives()<=0){
         renderLost();
     }
@@ -320,8 +317,7 @@ void Facade::update(unsigned int screenWidth, unsigned int screenHeight) {
 
     sf::Event event;
     while(window.pollEvent(event)){
-        if(event.type == sf::Event::Closed) window.close();
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) window.close();
+        if(event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) window.close();
 
         else if (event.type == sf::Event::MouseButtonPressed) {
 
