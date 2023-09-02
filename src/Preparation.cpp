@@ -4,32 +4,38 @@
 #include <iostream>
 
 
-
-static int TIMEPREP = 200;
+const static sf::Time TIMEPREP = sf::seconds(6.0f); //Preparation time
 
 Preparation::Preparation(Ingredient ingredient, int prepId) : Kitchen(ingredient, prepId) {
     //this->prepId = prepId;
     status = make_shared<Status>(notused);
     time_prep = ::TIMEPREP;
-    time_left = make_shared<int>(::TIMEPREP);
+    time_left = make_shared<sf::Time>(::TIMEPREP);
 }
 
 std::ostream& operator<<(std::ostream& os, const Preparation& preparation)
 {
     os << "Preparation :" << endl;
     os << "status" << preparation.status;
-    os << "time_prep : " << preparation.time_prep << endl;
+    os << "time_prep : " << preparation.time_prep.asSeconds() << endl;
     os << "time_left : " << preparation.time_left << endl;
     return os;
 }
 
-void Preparation::preparing_if_needed() {
+void Preparation::preparing_if_needed(sf::Time elapsed_time) {
     if(*status == inprep) {
-        *time_left -= 1;
+        cout << "time spent " << elapsed_time.asSeconds() << endl;
+        *time_left -= elapsed_time;
+        cout << "time left" << (*time_left).asSeconds();
     }
-    if(*time_left == 0) {
+    if(*time_left <= sf::Time::Zero) {
         *status = ready;
     }
+}
+
+float Preparation::getProgress() const {
+    float progress = 1.0f - (*time_left).asSeconds() / time_prep.asSeconds();
+    return std::max(0.0f, std::min(1.0f, progress)); // Between 0 and 1
 }
 
 std::string Preparation::getStatus() const {
@@ -58,11 +64,11 @@ void Preparation::setStatus( const std::string stat) {
     }
 }
 
-int Preparation::getTimePrep() {
+sf::Time Preparation::getTimePrep() {
     return time_prep;
 }
 
-int Preparation::getTimeLeft() {
+sf::Time Preparation::getTimeLeft() {
     return *time_left;
 }
 
@@ -83,6 +89,9 @@ void Preparation::setSprite(sf::Texture& preparation1, float scaleFactor, int sc
     int center = jar.getTextureRect().width * scaleJar/2 - sprite.getTextureRect().width*scaleFactor/2;
     int distance = 0.4*sprite.getTextureRect().width* scaleFactor;
 
+    progressBar.setSize(sf::Vector2f(getProgress() * 200, 50));
+    progressBar.setFillColor(sf::Color::Green);
+
     timer.setTexture(clock);
     timer.setScale(sf::Vector2f(0.05,0.05));
 
@@ -95,6 +104,7 @@ void Preparation::setSprite(sf::Texture& preparation1, float scaleFactor, int sc
         sf::Vector2f pot1Position(8.5*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center - distance, y);
         sprite.setPosition(pot1Position);
         timer.setPosition(pot1Position);
+        progressBar.setPosition(pot1Position);
         checkMark.setPosition(pot1Position);
         cout << "preparation " << ingredient.getLabel() << " has this position " << sprite.getPosition().x << " , " << sprite.getPosition().y << " and this scale: " << sprite.getScale().x << endl;
 
@@ -102,20 +112,20 @@ void Preparation::setSprite(sf::Texture& preparation1, float scaleFactor, int sc
     }else{
         sf::Vector2f pot2Position(8.5*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center + distance, y);
         sprite.setPosition(pot2Position);
+        progressBar.setPosition(pot2Position);
         timer.setPosition(pot2Position);
         checkMark.setPosition(pot2Position);
         cout << "2";
     }
 }
 
-bool Preparation::isStorage(){
-    return false;
-}
 
 void Preparation::draw(sf::RenderWindow& window){
     window.draw(sprite);
     if(*status == inprep) {
         window.draw(timer);
+        progressBar.setSize(sf::Vector2f(getProgress() * 80, 20));
+        window.draw(progressBar);
     }else if (*status == ready){
         window.draw(checkMark);
     }

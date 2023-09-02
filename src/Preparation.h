@@ -11,29 +11,25 @@ enum Status {
 class Preparation : public Kitchen {
 private:
     shared_ptr<Status> status;
-    int time_prep;
-    shared_ptr<int> time_left;
+    sf::Time time_prep;
+    shared_ptr<sf::Time> time_left;
     sf::Sprite timer;
     sf::Sprite checkMark;
     sf::Sprite sprite2;
+    sf::RectangleShape progressBar;
+
 public:
     explicit Preparation(Ingredient ingredient, int prepId);
-    void preparing_if_needed();
+    void preparing_if_needed(sf::Time elapsed_time);
     std::string getStatus() const;
-    void setStatus( const std::string stat);
+    void setStatus(const std::string stat);
     void reset();
     friend std::ostream& operator<<(std::ostream& os, const Preparation& preparation);
-    void SetReady();
-    int getTimePrep();
-    int getTimeLeft();
-    void freeprep();
+    sf::Time getTimePrep();
+    sf::Time getTimeLeft();
+    float getProgress() const;
     void setSprite(sf::Texture& texture, float scaleFactor, int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& clock, sf::Texture& check, sf::Texture& preparation2);
-    void addTimer(sf::Texture& texture);
     void draw(sf::RenderWindow& window);
-    bool isStorage();
-
-    static int id_count;
-    static int TIMEPREP;
 };
 
 

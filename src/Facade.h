@@ -37,20 +37,16 @@ private:
     sf::Text recipeNote;
     sf::Text recipeNote2;
     sf::RectangleShape score_board;
-    //std::optional<PizzaPool> pool; //PM
     PizzaManager pizzaManager;
-
-
 
 public:
     sf::RenderWindow window;
 
-    void releasePizza(Pizza pizza); //PM
     Facade();
     void run();
     void init();
     void render();
-    void update(unsigned int screenWidth, unsigned int screenHeight);
+    void update(sf::Time elapsed_time);
     void draw_init(unsigned int screenWidth, unsigned int screenHeight);
     void startCooking(Preparation& preparation);
     void selectReady(Preparation& preparation);
@@ -59,7 +55,5 @@ public:
     void setTextureScalePosition(sf::Sprite& sprite, sf::Texture& texture, double scale, double position_x, double position_y);
     void setText(sf::Text& text, int characterSize, sf::Color color, float position_x, float position_y, std::string string);
     static const sf::Time TimePerFrame;
-    sf::Vector2f getPostItPosition();
-    static const float xVelocity;
     void renderLost();
 };

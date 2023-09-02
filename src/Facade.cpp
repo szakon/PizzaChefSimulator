@@ -2,8 +2,6 @@
 #include "SFML/Audio/Music.hpp"
 #include <iostream>
 #include <map>
-#include <chrono>
-#include <thread>
 
 const sf::Time Facade::TimePerFrame = sf::seconds(1.f/60.f); // The game is running at 60 FPS
 
@@ -43,9 +41,6 @@ Facade::Facade()
     ingredients.push_back(pepperoni);
     ingredients.push_back(mushroom);
     ingredients.push_back(pepper);
-    //std::vector<Ingredient> pizzaIngredients = {tomatoe, cheese, pepperoni, mushroom};
-    //pool.emplace(PizzaPool(pizzaIngredients));
-    //pizzaManager.setPool(*pool);
     pizzaManager.setIngredients(ingredients);
 
 
@@ -90,15 +85,15 @@ void Facade::run() {
         //In case of game over
         if(pizzaManager.getLives()<0) window.close();
 
+        //The game is updated to match the 60fps defined earlier
         sf::Time elapsedTime = clock.restart();
         timeSinceLastUpdate += elapsedTime;
         while (timeSinceLastUpdate > TimePerFrame) {
             timeSinceLastUpdate -= TimePerFrame;
-            update(window.getSize().x, window.getSize().y);
+            update(elapsedTime);
             pizzaManager.movePizzas(window, lifeline, textures, postit);
             render();
         }
-
     }
 
     if(pizzaManager.getLives()<=0){
@@ -110,7 +105,6 @@ void Facade::run() {
 void Facade::init(){
 
     //Set up the storages and preparations
-    int i = 0;
     for (const auto &ingredient: ingredients){
         Storage storage(ingredient, 0);
         storages.push_back(storage);
@@ -118,13 +112,6 @@ void Facade::init(){
             Preparation preparation(ingredient, i);
             preparations.push_back(preparation);
         }
-        /*
-        Preparation preparation1(ingredient, 1);
-        Preparation preparation2(ingredient, 2);
-        storages.push_back(storage);
-        preparations.push_back(preparation1);
-        preparations.push_back(preparation2);
-         */
     }
 
 }
@@ -133,7 +120,6 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
 
 
     window.setFramerateLimit(60);
-    sf::Vector2u windowSize = window.getSize();
 
     //Score
     score_board.setSize(sf::Vector2f (400,100));
@@ -162,9 +148,6 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     for (int i = 1; i<recipeNotes.size(); i++){
         setText(recipeNotes[i], 30, sf::Color::Black, postit.getPosition().x + postit.getTextureRect().height*postit.getScale().x*0.1,postit.getPosition().y + postit.getTextureRect().width*postit.getScale().y*(0.3+0.2*i), "Pizza " + std::to_string(i+1) + ": ");
     }
-    //cout << "recipe note position: ( " << recipeNote.getPosition().x << " , " << recipeNote.getPosition().y << endl;
-    //cout << "expected position: ( " << postit.getPosition().x + postit.getTextureRect().height*postit.getScale().x*0.2 << " , " << postit.getPosition().y + postit.getTextureRect().width*postit.getScale().y*0.2 << endl;
-
     monsieur.setTexture(textures.at("monsieur"));
     float scaleFactorMonsieur = 1.1*screenWidth/2500;
     sf::Vector2f monsieurPosition(window.getSize().x * 0.65-monsieur.getTextureRect().height*scaleFactorMonsieur/3,belt.getPosition().y-monsieur.getTextureRect().height*scaleFactorMonsieur/4);
@@ -181,7 +164,6 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     //create the tomatoe jar
     sf::Sprite spriteTomatoe;
 
-
     for(auto& storage : storages) {
         storage.setSprite(textures.at(storage.getIngredient().getStorage()), scaleFactorJar, screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
 
@@ -194,11 +176,8 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     cout<< "After potline";
     //random sprite used for preparations
     for(auto& preparation : preparations) {
-        //cout << "Preparations test string " << preparation.getIngredient().getPreparation() << endl;
         preparation.setSprite(textures.at(preparation.getIngredient().getPreparation()), scaleFactorPot, screenWidth, spriteTomatoe, scaleFactorJar, potLine, textures.at("timer"), textures.at("check_mark"), textures.at(preparation.getIngredient().getPreparation2()));
     }
-
-    float circlePositionX = 0;
 
 }
 
@@ -306,13 +285,13 @@ void Facade::renderLost(){
     }
 }
 
-void Facade::update(unsigned int screenWidth, unsigned int screenHeight) {
+void Facade::update(sf::Time elapsed_time) {
 
     bool isTouched = false; //to test if an object was touched
 
     //Update the preparations preparing
     for (auto& prep : preparations) {
-        prep.preparing_if_needed();
+        prep.preparing_if_needed(elapsed_time);
     }
 
     sf::Event event;
@@ -358,7 +337,7 @@ void Facade::update(unsigned int screenWidth, unsigned int screenHeight) {
 
                 cout << "BEFORE IF" << endl;
                 if (selected_type == "preparation") {
-                    cout << "BEFORE CHECCK" << endl;
+                    cout << "BEFORE CHECK" << endl;
                     bool added = pizzaManager.checkPizzaClick(selected, mousePos);
                     if(added){
                         for (auto &prep: preparations) {
@@ -411,10 +390,6 @@ std::pair<std::string,sf::Texture> Facade::addTextureFromFile(const std::string&
     }
 
     return std::make_pair(name, texture);
-}
-
-sf::Vector2f Facade::getPostItPosition(){
-    return postit.getPosition();
 }
 
 void Facade::setTextureScalePosition(sf::Sprite& sprite, sf::Texture& texture, double scale, double position_x, double position_y) {
