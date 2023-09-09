@@ -235,7 +235,6 @@ void Facade::render() {
     }
     window.draw(lifeline);
 
-    //window.draw(madame);
     window.draw(postit);
     window.draw(belt);
     window.draw(monsieur);
@@ -267,12 +266,9 @@ void Facade::renderLost(){
         sf::Texture dead = loadTextureFromFile("resources/you_lost.png");
         sf::Sprite death;
         death.setTexture(dead);
-        //death.setScale(1, 1);
         float scaleX2 = static_cast<float>(window2.getSize().x) / dead.getSize().x;
         float scaleY2 = static_cast<float>(window2.getSize().y) / dead.getSize().y;
         death.setScale(scaleX2, scaleY2); // Set the scale of the sprite to fill the window
-        //death.setPosition(window2.getSize().x/2.f - death.getScale().x, window2.getSize().y/2.f - death.getScale().y);
-        //death.setPosition(500, 500);
         sf::Event event2;
         while(window2.pollEvent(event2)) {
             if (event2.type == sf::Event::Closed) window2.close();
@@ -298,9 +294,8 @@ void Facade::update(sf::Time elapsed_time) {
     while(window.pollEvent(event)){
         if(event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) window.close();
 
-        else if (event.type == sf::Event::MouseButtonPressed) {
+        else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
 
-            if (event.mouseButton.button == sf::Mouse::Left) {
                 sf::Vector2i mousePos = sf::Mouse::getPosition(window);
                 // Check for storage click
                 for (auto &storage: storages) {
@@ -366,13 +361,11 @@ void Facade::update(sf::Time elapsed_time) {
                     selected_type = "nothing";
                 }
             }
-
-        }
     }
 
 }
 
-sf::Texture Facade::loadTextureFromFile(const std::string& filePath) {
+sf::Texture Facade::loadTextureFromFile(const std::string& filePath) const {
     sf::Texture texture;
     if (!texture.loadFromFile(filePath)) {
         cout << "ERROR loading texture from file: " << filePath << std::endl;
@@ -381,7 +374,7 @@ sf::Texture Facade::loadTextureFromFile(const std::string& filePath) {
 }
 
 
-std::pair<std::string,sf::Texture> Facade::addTextureFromFile(const std::string& name) {
+std::pair<std::string,sf::Texture> Facade::addTextureFromFile(const std::string& name) const {
     sf::Texture texture;
     if (!texture.loadFromFile("resources/"+name+".png")) {
         cout << "ERROR loading texture from file: " << "resources/"+name+".png" << std::endl;
@@ -390,13 +383,13 @@ std::pair<std::string,sf::Texture> Facade::addTextureFromFile(const std::string&
     return std::make_pair(name, texture);
 }
 
-void Facade::setTextureScalePosition(sf::Sprite& sprite, sf::Texture& texture, double scale, double position_x, double position_y) {
+void Facade::setTextureScalePosition(sf::Sprite& sprite, sf::Texture& texture, double scale, double position_x, double position_y) const {
     sprite.setTexture(texture);
     sprite.setScale(scale,scale);
     sprite.setPosition(position_x, position_y);
 }
 
-void Facade::setText(sf::Text& text, int characterSize, sf::Color color, float position_x, float position_y, std::string string){
+void Facade::setText(sf::Text& text, int characterSize, sf::Color color, float position_x, float position_y, std::string string) const {
     text.setCharacterSize(characterSize);
     text.setFillColor(color);
     text.setPosition(position_x, position_y);

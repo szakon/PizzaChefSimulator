@@ -50,10 +50,10 @@ public:
     void draw_init(unsigned int screenWidth, unsigned int screenHeight);
     void startCooking(Preparation& preparation);
     void selectReady(Preparation& preparation);
-    sf::Texture loadTextureFromFile(const std::string& filePath);
-    std::pair<std::string,sf::Texture> addTextureFromFile(const std::string& name);
-    void setTextureScalePosition(sf::Sprite& sprite, sf::Texture& texture, double scale, double position_x, double position_y);
-    void setText(sf::Text& text, int characterSize, sf::Color color, float position_x, float position_y, std::string string);
+    sf::Texture loadTextureFromFile(const std::string& filePath) const;
+    std::pair<std::string,sf::Texture> addTextureFromFile(const std::string& name) const;
+    void setTextureScalePosition(sf::Sprite& sprite, sf::Texture& texture, double scale, double position_x, double position_y) const;
+    void setText(sf::Text& text, int characterSize, sf::Color color, float position_x, float position_y, std::string string) const;
     static const sf::Time TimePerFrame;
     void renderLost();
 };
