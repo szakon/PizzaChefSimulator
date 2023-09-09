@@ -87,6 +87,7 @@ void Facade::run() {
 
         //The game is updated to match the 60fps defined earlier
         sf::Time elapsedTime = clock.restart();
+        cout << "elapsed " << elapsedTime.asSeconds() << endl;
         timeSinceLastUpdate += elapsedTime;
         while (timeSinceLastUpdate > TimePerFrame) {
             timeSinceLastUpdate -= TimePerFrame;
@@ -187,7 +188,6 @@ void Facade::startCooking(Preparation &preparation){
         if (selected_type == "storage"){  //if the last selected object is a storage
             if (selected.value().getIngredient() == preparation.getIngredient()){ //if the selected storage corresponds to the right ingredient
                 preparation.setStatus("inprep");
-                cout << "Beginning prep : change status to : " << preparation.getStatus() << endl;
                 selected.emplace(preparation);
                 selected_type = "preparation";
 
@@ -195,10 +195,20 @@ void Facade::startCooking(Preparation &preparation){
                 cout << "ERROR: you selected the wrong ingredient" << endl;
             }
 
-        }else{
+        }else if (selected_type == "preparation" && selected->getPrepId()%2 == preparation.getPrepId()%2) {
+            if (selected.value().getIngredient() == preparation.getIngredient()) {
+                preparation.setStatus("inprep");
+                selected.emplace(preparation);
+                selected_type = "preparation";
+
+            } else {
+                cout << "ERROR: you selected the wrong ingredient" << endl;
+            }
+        } else {
+
             cout << "ERROR: you didn't select a storage" << endl;
         }
-    }else{
+    } else {
         cout << "ERROR: nothing was selected" << endl;
     }
 }
@@ -336,7 +346,7 @@ void Facade::update(sf::Time elapsed_time) {
                         for (auto &prep: preparations) {
                             if (selected->getIngredient() == prep.getIngredient() &&
                                 prep.getSelected() == true &&
-                                selected->getPrepId() == prep.getPrepId()) {
+                                selected->getPrepId()%2 == prep.getPrepId()%2) {
                                 prep.reset();
                             }
                         }
