@@ -22,7 +22,7 @@ Pizza::Pizza(std::vector<Ingredient>& ingr)
     completed = false;
     criticalStatePassed = false;
     for (auto &ingredient: ingr) {
-        ingredients.insert(std::make_pair(ingredient, std::make_shared<bool>(false)));
+        ingredients.insert(std::make_pair(ingredient, false));
     }
 
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();  //TO BE REMOVED
@@ -114,7 +114,7 @@ void Pizza::printPizza(sf::RenderWindow& window, sf::Sprite postit){
     for (auto ingredient: ingredients){
         Ingredient ingr = ingredient.first;
         ingr.printRecipe(window, pizzaNum, postit);
-        if (*ingredient.second){
+        if (ingredient.second){
             //cout << "HERE" << endl;
             ingr.printIngredient(window, ingredientPosition);
             //ingr.setPosition(ingredientPosition.x, ingredientPosition.y);
@@ -131,17 +131,13 @@ bool operator<(const Pizza& lhs, const Pizza& rhs) {
 
 
 int Pizza::addIngredient(Ingredient ingredient) {
-    //cout << "add ingredient in pizza ingredients length " << ingredients.size() <<  endl;
     int res = -2;
     for (auto& pair: ingredients){
 
-        //cout << "add ingredient in pizza 2" << endl;
         Ingredient ingr = pair.first;
-        if (ingr == ingredient){
-            //cout << "add ingredient in pizza 3" << endl;
-            if (pair.second && !(*pair.second)){
-                //cout << "add ingredient in pizza 4" << endl;
-                *pair.second = true;
+        if (ingr.getLabel() == ingredient.getLabel()){
+            if (!(pair.second)){
+                pair.second = true;
                 res = 3;
 
             }
@@ -154,7 +150,7 @@ int Pizza::addIngredient(Ingredient ingredient) {
 bool Pizza::isComplete() {
     bool res = true;
     for(auto& pair : ingredients) {
-        if(*pair.second == false) {
+        if(pair.second == false) {
             res = false;
         }
     }
@@ -164,7 +160,7 @@ bool Pizza::isComplete() {
 
 void Pizza::resetPizza(){
     for (auto& pair: ingredients){
-        *pair.second = false;
+        pair.second = false;
     }
 
 }

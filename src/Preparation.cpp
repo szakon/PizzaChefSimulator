@@ -8,9 +8,9 @@ const static sf::Time TIMEPREP = sf::seconds(6.0f); //Preparation time
 
 Preparation::Preparation(Ingredient ingredient, int prepId) : Kitchen(ingredient, prepId) {
     //this->prepId = prepId;
-    status = make_shared<Status>(notused);
-    time_prep = ::TIMEPREP;
-    time_left = make_shared<sf::Time>(::TIMEPREP);
+    status = notused;
+    time_prep = TIMEPREP;
+    time_left = TIMEPREP;
 }
 
 std::ostream& operator<<(std::ostream& os, const Preparation& preparation)
@@ -18,34 +18,34 @@ std::ostream& operator<<(std::ostream& os, const Preparation& preparation)
     os << "Preparation :" << endl;
     os << "status" << preparation.status;
     os << "time_prep : " << preparation.time_prep.asSeconds() << endl;
-    os << "time_left : " << preparation.time_left << endl;
+    os << "time_left : " << preparation.time_left.asSeconds() << endl;
     return os;
 }
 
 void Preparation::preparing_if_needed(sf::Time elapsed_time) {
-    if(*status == inprep) {
+    if(status == inprep) {
         cout << "time spent " << elapsed_time.asSeconds() << endl;
-        *time_left -= elapsed_time;
-        cout << "time left" << (*time_left).asSeconds();
+        time_left -= elapsed_time;
+        cout << "time left" << time_left.asSeconds();
     }
-    if(*time_left <= sf::Time::Zero) {
-        *status = ready;
+    if(time_left <= sf::Time::Zero) {
+        status = ready;
     }
 }
 
 float Preparation::getProgress() const {
-    float progress = 1.0f - (*time_left).asSeconds() / time_prep.asSeconds();
+    float progress = 1.0f - time_left.asSeconds() / time_prep.asSeconds();
     return std::max(0.0f, std::min(1.0f, progress)); // Between 0 and 1
 }
 
 std::string Preparation::getStatus() const {
-    if(*status == inprep) {
+    if(status == inprep) {
         return "inprep";
     }
-    else if (*status == notused) {
+    else if (status == notused) {
         return "notused";
     }
-    else if (*status == ready) {
+    else if (status == ready) {
         return "ready";
     }
 
@@ -54,27 +54,27 @@ std::string Preparation::getStatus() const {
 
 void Preparation::setStatus( const std::string stat) {
     if(stat == "inprep") {
-        *status = inprep;
+        status = inprep;
     }
     else if (stat == "notused") {
-        *status = notused;
+        status = notused;
     }
     else if (stat == "ready") {
-        *status = ready;
+        status = ready;
     }
 }
 
-sf::Time Preparation::getTimePrep() {
+sf::Time Preparation::getTimePrep() const {
     return time_prep;
 }
 
-sf::Time Preparation::getTimeLeft() {
-    return *time_left;
+sf::Time Preparation::getTimeLeft() const {
+    return time_left;
 }
 
 void Preparation::reset() {
-    *status = notused;
-    *time_left = time_prep;
+    status = notused;
+    time_left = TIMEPREP;
     selected = false;
 }
 
@@ -122,11 +122,11 @@ void Preparation::setSprite(sf::Texture& preparation1, float scaleFactor, int sc
 
 void Preparation::draw(sf::RenderWindow& window){
     window.draw(sprite);
-    if(*status == inprep) {
+    if(status == inprep) {
         window.draw(timer);
         progressBar.setSize(sf::Vector2f(getProgress() * 80, 20));
         window.draw(progressBar);
-    }else if (*status == ready){
+    }else if (status == ready){
         window.draw(checkMark);
     }
 }

@@ -77,7 +77,6 @@ void Ingredient::printIngredient(sf::RenderWindow& window, sf::Vector2<float> in
 }
 
 void Ingredient::printRecipe(sf::RenderWindow& window, int pizzaNum, sf::Sprite postit){
-    cout << "Pizza num " << pizzaNum << "Printing this ingredient " << label << endl;
     recipe.setPosition(postit.getPosition().x + postit.getTextureRect().height*postit.getScale().x*0.1*(order+1), postit.getPosition().y + postit.getTextureRect().width*postit.getScale().y*(0.4+0.2*(pizzaNum-1)));
     window.draw(recipe);
 

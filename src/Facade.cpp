@@ -335,9 +335,7 @@ void Facade::update(sf::Time elapsed_time) {
                     }
                 }
 
-                cout << "BEFORE IF" << endl;
                 if (selected_type == "preparation") {
-                    cout << "BEFORE CHECK" << endl;
                     bool added = pizzaManager.checkPizzaClick(selected, mousePos);
                     if(added){
                         for (auto &prep: preparations) {
