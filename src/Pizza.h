@@ -9,7 +9,7 @@ using namespace std;
 
 class Pizza {
 private :
-    std::map< Ingredient, shared_ptr<bool>> ingredients;
+    std::map< Ingredient, bool> ingredients;
     bool completed;
     sf::CircleShape dough;
     sf::Vector2f circlePosition;
