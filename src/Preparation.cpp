@@ -99,7 +99,7 @@ void Preparation::setSprite(sf::Texture& preparation1, float scaleFactor, int sc
     checkMark.setScale(sf::Vector2f(0.2,0.2));
 
     float position = ingredient.getOrder()*1.7;
-    int y = y_position + sprite.getTextureRect().height*scaleFactor*1.5; // * floor(prepId/2);
+    int y = y_position + sprite.getTextureRect().height*scaleFactor*1.5*floor(prepId/2);
     if (prepId%2 == 0){
         sf::Vector2f pot1Position(8.5*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center - distance, y);
         sprite.setPosition(pot1Position);
