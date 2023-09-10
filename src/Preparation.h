@@ -17,7 +17,6 @@ private:
     sf::Sprite checkMark;
     sf::Sprite sprite2;
     sf::RectangleShape progressBar;
-    bool isFinalPreparation;
     int preparation_order;
 
 public:

@@ -15,14 +15,11 @@ Preparation::Preparation(Ingredient ingredient, int prepId) : Kitchen(ingredient
     cout << "preparation created for ingredient: " << ingredient.getLabel() << " NUMBER " << ingredient.getNumPreparations() << endl;
     if(ingredient.getNumPreparations() == 2){
         if(floor(prepId / 2) == 1){
-            isFinalPreparation = true;
             preparation_order = 2;
         }else{
-            isFinalPreparation = false;
             preparation_order = 1;
         }
     }else{
-        isFinalPreparation = true;
         preparation_order = 0;
     }
 
