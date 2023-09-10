@@ -17,6 +17,8 @@ private:
     sf::Sprite checkMark;
     sf::Sprite sprite2;
     sf::RectangleShape progressBar;
+    bool isFinalPreparation;
+    int preparation_order;
 
 public:
     explicit Preparation(Ingredient ingredient, int prepId);
@@ -30,6 +32,7 @@ public:
     float getProgress() const;
     void setSprite(sf::Texture& texture, float scaleFactor, int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& clock, sf::Texture& check, sf::Texture& preparation2);
     void draw(sf::RenderWindow& window);
+    int getPreparationOrder();
 };
 
 

@@ -37,7 +37,7 @@ void PizzaManager::movePizzas(sf::RenderWindow& window, sf::Sprite lifeline, std
     //cout << "here 2" << endl;
     bool pizzaNeedGeneration=false;
     for (Pizza *pizza: pizzas) {
-        cout << "PIZZA ID: " << pizza->getId() << "Position: " << pizza->getPizzaNum() << endl;
+        //cout << "PIZZA ID: " << pizza->getId() << "Position: " << pizza->getPizzaNum() << endl;
         if (pizza->getCirclePosition().x >window.getSize().x * 0.65) { //we are at the end of the line
             if (!pizza->isComplete()) { // If the pizza is not completed with all ingredients
                 score -= 10;
@@ -68,7 +68,7 @@ void PizzaManager::movePizzas(sf::RenderWindow& window, sf::Sprite lifeline, std
     if (pizzaNeedGeneration)
         pizzaGenerator(window, postit);
 
-    cout << "pizza generator in move pizza" << endl;
+    //cout << "pizza generator in move pizza" << endl;
 }
 
 void PizzaManager::randomIngr(Pizza* pizza){ //PM
@@ -203,7 +203,7 @@ void PizzaManager::printRecipe(sf::RenderWindow& window, sf::Sprite postit){
         for (auto ingredient : pizzas[i]->getIngredients()){
             ingredient.printRecipe(window, i, postit);
         }
-        cout << "ReLEASE PIZZA ID: " << pizzas[i]->getId() << "Position: " << pizzas[i]->getPizzaNum() << endl;
+        //cout << "ReLEASE PIZZA ID: " << pizzas[i]->getId() << "Position: " << pizzas[i]->getPizzaNum() << endl;
     }
 }
 

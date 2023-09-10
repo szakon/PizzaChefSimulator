@@ -11,6 +11,23 @@ Preparation::Preparation(Ingredient ingredient, int prepId) : Kitchen(ingredient
     status = notused;
     time_prep = TIMEPREP;
     time_left = TIMEPREP;
+
+    cout << "preparation created for ingredient: " << ingredient.getLabel() << " NUMBER " << ingredient.getNumPreparations() << endl;
+    if(ingredient.getNumPreparations() == 2){
+        if(floor(prepId / 2) == 1){
+            isFinalPreparation = true;
+            preparation_order = 2;
+        }else{
+            isFinalPreparation = false;
+            preparation_order = 1;
+        }
+    }else{
+        isFinalPreparation = true;
+        preparation_order = 0;
+    }
+
+    cout << "PREPARATION ORDER " << preparation_order << endl;
+
 }
 
 std::ostream& operator<<(std::ostream& os, const Preparation& preparation)
@@ -99,7 +116,7 @@ void Preparation::setSprite(sf::Texture& preparation1, float scaleFactor, int sc
     checkMark.setScale(sf::Vector2f(0.2,0.2));
 
     float position = ingredient.getOrder()*1.7;
-    int y = y_position + sprite.getTextureRect().height * scaleFactor * 1.5 * (prepId / 2);
+    int y = y_position + sprite.getTextureRect().height * scaleFactor * 1.5 * floor(prepId / 2);
     if (prepId%2 == 0){
         sf::Vector2f pot1Position(8.5*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center - distance, y);
         sprite.setPosition(pot1Position);
@@ -129,5 +146,9 @@ void Preparation::draw(sf::RenderWindow& window){
     }else if (status == ready){
         window.draw(checkMark);
     }
+}
+
+int Preparation::getPreparationOrder(){
+    return preparation_order;
 }
 

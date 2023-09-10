@@ -35,7 +35,7 @@ Facade::Facade()
     Ingredient cheese("cheese", 1, (170*screenWidth-20)/2500, textures.at("cooked_cheese"), "preparation_cheese", "storage_cheese", textures.at("cheese"),1, "preparation_pepper2");
     Ingredient pepperoni("pepperoni", 2, (170*screenWidth-20)/2500, textures.at("pepperonis"), "preparation_pepperoni", "storage_pepperoni", textures.at("pepperoni"), 1, "preparation_pepper2");
     Ingredient mushroom("mushroom", 3, (170*screenWidth-20)/2500, textures.at("mushrooms"), "preparation_mushroom", "storage_mushroom", textures.at("mushroom"), 1, "preparation_pepper2");
-    Ingredient pepper("pepper", 4, (170*screenWidth-20)/2500, textures.at("peppers_cut"), "pan", "storage_pepper", textures.at("pepper"), 2, "preparation_pepper2");
+    Ingredient pepper("pepper", 4, (170*screenWidth-20)/2500, textures.at("peppers_cut"), "preparation_pepper2", "storage_pepper", textures.at("pepper"), 2, "pan");
     ingredients.push_back(tomatoe);
     ingredients.push_back(cheese);
     ingredients.push_back(pepperoni);
@@ -87,7 +87,7 @@ void Facade::run() {
 
         //The game is updated to match the 60fps defined earlier
         sf::Time elapsedTime = clock.restart();
-        cout << "elapsed " << elapsedTime.asSeconds() << endl;
+        //cout << "elapsed " << elapsedTime.asSeconds() << endl;
         timeSinceLastUpdate += elapsedTime;
         while (timeSinceLastUpdate > TimePerFrame) {
             timeSinceLastUpdate -= TimePerFrame;
@@ -185,29 +185,36 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
 void Facade::startCooking(Preparation &preparation){
     if (selected.has_value()){ //is something selected
         cout << "Selected: " << selected.value().getIngredient() << endl;
-        if (selected_type == "storage"){  //if the last selected object is a storage
-            if (selected.value().getIngredient() == preparation.getIngredient()){ //if the selected storage corresponds to the right ingredient
+        if (selected_type == "storage" || selected_type == "first preparation"){  //if the last selected object is a storage
+            //if (selected.value().getIngredient() == preparation.getIngredient() && preparation.getPreparationOrder()!=1){
+            if (selected.value().getIngredient() == preparation.getIngredient() && preparation.getPreparationOrder()!=2){ //if the selected storage corresponds to the right ingredient
                 preparation.setStatus("inprep");
-                selected.emplace(preparation);
-                selected_type = "preparation";
+                selectReady(preparation);
 
             }else{
                 cout << "ERROR: you selected the wrong ingredient" << endl;
             }
 
-        }else if (selected_type == "preparation" && selected->getPrepId()%2 == preparation.getPrepId()%2) {
-            if (selected.value().getIngredient() == preparation.getIngredient()) {
-                preparation.setStatus("inprep");
-                selected.emplace(preparation);
-                selected_type = "preparation";
-
-            } else {
-                cout << "ERROR: you selected the wrong ingredient" << endl;
-            }
         } else {
 
             cout << "ERROR: you didn't select a storage" << endl;
         }
+        if (preparation.getPreparationOrder() == 2){
+            if(selected_type == "first preparation"){
+                for (auto &prep: preparations) {
+                    if (selected->getIngredient() == prep.getIngredient() &&
+                        prep.getSelected() == true &&
+                        selected->getPrepId()%2 == prep.getPrepId()%2) {
+                        preparation.setStatus("inprep");
+                        selectReady(preparation);
+                        prep.reset();
+                        cout << "HERE" << endl;
+                        break;
+                    }
+                }
+            }
+        }
+
     } else {
         cout << "ERROR: nothing was selected" << endl;
     }
@@ -215,7 +222,14 @@ void Facade::startCooking(Preparation &preparation){
 
 void Facade::selectReady(Preparation &preparation) {
     selected.emplace(preparation);
-    selected_type = "preparation";
+    cout << "PREPARATION ORDER: " << preparation.getPreparationOrder() << endl;
+    if (preparation.getPreparationOrder() == 1){
+        selected_type = "first preparation";
+        cout << "First preparation type attributed" << endl;
+    }else{
+        selected_type = "preparation";
+        cout << "Regular preparation type attributed" << endl;
+    }
     preparation.setSelected(true);
 }
 
