@@ -11,8 +11,8 @@ enum Status {
 class Preparation : public Kitchen {
 private:
     Status status;
-    sf::Time time_prep;
-    sf::Time time_left;
+    float time_prep;
+    float time_left;
     sf::Sprite timer;
     sf::Sprite checkMark;
     sf::Sprite sprite2;
@@ -26,8 +26,8 @@ public:
     void setStatus(const std::string stat);
     void reset();
     friend std::ostream& operator<<(std::ostream& os, const Preparation& preparation);
-    sf::Time getTimePrep() const;
-    sf::Time getTimeLeft() const;
+    float getTimePrep() const;
+    float getTimeLeft() const;
     float getProgress() const;
     void setSprite(sf::Texture& texture, float scaleFactor, int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& clock, sf::Texture& check, sf::Texture& preparation2);
     void draw(sf::RenderWindow& window);

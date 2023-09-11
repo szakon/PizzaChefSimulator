@@ -87,11 +87,11 @@ void Facade::run() {
 
         //The game is updated to match the 60fps defined earlier
         sf::Time elapsedTime = clock.restart();
-        //cout << "elapsed " << elapsedTime.asSeconds() << endl;
         timeSinceLastUpdate += elapsedTime;
         while (timeSinceLastUpdate > TimePerFrame) {
             timeSinceLastUpdate -= TimePerFrame;
             update(elapsedTime);
+            elapsedTime = clock.restart();
             pizzaManager.movePizzas(window, lifeline, textures, postit);
             render();
         }
