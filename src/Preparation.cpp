@@ -1,16 +1,16 @@
 #include "Preparation.h"
 #include "Kitchen.h"
-#include <chrono>
 #include <iostream>
+#include <cmath>
 
 
-const static sf::Time TIMEPREP = sf::seconds(6.0f); //Preparation time
+const static sf::Time TIMEPREP = sf::seconds(1); //Preparation time
 
 Preparation::Preparation(Ingredient ingredient, int prepId, sf::Texture& texture, float scaleFactor, sf::Texture& texture2) : Kitchen(ingredient, prepId, texture, scaleFactor) {
     //this->prepId = prepId;
     status = notused;
-    time_prep = TIMEPREP;
-    time_left = TIMEPREP;
+    time_prep = TIMEPREP.asSeconds();
+    time_left = TIMEPREP.asSeconds();
 
     cout << "preparation created for ingredient: " << ingredient.getLabel() << " NUMBER " << ingredient.getNumPreparations() << endl;
     if(ingredient.getNumPreparations() == 2){
@@ -37,25 +37,24 @@ std::ostream& operator<<(std::ostream& os, const Preparation& preparation)
 {
     os << "Preparation :" << endl;
     os << "status" << preparation.status;
-    os << "time_prep : " << preparation.time_prep.asSeconds() << endl;
-    os << "time_left : " << preparation.time_left.asSeconds() << endl;
+    os << "time_prep : " << preparation.time_prep << endl;
+    os << "time_left : " << preparation.time_left << endl;
     return os;
 }
 
 void Preparation::preparing_if_needed(sf::Time elapsed_time) {
     if(status == inprep) {
         cout << "time spent " << elapsed_time.asSeconds() << endl;
-        //time_left -= elapsed_time;
-        time_left -= elapsed_time;
-        cout << "time left" << time_left.asSeconds();
+        time_left -= elapsed_time.asSeconds();
+        cout << "time left" << time_left;
     }
-    if(time_left <= sf::Time::Zero) {
+    if(time_left <= 0) {
         status = ready;
     }
 }
 
 float Preparation::getProgress() const {
-    float progress = 1.0f - time_left.asSeconds() / time_prep.asSeconds();
+    float progress = 1.0f - time_left / time_prep;
     return std::max(0.0f, std::min(1.0f, progress)); // Between 0 and 1
 }
 
@@ -85,17 +84,17 @@ void Preparation::setStatus( const std::string stat) {
     }
 }
 
-sf::Time Preparation::getTimePrep() const {
+float Preparation::getTimePrep() const {
     return time_prep;
 }
 
-sf::Time Preparation::getTimeLeft() const {
+float Preparation::getTimeLeft() const {
     return time_left;
 }
 
 void Preparation::reset() {
     status = notused;
-    time_left = TIMEPREP;
+    time_left = TIMEPREP.asSeconds();
     selected = false;
 }
 
