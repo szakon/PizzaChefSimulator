@@ -20,7 +20,8 @@ private:
     int preparation_order;
 
 public:
-    explicit Preparation(Ingredient ingredient, int prepId);
+    //explicit Preparation(Ingredient ingredient, int prepId);
+    explicit Preparation(Ingredient ingr, int prepId, sf::Texture& texture, float scaleFactor, sf::Texture& texture2);
     void preparing_if_needed(sf::Time elapsed_time);
     std::string getStatus() const;
     void setStatus(const std::string stat);
@@ -29,7 +30,7 @@ public:
     sf::Time getTimePrep() const;
     sf::Time getTimeLeft() const;
     float getProgress() const;
-    void setSprite(sf::Texture& texture, float scaleFactor, int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& clock, sf::Texture& check, sf::Texture& preparation2);
+    void setSprite(float scaleFactor, int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& clock, sf::Texture& check);
     void draw(sf::RenderWindow& window);
     int getPreparationOrder();
 };

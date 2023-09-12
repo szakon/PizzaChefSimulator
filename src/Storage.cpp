@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 
-Storage::Storage(Ingredient ingredient, int prepId) : Kitchen(ingredient, prepId) {
+Storage::Storage(Ingredient ingredient, int prepId, sf::Texture& texture, float scaleFactor) : Kitchen(ingredient, prepId, texture, scaleFactor) {
 }
 
 

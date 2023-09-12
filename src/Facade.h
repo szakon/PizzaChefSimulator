@@ -4,6 +4,7 @@
 #include <map>
 #include "Pizza.h"
 #include "PizzaManager.h"
+#include "KitchenManager.h"
 #include "Kitchen.h"
 #include "Storage.h"
 #include <memory>
@@ -38,6 +39,7 @@ private:
     sf::Text recipeNote2;
     sf::RectangleShape score_board;
     PizzaManager pizzaManager;
+    KitchenManager kitchenManager;
 
 public:
     sf::RenderWindow window;

@@ -6,7 +6,7 @@
 
 const static sf::Time TIMEPREP = sf::seconds(6.0f); //Preparation time
 
-Preparation::Preparation(Ingredient ingredient, int prepId) : Kitchen(ingredient, prepId) {
+Preparation::Preparation(Ingredient ingredient, int prepId, sf::Texture& texture, float scaleFactor, sf::Texture& texture2) : Kitchen(ingredient, prepId, texture, scaleFactor) {
     //this->prepId = prepId;
     status = notused;
     time_prep = TIMEPREP;
@@ -21,6 +21,12 @@ Preparation::Preparation(Ingredient ingredient, int prepId) : Kitchen(ingredient
         }
     }else{
         preparation_order = 0;
+    }
+
+    if (preparation_order == 2){
+        sprite.setTexture(texture2);
+    }else{
+        sprite.setTexture(texture);
     }
 
     cout << "PREPARATION ORDER " << preparation_order << endl;
@@ -39,6 +45,7 @@ std::ostream& operator<<(std::ostream& os, const Preparation& preparation)
 void Preparation::preparing_if_needed(sf::Time elapsed_time) {
     if(status == inprep) {
         cout << "time spent " << elapsed_time.asSeconds() << endl;
+        //time_left -= elapsed_time;
         time_left -= elapsed_time;
         cout << "time left" << time_left.asSeconds();
     }
@@ -92,12 +99,13 @@ void Preparation::reset() {
     selected = false;
 }
 
-void Preparation::setSprite(sf::Texture& preparation1, float scaleFactor, int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& clock, sf::Texture& check, sf::Texture& preparation2){
+void Preparation::setSprite(float scaleFactor, int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& clock, sf::Texture& check){
+    /*
     if (prepId/2<1){
         sprite.setTexture(preparation1);
     }else{
         sprite.setTexture(preparation2);
-    }
+    }*/
     sprite.setScale(scaleFactor,scaleFactor);
 
     int center = jar.getTextureRect().width * scaleJar/2 - sprite.getTextureRect().width*scaleFactor/2;

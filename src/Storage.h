@@ -4,7 +4,7 @@
 
 class Storage : public Kitchen {
 public:
-    explicit Storage(Ingredient ingredient, int prepId);
+    explicit Storage(Ingredient ingr, int prepId, sf::Texture& texture, float scaleFactor);
     bool isStorage();
 
 };

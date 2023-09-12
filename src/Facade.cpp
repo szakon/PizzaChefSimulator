@@ -6,7 +6,6 @@
 const sf::Time Facade::TimePerFrame = sf::seconds(1.f/60.f); // The game is running at 60 FPS
 
 Facade::Facade()
-        :pizzaManager()
 {
     sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
     unsigned int screenWidth = desktopMode.width;
@@ -21,6 +20,7 @@ Facade::Facade()
     for (auto& element : vect) {
         textures.insert(addTextureFromFile(element));
     }
+    kitchenManager.setTextures(textures);
 
     //Background
     sprite_background.setTexture(textures.at("bois"));
@@ -42,6 +42,7 @@ Facade::Facade()
     ingredients.push_back(mushroom);
     ingredients.push_back(pepper);
     pizzaManager.setIngredients(ingredients);
+    kitchenManager.setIngredients(ingredients);
 
 
     //Set up the score
@@ -106,6 +107,9 @@ void Facade::run() {
 void Facade::init(){
 
     //Set up the storages and preparations
+
+    kitchenManager.initPrepAndStorage();
+    /*
     for (const auto &ingredient: ingredients){
         Storage storage(ingredient, 0);
         storages.push_back(storage);
@@ -114,6 +118,8 @@ void Facade::init(){
             preparations.push_back(preparation);
         }
     }
+     */
+    //
 
 }
 
@@ -156,7 +162,7 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     monsieur.setPosition(monsieurPosition);
 
     setTextureScalePosition(monsieur_arm, textures.at("arm"), scaleFactorMonsieur, monsieurPosition.x, monsieurPosition.y);
-
+    /*
     float scaleFactorJar = 0.9f*screenWidth/2500;
 
     //create the cheese jar
@@ -164,24 +170,27 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
 
     //create the tomatoe jar
     sf::Sprite spriteTomatoe;
-
-    for(auto& storage : storages) {
-        storage.setSprite(textures.at(storage.getIngredient().getStorage()), scaleFactorJar, screenWidth, sprite_background, 0.0, 0.0, textures.at("timer"));
-
+    */
+    kitchenManager.setSprites();
+    /*
+    for(auto& storage : kitchenManager.getStorages()) {
+        storage.setSprite(textures.at(storage.getIngredient().getStorage()), scaleFactorJar, screenWidth, 0.0, 0.0, textures.at("timer"));
     }
 
     //create a pot
     float scaleFactorPot = 0.15f*screenWidth/2500;
     cout<< "Before potline";
-    float potLine = 20 + 1.2f * storages[0].getSprite().getTextureRect().height*scaleFactorJar;
+    cout << "first storage: " << kitchenManager.getStorages()[0] << endl;
+    float potLine = 20 + 1.2f * kitchenManager.getStorages()[0].getSprite().getTextureRect().height*scaleFactorJar;
     cout<< "After potline";
     //random sprite used for preparations
-    for(auto& preparation : preparations) {
+    for(auto& preparation : kitchenManager.getPreparations()) {
         preparation.setSprite(textures.at(preparation.getIngredient().getPreparation()), scaleFactorPot, screenWidth, spriteTomatoe, scaleFactorJar, potLine, textures.at("timer"), textures.at("check_mark"), textures.at(preparation.getIngredient().getPreparation2()));
-    }
+    }*/
 
 }
-
+//
+/*
 void Facade::startCooking(Preparation &preparation){
     if (selected.has_value()){ //is something selected
         cout << "Selected: " << selected.value().getIngredient() << endl;
@@ -232,17 +241,23 @@ void Facade::selectReady(Preparation &preparation) {
     }
     preparation.setSelected(true);
 }
+*/
+//
 
 void Facade::render() {
 
     window.clear();
     window.draw(sprite_background);
+
+    kitchenManager.printKitchen(window);
+    /*
     for(auto& storage : storages) {
         storage.draw(window);
     }
     for(auto& preparation : preparations) {
         preparation.draw(window);
-    }
+    }*/
+
 
     window.draw(score_board);
     scoreText.setString("Your Score: " + std::to_string(pizzaManager.getScore()));
@@ -310,19 +325,23 @@ void Facade::update(sf::Time elapsed_time) {
     bool isTouched = false; //to test if an object was touched
 
     //Update the preparations preparing
-    for (auto& prep : preparations) {
+    kitchenManager.prepareIfNeeded(elapsed_time);
+    /*for (auto& prep : kitchenManager.getPreparations()) {
         prep.preparing_if_needed(elapsed_time);
-    }
+    }*/
 
     sf::Event event;
     while(window.pollEvent(event)){
+        //cout << "SELECTED TYPE: " << selected_type << endl;
         if(event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) window.close();
 
         else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
 
                 sf::Vector2i mousePos = sf::Mouse::getPosition(window);
                 // Check for storage click
-                for (auto &storage: storages) {
+                bool isTouchedStorage = kitchenManager.onTouchedStorage(mousePos, window);
+                /*
+                for (auto &storage: kitchenManager.getStorages()) {
                     if (storage.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
                         cout << storage.getIngredient() << endl;
                         selected.emplace(storage);
@@ -331,9 +350,10 @@ void Facade::update(sf::Time elapsed_time) {
                         break; // Exit the loop if a storage is clicked
                     }
                 }
-                //Check for preparation click
-
-                for (auto&preparation: preparations) {
+                //Check for preparation click*/
+                bool isTouchedPreparation = kitchenManager.onTouchedPreparation(mousePos, window);
+                /*
+                for (auto&preparation: kitchenManager.getPreparations()) {
                     if (preparation.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
                         if(preparation.getStatus() == "ready") { //If the preparation is ready to be put on the pizza
                             selectReady(preparation);
@@ -352,15 +372,15 @@ void Facade::update(sf::Time elapsed_time) {
                         }
 
                     }
-                }
+                }*/
 
-                if (selected_type == "preparation") {
-                    bool added = pizzaManager.checkPizzaClick(selected, mousePos);
+                if (kitchenManager.getSelectedType() == "preparation") {
+                    bool added = pizzaManager.checkPizzaClick(kitchenManager.getSelected(), mousePos);
                     if(added){
                         for (auto &prep: preparations) {
-                            if (selected->getIngredient() == prep.getIngredient() &&
+                            if (kitchenManager.getSelected()->getIngredient() == prep.getIngredient() &&
                                 prep.getSelected() == true &&
-                                selected->getPrepId()%2 == prep.getPrepId()%2) {
+                                kitchenManager.getSelected()->getPrepId()%2 == prep.getPrepId()%2) {
                                 prep.reset();
                             }
                         }
@@ -380,11 +400,13 @@ void Facade::update(sf::Time elapsed_time) {
                     }
                 }
 
-                if (!isTouched){
-                    selected.reset();
-                    selected_type = "nothing";
+                if (!isTouchedStorage && !isTouchedPreparation){
+                    //selected.reset();
+                    //selected_type = "nothing";
+                    kitchenManager.resetSelected();
+                    kitchenManager.setSelectedType("nothing");
                 }
-            }
+        }
     }
 
 }

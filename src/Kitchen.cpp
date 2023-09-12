@@ -5,10 +5,13 @@
 using namespace std;
 
 
-Kitchen::Kitchen(Ingredient ingr, int prepId)
+Kitchen::Kitchen(Ingredient ingr, int prepId, sf::Texture& texture, float scaleFactor)
         : ingredient(ingr), selected(false)
 {
     this->prepId = prepId;
+    sprite.setTexture(texture);
+    sprite.setScale(scaleFactor,scaleFactor);
+
 }
 
 Ingredient Kitchen::getIngredient() {
@@ -31,9 +34,9 @@ std::ostream& operator<<(std::ostream& os, const Kitchen& kitchen)
     return os;
 }
 
-void Kitchen::setSprite(sf::Texture& texture, float scaleFactor, int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& timer) {
-    sprite.setTexture(texture);
-    sprite.setScale(scaleFactor,scaleFactor);
+void Kitchen::setSprite(float scaleFactor, int screenWidth, float scaleJar, float y_position, sf::Texture& timer) {
+    //sprite.setTexture(texture);
+    //sprite.setScale(scaleFactor,scaleFactor);
     float position = ingredient.getOrder()*1.5;
     sf::Vector2f position_sprite(8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor, 20);
     //cout << "set sprite for " << ingredient.getLabel() << " at position: " << 8*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor << " and with the scale factor: " << endl;
@@ -49,6 +52,7 @@ int Kitchen::getPrepId() {
 }
 
 void Kitchen::draw(sf::RenderWindow& window) {
+    sprite.setScale(1,1);
     window.draw(sprite);
 }
 

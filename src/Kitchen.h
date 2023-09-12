@@ -14,9 +14,10 @@ protected:
     sf::Sprite sprite;
     int prepId;
 public:
-    explicit Kitchen(Ingredient ingr, int prepId);
+    //explicit Kitchen(Ingredient ingr, int prepId);
+    Kitchen(Ingredient ingr, int prepId, sf::Texture& texture, float scaleFactor);
     Ingredient getIngredient();
-    virtual void setSprite(sf::Texture& texture, float scaleFactor,int screenWidth, sf::Sprite jar, float scaleJar, float y_position, sf::Texture& timer);
+    virtual void setSprite(float scaleFactor,int screenWidth, float scaleJar, float y_position, sf::Texture& timer);
     virtual sf::Sprite getSprite() const;
     bool getSelected() const;
     int getPrepId();
