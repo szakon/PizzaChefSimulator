@@ -48,7 +48,6 @@ Facade::Facade()
     //Set up the score
     sf::Font font;
     if (!font.loadFromFile("resources/font.ttf")) {
-        cout << "ERROR FONT DIDN'T LOAD";
     }
     scoreText.setFont(font);
     for (int j=0; j<4; j++){
@@ -60,7 +59,6 @@ Facade::Facade()
 
     //Set up the music
     if (!music.openFromFile("resources/music.ogg")) {
-        cout << "ERROR MUSIC DIDN'T LOAD";
     }
     music.setVolume(20.0);
     music.play();
@@ -139,7 +137,6 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
                             score_board.getPosition().y + score_board.getSize().y - 20);
 
     //Characters
-    //setTextureScalePosition(madame, textures.at("madame"), 0.5*screenWidth/2500, 0, belt.getPosition().y-textures.at("madame").getSize().y*0.5*screenWidth/2500);
     setTextureScalePosition(postit, textures.at("post-it"), 0.5 * screenWidth / 2500, 0,
                             belt.getPosition().y - textures.at("post-it").getSize().y * 0.5 * screenWidth / 2500);
     setText(recipeNotes[0], 30, sf::Color::Black,
@@ -243,7 +240,6 @@ void Facade::update(sf::Time elapsed_time) {
 
     sf::Event event;
     while(window.pollEvent(event)){
-        //cout << "SELECTED TYPE: " << selected_type << endl;
         if(event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) window.close();
 
         else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
@@ -285,7 +281,6 @@ void Facade::update(sf::Time elapsed_time) {
 sf::Texture Facade::loadTextureFromFile(const std::string& filePath) const {
     sf::Texture texture;
     if (!texture.loadFromFile(filePath)) {
-        cout << "ERROR loading texture from file: " << filePath << std::endl;
     }
     return texture;
 }
@@ -294,7 +289,6 @@ sf::Texture Facade::loadTextureFromFile(const std::string& filePath) const {
 std::pair<std::string,sf::Texture> Facade::addTextureFromFile(const std::string& name) const {
     sf::Texture texture;
     if (!texture.loadFromFile("resources/"+name+".png")) {
-        cout << "ERROR loading texture from file: " << "resources/"+name+".png" << std::endl;
     }
 
     return std::make_pair(name, texture);

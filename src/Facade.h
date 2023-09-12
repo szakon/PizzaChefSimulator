@@ -10,7 +10,6 @@
 #include <memory>
 #include <optional>
 #include <random>
-#include "PizzaPool.h"
 #include "SFML/Audio/Music.hpp"
 #include <SFML/Graphics.hpp>
 

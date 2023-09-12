@@ -20,7 +20,6 @@ private:
     int preparation_order;
 
 public:
-    //explicit Preparation(Ingredient ingredient, int prepId);
     explicit Preparation(Ingredient ingr, int prepId, sf::Texture& texture, float scaleFactor, sf::Texture& texture2);
     void preparing_if_needed(sf::Time elapsed_time);
     std::string getStatus() const;

@@ -11,7 +11,6 @@
 #include <memory>
 #include <optional>
 #include <random>
-#include "PizzaPool.h"
 #ifndef GLOUTON_PIZZAMANAGER_H
 #define GLOUTON_PIZZAMANAGER_H
 
@@ -22,16 +21,12 @@ private:
     int lives;
     int score;
     static const float xVelocity;
-    //std::optional<PizzaPool> pool;
     std::vector<Ingredient> ingredients;
     int numberOfPizzas;
     sf::RenderWindow window;
 public:
     explicit PizzaManager();
-
-    //void setPool(PizzaPool pool);
     void setIngredients(std::vector<Ingredient> ingredients);
-    //void setWindow(sf::RenderWindow& window);
     std::vector<Pizza*> getPizzas();
     int getScore();
     int getLives();

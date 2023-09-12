@@ -53,11 +53,7 @@ std::vector<Storage> KitchenManager::getStorages(){
 
 void KitchenManager::initPrepAndStorage(){
     for (const auto &ingredient: ingredients){
-        cout << ingredient.getStorage() << endl;
-        cout << scaleFactorJar << endl;
-        cout << "this? " << textures.at(ingredient.getStorage()).getSize().x << endl;
         Storage storage(ingredient, 0, textures.at(ingredient.getStorage()), scaleFactorJar);
-        cout << 1 << endl;
         storages.push_back(storage);
         for (int i = 0; i<2*ingredient.getNumPreparations(); i++){
             Preparation preparation(ingredient, i, textures.at(ingredient.getPreparation()), scaleFactorPot, textures.at(ingredient.getPreparation2()));
@@ -69,9 +65,7 @@ void KitchenManager::initPrepAndStorage(){
 
 void KitchenManager::startCooking(Preparation &preparation){
     if (selected.has_value()){ //is something selected
-        cout << "Selected: " << selected.value().getIngredient() << endl;
         if (selected_type == "storage" || selected_type == "first preparation"){  //if the last selected object is a storage
-            //if (selected.value().getIngredient() == preparation.getIngredient() && preparation.getPreparationOrder()!=1){
             if (selected.value().getIngredient() == preparation.getIngredient() && preparation.getPreparationOrder()!=2){ //if the selected storage corresponds to the right ingredient
                 preparation.setStatus("inprep");
                 selectReady(preparation);
@@ -108,13 +102,10 @@ void KitchenManager::startCooking(Preparation &preparation){
 
 void KitchenManager::selectReady(Preparation &preparation) {
     selected.emplace(preparation);
-    cout << "PREPARATION ORDER: " << preparation.getPreparationOrder() << endl;
     if (preparation.getPreparationOrder() == 1){
         selected_type = "first preparation";
-        cout << "First preparation type attributed" << endl;
     }else{
         selected_type = "preparation";
-        cout << "Regular preparation type attributed" << endl;
     }
     preparation.setSelected(true);
 }
@@ -130,7 +121,6 @@ void KitchenManager::printKitchen(sf::RenderWindow& window){
 
 bool KitchenManager::onTouchedStorage(sf::Vector2i mousePos, sf::RenderWindow& window){
     bool isTouched = false;
-    cout << "SELECTED TYPE: " << selected_type << endl;
     for (auto &storage: storages) {
         if (storage.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
             cout << storage.getIngredient() << endl;
@@ -184,10 +174,7 @@ void KitchenManager::setSprites(){
 
     //create a pot
     float scaleFactorPot = 0.15f*screenWidth/2500;
-    cout<< "Before potline";
-    cout << "first storage: " << storages[0] << endl;
     float potLine = 20 + 1.2f * storages[0].getSprite().getTextureRect().height*scaleFactorJar;
-    cout<< "After potline";
     //random sprite used for preparations
     for(auto& preparation : preparations) {
         preparation.setSprite(scaleFactorPot, screenWidth, spriteTomatoe, scaleFactorJar, potLine, textures.at("timer"), textures.at("check_mark"));

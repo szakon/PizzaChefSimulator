@@ -11,8 +11,6 @@ Preparation::Preparation(Ingredient ingredient, int prepId, sf::Texture& texture
     status = notused;
     time_prep = TIMEPREP.asSeconds();
     time_left = TIMEPREP.asSeconds();
-
-    cout << "preparation created for ingredient: " << ingredient.getLabel() << " NUMBER " << ingredient.getNumPreparations() << endl;
     if(ingredient.getNumPreparations() == 2){
         if(floor(prepId / 2) == 1){
             preparation_order = 2;
@@ -29,8 +27,6 @@ Preparation::Preparation(Ingredient ingredient, int prepId, sf::Texture& texture
         sprite.setTexture(texture);
     }
 
-    cout << "PREPARATION ORDER " << preparation_order << endl;
-
 }
 
 std::ostream& operator<<(std::ostream& os, const Preparation& preparation)
@@ -44,9 +40,7 @@ std::ostream& operator<<(std::ostream& os, const Preparation& preparation)
 
 void Preparation::preparing_if_needed(sf::Time elapsed_time) {
     if(status == inprep) {
-        cout << "time spent " << elapsed_time.asSeconds() << endl;
         time_left -= elapsed_time.asSeconds();
-        cout << "time left" << time_left;
     }
     if(time_left <= 0) {
         status = ready;
@@ -127,8 +121,6 @@ void Preparation::setSprite(float scaleFactor, int screenWidth, sf::Sprite jar, 
         timer.setPosition(pot1Position);
         progressBar.setPosition(pot1Position);
         checkMark.setPosition(pot1Position);
-        cout << "preparation " << ingredient.getLabel() << " has this position " << sprite.getPosition().x << " , " << sprite.getPosition().y << " and this scale: " << sprite.getScale().x << endl;
-
 
     }else{
         sf::Vector2f pot2Position(8.5*screenWidth/10-position * sprite.getTextureRect().width * scaleFactor + center + distance, y);
@@ -136,7 +128,6 @@ void Preparation::setSprite(float scaleFactor, int screenWidth, sf::Sprite jar, 
         progressBar.setPosition(pot2Position);
         timer.setPosition(pot2Position);
         checkMark.setPosition(pot2Position);
-        cout << "2";
     }
 }
 

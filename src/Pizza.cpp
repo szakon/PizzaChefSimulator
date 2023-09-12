@@ -17,7 +17,6 @@ int nextId = 0;
 Pizza::Pizza(std::vector<Ingredient>& ingr)
 {
     pizzaNum = 1;
-    cout << "Create pizza w/ ingr length " << ingr.size() << endl;
     id = nextId++;
     completed = false;
     criticalStatePassed = false;
@@ -73,7 +72,6 @@ void Pizza::setPizzaNum(int i){
 }
 
 void Pizza::setCriticalStatePassed(){
-    //cout << "Pizza set New generated called" << endl;
     criticalStatePassed = true;
 }
 
@@ -96,18 +94,13 @@ sf::CircleShape Pizza::getDough(){
 
 
 void Pizza::movePizza(float velocity) {
-    //cout << "in movePizza in Pizza" << endl;
-    //cout << "should move Pizza number " << id <<  " from position: " << circlePosition.x << endl;
     circlePosition.x += velocity;
     ingredientPosition.x += velocity;
 
-    //cout << "pizza moved to position: " << circlePosition.x << endl;
 }
 
 void Pizza::printPizza(sf::RenderWindow& window, sf::Sprite postit){
     dough.setPosition(circlePosition.x,circlePosition.y);
-
-    //cout << "print pizza at position: " << circlePosition.x << " , " << circlePosition.y << endl;
     window.draw(dough);
 
 
@@ -115,10 +108,7 @@ void Pizza::printPizza(sf::RenderWindow& window, sf::Sprite postit){
         Ingredient ingr = ingredient.first;
         ingr.printRecipe(window, pizzaNum, postit);
         if (ingredient.second){
-            //cout << "HERE" << endl;
             ingr.printIngredient(window, ingredientPosition);
-            //ingr.setPosition(ingredientPosition.x, ingredientPosition.y);
-            //circles.push_back(ingr.getCircle());
         }
     }
 }
