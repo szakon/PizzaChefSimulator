@@ -377,13 +377,14 @@ void Facade::update(sf::Time elapsed_time) {
                 if (kitchenManager.getSelectedType() == "preparation") {
                     bool added = pizzaManager.checkPizzaClick(kitchenManager.getSelected(), mousePos);
                     if(added){
-                        for (auto &prep: preparations) {
+                        kitchenManager.addIngredient();
+                        /*for (auto &prep: preparations) {
                             if (kitchenManager.getSelected()->getIngredient() == prep.getIngredient() &&
                                 prep.getSelected() == true &&
                                 kitchenManager.getSelected()->getPrepId()%2 == prep.getPrepId()%2) {
                                 prep.reset();
                             }
-                        }
+                        }*/
                     }
                 }
                 if(sound.getGlobalBounds().contains(mousePos.x, mousePos.y)) {

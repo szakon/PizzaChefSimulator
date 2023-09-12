@@ -199,3 +199,14 @@ void KitchenManager::prepareIfNeeded(sf::Time elapsed_time){
         prep.preparing_if_needed(elapsed_time);
     }
 }
+
+
+void KitchenManager::addIngredient(){
+    for (auto &prep: preparations) {
+        if (selected->getIngredient() == prep.getIngredient() &&
+            prep.getSelected() == true &&
+            selected->getPrepId()%2 == prep.getPrepId()%2) {
+            prep.reset();
+        }
+    }
+}

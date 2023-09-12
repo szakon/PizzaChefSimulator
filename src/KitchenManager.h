@@ -53,5 +53,6 @@ public:
     bool onTouchedPreparation(sf::Vector2i mousePos, sf::RenderWindow& window);
     void setSprites();
     void prepareIfNeeded(sf::Time elapsed_time);
+    void addIngredient();
 };
 #endif //GLOUTON_KITCHENMANAGER_H
