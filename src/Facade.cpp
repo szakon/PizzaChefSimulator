@@ -34,7 +34,7 @@ Facade::Facade()
     Ingredient tomatoe("tomatoe",0, (170*screenWidth-20)/2500, textures.at("tomato_sauce"), "preparation_tomatoe", "storage_tomatoe", textures.at("tomato"), 1, "preparation_pepper2");
     Ingredient cheese("cheese", 1, (170*screenWidth-20)/2500, textures.at("cooked_cheese"), "preparation_cheese", "storage_cheese", textures.at("cheese"),1, "preparation_pepper2");
     Ingredient pepperoni("pepperoni", 2, (170*screenWidth-20)/2500, textures.at("pepperonis"), "preparation_pepperoni", "storage_pepperoni", textures.at("pepperoni"), 1, "preparation_pepper2");
-    Ingredient mushroom("mushroom", 3, (170*screenWidth-20)/2500, textures.at("mushrooms"), "preparation_mushroom", "storage_mushroom", textures.at("mushroom"), 1, "preparation_pepper2");
+    Ingredient mushroom("mushroom", 3, (170*screenWidth-20)/2500, textures.at("mushrooms"), "preparation_mushroom", "storage_mushroom", textures.at("mushroom"), 1, "pan");
     Ingredient pepper("pepper", 4, (170*screenWidth-20)/2500, textures.at("peppers_cut"), "preparation_pepper2", "storage_pepper", textures.at("pepper"), 2, "pan");
     ingredients.push_back(tomatoe);
     ingredients.push_back(cheese);
@@ -128,7 +128,7 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
 
     //Set up the conveyor belt
     belt.setSize(sf::Vector2f(screenWidth, screenHeight / 3));
-    belt.setPosition(0, 6 * screenHeight / 10 - 20);
+    belt.setPosition(0, 6 * screenHeight / 10+85);
     sf::Color greyColor(105, 105, 105);
     belt.setFillColor(greyColor);
 

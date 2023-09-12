@@ -26,11 +26,11 @@ private:
     sf::Music music;
     sf::Sprite sound;
     bool sound_on_off;
-    std::vector<Storage> storages;
-    std::vector<Preparation> preparations;
+    //std::vector<Storage> storages;
+    //std::vector<Preparation> preparations;
     std::vector<Ingredient> ingredients;
-    std::optional<Kitchen> selected;
-    std::string selected_type;
+    //std::optional<Kitchen> selected;
+    //std::string selected_type;
     std::map<std::string, sf::Texture> textures;
     sf::Text scoreText;
     std::vector<sf::Text> recipeNotes;
@@ -49,8 +49,6 @@ public:
     void render();
     void update(sf::Time elapsed_time);
     void draw_init(unsigned int screenWidth, unsigned int screenHeight);
-    void startCooking(Preparation& preparation);
-    void selectReady(Preparation& preparation);
     sf::Texture loadTextureFromFile(const std::string& filePath) const;
     std::pair<std::string,sf::Texture> addTextureFromFile(const std::string& name) const;
     void setTextureScalePosition(sf::Sprite& sprite, sf::Texture& texture, double scale, double position_x, double position_y) const;
