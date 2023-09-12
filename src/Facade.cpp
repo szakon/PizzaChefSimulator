@@ -109,17 +109,6 @@ void Facade::init(){
     //Set up the storages and preparations
 
     kitchenManager.initPrepAndStorage();
-    /*
-    for (const auto &ingredient: ingredients){
-        Storage storage(ingredient, 0);
-        storages.push_back(storage);
-        for (int i = 0; i<2*ingredient.getNumPreparations(); i++){
-            Preparation preparation(ingredient, i);
-            preparations.push_back(preparation);
-        }
-    }
-     */
-    //
 
 }
 
@@ -129,120 +118,52 @@ void Facade::draw_init(unsigned int screenWidth, unsigned int screenHeight) {
     window.setFramerateLimit(60);
 
     //Score
-    score_board.setSize(sf::Vector2f (400,100));
-    score_board.setPosition(20,20);
+    score_board.setSize(sf::Vector2f(400, 100));
+    score_board.setPosition(20, 20);
     score_board.setFillColor(sf::Color::Black);
     score_board.setOutlineColor(sf::Color::White);
     score_board.setOutlineThickness(3);
 
     setText(scoreText, 50, sf::Color::White, 40, 30, "Your Score: " + std::to_string(pizzaManager.getScore()));
     //Set up the sound
-    setTextureScalePosition(sound, textures.at("sound_on"), 0.09, screenWidth*14/15,0);
+    setTextureScalePosition(sound, textures.at("sound_on"), 0.09, screenWidth * 14 / 15, 0);
 
     //Set up the conveyor belt
-    belt.setSize(sf::Vector2f(screenWidth,screenHeight/3));
-    belt.setPosition(0, 6*screenHeight/10-20);
+    belt.setSize(sf::Vector2f(screenWidth, screenHeight / 3));
+    belt.setPosition(0, 6 * screenHeight / 10 - 20);
     sf::Color greyColor(105, 105, 105);
     belt.setFillColor(greyColor);
 
     //Set up the lives
-    setTextureScalePosition(lifeline, textures.at("3"), 0.15, 0,score_board.getPosition().y + score_board.getSize().y - 20 );
+    setTextureScalePosition(lifeline, textures.at("3"), 0.15, 0,
+                            score_board.getPosition().y + score_board.getSize().y - 20);
 
     //Characters
     //setTextureScalePosition(madame, textures.at("madame"), 0.5*screenWidth/2500, 0, belt.getPosition().y-textures.at("madame").getSize().y*0.5*screenWidth/2500);
-    setTextureScalePosition(postit, textures.at("post-it"), 0.5*screenWidth/2500, 0, belt.getPosition().y-textures.at("post-it").getSize().y*0.5*screenWidth/2500);
-    setText(recipeNotes[0], 30, sf::Color::Black, postit.getPosition().x + postit.getTextureRect().height*postit.getScale().x*0.1,postit.getPosition().y + postit.getTextureRect().width*postit.getScale().y*0.3, "Next Pizza: ");
-    for (int i = 1; i<recipeNotes.size(); i++){
-        setText(recipeNotes[i], 30, sf::Color::Black, postit.getPosition().x + postit.getTextureRect().height*postit.getScale().x*0.1,postit.getPosition().y + postit.getTextureRect().width*postit.getScale().y*(0.3+0.2*i), "Pizza " + std::to_string(i+1) + ": ");
+    setTextureScalePosition(postit, textures.at("post-it"), 0.5 * screenWidth / 2500, 0,
+                            belt.getPosition().y - textures.at("post-it").getSize().y * 0.5 * screenWidth / 2500);
+    setText(recipeNotes[0], 30, sf::Color::Black,
+            postit.getPosition().x + postit.getTextureRect().height * postit.getScale().x * 0.1,
+            postit.getPosition().y + postit.getTextureRect().width * postit.getScale().y * 0.3, "Next Pizza: ");
+    for (int i = 1; i < recipeNotes.size(); i++) {
+        setText(recipeNotes[i], 30, sf::Color::Black,
+                postit.getPosition().x + postit.getTextureRect().height * postit.getScale().x * 0.1,
+                postit.getPosition().y + postit.getTextureRect().width * postit.getScale().y * (0.3 + 0.2 * i),
+                "Pizza " + std::to_string(i + 1) + ": ");
     }
     monsieur.setTexture(textures.at("monsieur"));
-    float scaleFactorMonsieur = 1.1*screenWidth/2500;
-    sf::Vector2f monsieurPosition(window.getSize().x * 0.65-monsieur.getTextureRect().height*scaleFactorMonsieur/3,belt.getPosition().y-monsieur.getTextureRect().height*scaleFactorMonsieur/4);
+    float scaleFactorMonsieur = 1.1 * screenWidth / 2500;
+    sf::Vector2f monsieurPosition(
+            window.getSize().x * 0.65 - monsieur.getTextureRect().height * scaleFactorMonsieur / 3,
+            belt.getPosition().y - monsieur.getTextureRect().height * scaleFactorMonsieur / 4);
     monsieur.setScale(scaleFactorMonsieur, scaleFactorMonsieur);
     monsieur.setPosition(monsieurPosition);
 
-    setTextureScalePosition(monsieur_arm, textures.at("arm"), scaleFactorMonsieur, monsieurPosition.x, monsieurPosition.y);
-    /*
-    float scaleFactorJar = 0.9f*screenWidth/2500;
+    setTextureScalePosition(monsieur_arm, textures.at("arm"), scaleFactorMonsieur, monsieurPosition.x,
+                            monsieurPosition.y);
 
-    //create the cheese jar
-    sf::Sprite spriteCheese;
-
-    //create the tomatoe jar
-    sf::Sprite spriteTomatoe;
-    */
     kitchenManager.setSprites();
-    /*
-    for(auto& storage : kitchenManager.getStorages()) {
-        storage.setSprite(textures.at(storage.getIngredient().getStorage()), scaleFactorJar, screenWidth, 0.0, 0.0, textures.at("timer"));
-    }
-
-    //create a pot
-    float scaleFactorPot = 0.15f*screenWidth/2500;
-    cout<< "Before potline";
-    cout << "first storage: " << kitchenManager.getStorages()[0] << endl;
-    float potLine = 20 + 1.2f * kitchenManager.getStorages()[0].getSprite().getTextureRect().height*scaleFactorJar;
-    cout<< "After potline";
-    //random sprite used for preparations
-    for(auto& preparation : kitchenManager.getPreparations()) {
-        preparation.setSprite(textures.at(preparation.getIngredient().getPreparation()), scaleFactorPot, screenWidth, spriteTomatoe, scaleFactorJar, potLine, textures.at("timer"), textures.at("check_mark"), textures.at(preparation.getIngredient().getPreparation2()));
-    }*/
-
 }
-//
-/*
-void Facade::startCooking(Preparation &preparation){
-    if (selected.has_value()){ //is something selected
-        cout << "Selected: " << selected.value().getIngredient() << endl;
-        if (selected_type == "storage" || selected_type == "first preparation"){  //if the last selected object is a storage
-            //if (selected.value().getIngredient() == preparation.getIngredient() && preparation.getPreparationOrder()!=1){
-            if (selected.value().getIngredient() == preparation.getIngredient() && preparation.getPreparationOrder()!=2){ //if the selected storage corresponds to the right ingredient
-                preparation.setStatus("inprep");
-                selectReady(preparation);
-
-            }else{
-                cout << "ERROR: you selected the wrong ingredient" << endl;
-            }
-
-        } else {
-
-            cout << "ERROR: you didn't select a storage" << endl;
-        }
-        if (preparation.getPreparationOrder() == 2){
-            if(selected_type == "first preparation"){
-                for (auto &prep: preparations) {
-                    if (selected->getIngredient() == prep.getIngredient() &&
-                        prep.getSelected() == true &&
-                        selected->getPrepId()%2 == prep.getPrepId()%2) {
-                        preparation.setStatus("inprep");
-                        selectReady(preparation);
-                        prep.reset();
-                        cout << "HERE" << endl;
-                        break;
-                    }
-                }
-            }
-        }
-
-    } else {
-        cout << "ERROR: nothing was selected" << endl;
-    }
-}
-
-void Facade::selectReady(Preparation &preparation) {
-    selected.emplace(preparation);
-    cout << "PREPARATION ORDER: " << preparation.getPreparationOrder() << endl;
-    if (preparation.getPreparationOrder() == 1){
-        selected_type = "first preparation";
-        cout << "First preparation type attributed" << endl;
-    }else{
-        selected_type = "preparation";
-        cout << "Regular preparation type attributed" << endl;
-    }
-    preparation.setSelected(true);
-}
-*/
-//
 
 void Facade::render() {
 
@@ -250,13 +171,6 @@ void Facade::render() {
     window.draw(sprite_background);
 
     kitchenManager.printKitchen(window);
-    /*
-    for(auto& storage : storages) {
-        storage.draw(window);
-    }
-    for(auto& preparation : preparations) {
-        preparation.draw(window);
-    }*/
 
 
     window.draw(score_board);
@@ -326,9 +240,6 @@ void Facade::update(sf::Time elapsed_time) {
 
     //Update the preparations preparing
     kitchenManager.prepareIfNeeded(elapsed_time);
-    /*for (auto& prep : kitchenManager.getPreparations()) {
-        prep.preparing_if_needed(elapsed_time);
-    }*/
 
     sf::Event event;
     while(window.pollEvent(event)){
@@ -340,51 +251,12 @@ void Facade::update(sf::Time elapsed_time) {
                 sf::Vector2i mousePos = sf::Mouse::getPosition(window);
                 // Check for storage click
                 bool isTouchedStorage = kitchenManager.onTouchedStorage(mousePos, window);
-                /*
-                for (auto &storage: kitchenManager.getStorages()) {
-                    if (storage.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                        cout << storage.getIngredient() << endl;
-                        selected.emplace(storage);
-                        selected_type = "storage";
-                        isTouched = true;
-                        break; // Exit the loop if a storage is clicked
-                    }
-                }
-                //Check for preparation click*/
                 bool isTouchedPreparation = kitchenManager.onTouchedPreparation(mousePos, window);
-                /*
-                for (auto&preparation: kitchenManager.getPreparations()) {
-                    if (preparation.getSprite().getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                        if(preparation.getStatus() == "ready") { //If the preparation is ready to be put on the pizza
-                            selectReady(preparation);
-                            isTouched = true;
-                            //change sprite
-                        }
-                        else if (preparation.getStatus() == "notused"){ //If we need to cook the ingredient
-                            cout << preparation.getIngredient() << endl;
-                            startCooking(preparation);
-                            isTouched = false;
-                            selected = nullopt;
-                        }
-                        else {
-                            isTouched = false;
-                            selected = nullopt;
-                        }
-
-                    }
-                }*/
 
                 if (kitchenManager.getSelectedType() == "preparation") {
                     bool added = pizzaManager.checkPizzaClick(kitchenManager.getSelected(), mousePos);
                     if(added){
                         kitchenManager.addIngredient();
-                        /*for (auto &prep: preparations) {
-                            if (kitchenManager.getSelected()->getIngredient() == prep.getIngredient() &&
-                                prep.getSelected() == true &&
-                                kitchenManager.getSelected()->getPrepId()%2 == prep.getPrepId()%2) {
-                                prep.reset();
-                            }
-                        }*/
                     }
                 }
                 if(sound.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
@@ -402,8 +274,6 @@ void Facade::update(sf::Time elapsed_time) {
                 }
 
                 if (!isTouchedStorage && !isTouchedPreparation){
-                    //selected.reset();
-                    //selected_type = "nothing";
                     kitchenManager.resetSelected();
                     kitchenManager.setSelectedType("nothing");
                 }
